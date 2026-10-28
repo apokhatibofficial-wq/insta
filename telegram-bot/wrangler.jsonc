@@ -1,0 +1,8 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "khatib-store-bot",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true }
+  // Secrets (set by scripts/deploy-telegram-bot.mjs): TELEGRAM_BOT_TOKEN, MANAGER_CHAT_ID (optional).
+}
