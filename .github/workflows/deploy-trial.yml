@@ -5,6 +5,7 @@ name: Deploy (trial)
 #   SUPABASE_ACCESS_TOKEN, SUPABASE_ORG_SLUG, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID,
 #   DEPLOY_MASTER_KEY (≥32 random chars; all app secrets are derived from it — never change it),
 #   ADMIN_SETUP_TOKEN (≥24 random chars; entered once at /admin/setup).
+# Optional, for Instagram: META_APP_ID, META_APP_SECRET, META_WEBHOOK_VERIFY_TOKEN (≥16 chars).
 on:
   workflow_dispatch:
 
@@ -35,3 +36,6 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           DEPLOY_MASTER_KEY: ${{ secrets.DEPLOY_MASTER_KEY }}
           ADMIN_SETUP_TOKEN: ${{ secrets.ADMIN_SETUP_TOKEN }}
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          META_WEBHOOK_VERIFY_TOKEN: ${{ secrets.META_WEBHOOK_VERIFY_TOKEN }}
