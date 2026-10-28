@@ -32,6 +32,7 @@ const KNOWN = new Set([
   "renewal_too_far",
   "read_only",
   "keyword_clash",
+  "ig_account_in_use",
 ]);
 
 export function toDbError(message: string | undefined): DbError {

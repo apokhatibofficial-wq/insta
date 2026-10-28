@@ -17,7 +17,12 @@ export function createPgDb(connectionString: string): Db & { end(): Promise<void
   async function call<T>(role: "service_role" | "authenticated", claims: object, fn: string, args: RpcArgs = {}) {
     assertFnName(fn);
     const keys = Object.keys(args).map(argName);
-    const params = keys.map((k) => args[k]);
+    // Like PostgREST: arrays of objects are JSON (jsonb params); arrays of
+    // scalars stay Postgres arrays (text[], uuid[], bytea[]).
+    const params = keys.map((k) => {
+      const v = args[k];
+      return Array.isArray(v) && v.some((x) => x !== null && typeof x === "object") ? JSON.stringify(v) : v;
+    });
     const sql = `select public.${fn}(${keys.map((k, i) => `${k} => $${i + 1}`).join(", ")}) as r`;
     const c = await pool.connect();
     try {
@@ -29,6 +34,7 @@ export function createPgDb(connectionString: string): Db & { end(): Promise<void
       return (res.rows[0]?.r ?? null) as T;
     } catch (e) {
       await c.query("rollback").catch(() => {});
+      if (process.env.DEBUG_DB_ERRORS) console.error("db:", fn, e instanceof Error ? e.message : e);
       throw toDbError(e instanceof Error ? e.message : undefined);
     } finally {
       c.release();
