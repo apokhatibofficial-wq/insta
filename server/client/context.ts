@@ -11,7 +11,7 @@ export type Me = {
   public_id: string;
   name: string;
   subscription: SubSummary;
-  ig: { status: "ok" | "needs_reconnect" | "none"; username: string | null } | null;
+  ig: { status: "ok" | "needs_reconnect" | "none"; username: string | null; updated_at?: string } | null;
   bot: { client_enabled: boolean } | null;
 };
 

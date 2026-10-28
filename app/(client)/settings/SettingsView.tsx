@@ -7,7 +7,15 @@ import { disconnectInstagramAction, endDeviceAction } from "../actions";
 
 export type Device = { id: string; ua: string | null; last_seen_at: string; current: boolean };
 
-export function InstagramSection({ status, username }: { status: "ok" | "needs_reconnect" | "none"; username: string | null }) {
+export function InstagramSection({
+  status,
+  username,
+  canConnect,
+}: {
+  status: "ok" | "needs_reconnect" | "none";
+  username: string | null;
+  canConnect: boolean;
+}) {
   const router = useRouter();
   const [dlg, setDlg] = useState(false);
   const [pending, start] = useTransition();
@@ -38,9 +46,15 @@ export function InstagramSection({ status, username }: { status: "ok" | "needs_r
       ) : (
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
           <span style={{ flex: 1, minWidth: 200, fontSize: 15, color: "var(--muted)" }}>لا يوجد حساب مربوط. البوت متوقف.</span>
-          <button type="button" className="btn btn-primary" disabled title="يتاح بعد اعتماد تطبيق Meta">
-            ربط حساب إنستغرام
-          </button>
+          {canConnect ? (
+            <a href="/connect/instagram" className="btn btn-primary" style={{ textDecoration: "none" }}>
+              ربط حساب إنستغرام
+            </a>
+          ) : (
+            <button type="button" className="btn btn-primary" disabled title="يتاح بعد اعتماد تطبيق Meta">
+              ربط حساب إنستغرام
+            </button>
+          )}
         </div>
       )}
       {error && (

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { RobotImg } from "@/components/robot/RobotImg";
+import { PostThumb } from "@/components/client/PostThumb";
+import { RefreshPosts } from "./RefreshPosts";
 import { IconSearch } from "@/components/ui/icons";
 import { formatDayMonth } from "@/lib/dates";
 import { commentsLabel } from "@/lib/events";
@@ -33,9 +35,12 @@ export function PostsView({
 
   return (
     <>
-      <div className="page-title">
-        <h1>المنشورات</h1>
-        <p>اختر منشورًا لتحدد الكلمات التي يرد عليها البوت في تعليقاته.</p>
+      <div className="page-head">
+        <div className="page-title">
+          <h1>المنشورات</h1>
+          <p>اختر منشورًا لتحدد الكلمات التي يرد عليها البوت في تعليقاته.</p>
+        </div>
+        {igConnected && <RefreshPosts />}
       </div>
 
       <div className="toolbar">
@@ -81,6 +86,7 @@ export function PostsView({
           return (
             <Link key={p.id} href={`/replies?post=${p.id}`} className="post-card" aria-label={`إعداد ردود منشور: ${p.caption}`}>
               <span className="post-tile" style={{ background: postTone(p.id) }}>
+                <PostThumb src={p.image} />
                 <span className="post-badge" style={{ left: 12 }}>
                   {postKind(p.media_type)}
                 </span>

@@ -10,7 +10,8 @@ export function middleware(request: NextRequest) {
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${dev ? " 'unsafe-eval'" : ""}`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
+    // Post thumbnails come from Instagram's CDN.
+    "img-src 'self' data: blob: https://*.cdninstagram.com https://*.fbcdn.net",
     "font-src 'self'",
     "connect-src 'self'",
     "object-src 'none'",

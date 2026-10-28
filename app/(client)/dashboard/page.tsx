@@ -4,10 +4,10 @@ import { BotSwitch } from "@/components/client/BotSwitch";
 import { ClientShell } from "@/components/client/ClientShell";
 import { MiniRobot } from "@/components/robot/MiniRobot";
 import { IconLock } from "@/components/ui/icons";
-import { formatDate, formatDateTime } from "@/lib/dates";
+import { formatDate, formatDateTime, formatDayMonth } from "@/lib/dates";
 import { commentsLabel, eventView, type ClientEvent } from "@/lib/events";
 import { getClientContext } from "@/server/client/context";
-import { env } from "@/server/env";
+import { env, metaConfigured } from "@/server/env";
 import { Expired } from "./Expired";
 
 export const metadata: Metadata = { title: "لوحتك — KHATIB" };
@@ -22,8 +22,19 @@ type Dash = {
 
 const DOT = { green: "var(--success)", amber: "var(--warning)", gray: "var(--muted-2)", soft: "var(--muted-2)" };
 
-export default async function Dashboard() {
+const IG_RESULT: Record<string, { ok: boolean; text: string }> = {
+  connected: { ok: true, text: "رُبط حساب إنستغرام بنجاح. البوت جاهز للعمل." },
+  denied: { ok: false, text: "أُلغي الربط من صفحة Meta، فلم يتغيّر شيء. يمكنك المحاولة متى شئت." },
+  state: { ok: false, text: "انتهت مهلة طلب الربط. ابدأ الربط من جديد من هذه الصفحة." },
+  in_use: { ok: false, text: "حساب إنستغرام هذا مربوط بلوحة أخرى. تواصل مع فريق KHATIB." },
+  failed: { ok: false, text: "تعذّر إكمال الربط مع Meta. تأكد أن الحساب احترافي (أعمال أو صانع محتوى) وحاول مرة أخرى." },
+  not_configured: { ok: false, text: "الربط غير متاح حاليًا." },
+};
+
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ ig?: string }> }) {
   const { clientId, db, me } = await getClientContext();
+  const metaReady = metaConfigured();
+  const igResult = IG_RESULT[(await searchParams).ig ?? ""];
   const sub = me.subscription;
   if (sub.state === "expired" || sub.state === "none") {
     return <Expired endsOn={sub.ends_on ?? sub.today} whatsapp={env().SUPPORT_WHATSAPP_URL} />;
@@ -75,6 +86,12 @@ export default async function Dashboard() {
         </div>
       </section>
 
+      {igResult && (
+        <div role={igResult.ok ? "status" : "alert"} className={`callout ${igResult.ok ? "callout-success" : "callout-danger"}`}>
+          {igResult.text}
+        </div>
+      )}
+
       {needsConnect && (
         <section aria-labelledby="connect-h" className="card" style={{ gap: 22, padding: 28, borderRadius: 24, borderColor: "var(--border-strong)" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -99,16 +116,21 @@ export default async function Dashboard() {
             </li>
           </ol>
           <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-            {/* The Meta connection arrives in Phase 4 (needs Meta app approval). */}
-            <button type="button" className="btn btn-primary" disabled style={{ minHeight: 52, padding: "0 24px", borderRadius: 14, fontSize: 16 }}>
-              {ig === "needs_reconnect" ? "إعادة الربط" : "ربط حساب إنستغرام"}
-            </button>
+            {metaReady && d.can_edit ? (
+              <a href="/connect/instagram" className="btn btn-primary" style={{ minHeight: 52, padding: "0 24px", borderRadius: 14, fontSize: 16, textDecoration: "none" }}>
+                {ig === "needs_reconnect" ? "إعادة الربط" : "ربط حساب إنستغرام"}
+              </a>
+            ) : (
+              <button type="button" className="btn btn-primary" disabled style={{ minHeight: 52, padding: "0 24px", borderRadius: 14, fontSize: 16 }}>
+                {ig === "needs_reconnect" ? "إعادة الربط" : "ربط حساب إنستغرام"}
+              </button>
+            )}
             <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "var(--muted-2)" }}>
               <IconLock />
               لن نطلب منك كلمة مرور إنستغرام أبدًا.
             </span>
           </div>
-          <span className="field-hint">سيتاح الربط قريبًا بعد اعتماد تطبيق KHATIB لدى Meta.</span>
+          {!metaReady && <span className="field-hint">سيتاح الربط قريبًا بعد اعتماد تطبيق KHATIB لدى Meta.</span>}
         </section>
       )}
 
@@ -127,7 +149,9 @@ export default async function Dashboard() {
             <span className="dot" style={{ width: 9, height: 9, background: ig === "ok" ? "var(--success)" : ig === "needs_reconnect" ? "var(--danger)" : "var(--border-hover)" }} />
             <span dir={me.ig?.username ? "ltr" : "rtl"}>{me.ig?.username ? `@${me.ig.username}` : "غير مربوط"}</span>
           </span>
-          <span className="meta">{ig === "ok" ? "مربوط" : ig === "needs_reconnect" ? "انتهت صلاحية الربط" : "لم يُربط بعد"}</span>
+          <span className="meta">
+            {ig === "ok" ? (me.ig?.updated_at ? `مربوط منذ ${formatDayMonth(me.ig.updated_at)}` : "مربوط") : ig === "needs_reconnect" ? "انتهت صلاحية الربط" : "لم يُربط بعد"}
+          </span>
         </div>
         <div className="card">
           <div className="card-title-row">

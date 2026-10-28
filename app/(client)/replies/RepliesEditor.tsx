@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent, type KeyboardEvent } from
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { RobotImg } from "@/components/robot/RobotImg";
+import { PostThumb } from "@/components/client/PostThumb";
 import { IconCheck, IconChevronStart, IconPlus, IconX } from "@/components/ui/icons";
 import { formatDayMonth } from "@/lib/dates";
 import { DM_MAX, REPLY_MAX, isValidLink, normalizeKeyword } from "@/lib/keywords";
@@ -123,7 +124,9 @@ export function RepliesEditor({
   const overrides =
     r && !isGeneral(r) ? r.words.filter((w) => rules.some((x) => isGeneral(x) && x.words.some((v) => normalizeKeyword(v) === normalizeKeyword(w)))) : [];
   const linkBad = !!r?.link && !isValidLink(r.link);
-  const dmOver = (r?.dm.length ?? 0) > DM_MAX;
+  // Meta limits the private message (text + link) to 1000 UTF-8 bytes.
+  const dmBytes = r ? new TextEncoder().encode([r.dm.trim(), r.link.trim()].filter(Boolean).join("\n")).length : 0;
+  const dmOver = dmBytes > DM_MAX;
   const replyOver = (r?.reply.length ?? 0) > REPLY_MAX;
   const isSpecific = !!r && !isGeneral(r);
   const noPosts = isSpecific && r!.posts.length === 0;
@@ -286,6 +289,7 @@ export function RepliesEditor({
             return (
               <button key={p.id} type="button" role="option" aria-selected={post === p.id} onClick={() => pickPost(p.id)} className="strip-item">
                 <span className="strip-tile" data-on={post === p.id || undefined} style={{ background: postTone(p.id) }}>
+                  <PostThumb src={p.image} />
                   <span className="post-badge" style={{ top: 8, left: 8, height: 22, fontSize: 11, padding: "0 7px", borderRadius: 7 }}>
                     {postKind(p.media_type)}
                   </span>
@@ -470,10 +474,13 @@ export function RepliesEditor({
                   <span className="field-label" style={{ display: "flex", justifyContent: "space-between" }}>
                     <span>الرسالة الخاصة</span>
                     <span className="mono" style={{ fontSize: 12, color: dmOver ? "var(--danger)" : "var(--muted-2)" }}>
-                      {r.dm.length}/{DM_MAX}
+                      {dmBytes}/{DM_MAX}
                     </span>
                   </span>
                   <textarea rows={4} className="input" value={r.dm} onChange={(e) => patch({ dm: e.target.value })} placeholder="مثال: أهلًا! هذه أسعار مجموعتنا…" aria-invalid={dmOver} />
+                  <span className="field-hint" style={{ color: dmOver ? "var(--danger)" : undefined }}>
+                    {dmOver ? "الرسالة مع الرابط أطول من حد Meta. اختصرها قليلًا." : "حد Meta للرسالة مع الرابط 1000 بايت (الحرف العربي = 2، تقريبًا 480 حرفًا)."}
+                  </span>
                 </label>
 
                 <label className="field">
@@ -598,6 +605,7 @@ export function RepliesEditor({
                     data-on={on || undefined}
                     style={{ background: postTone(p.id) }}
                   >
+                    <PostThumb src={p.image} />
                     <span className="picker-check">{on && <IconCheck size={14} sw={2.6} />}</span>
                     <span className="post-badge" style={{ top: 8, left: 8, height: 22, fontSize: 11, padding: "0 7px", borderRadius: 7 }}>
                       {postKind(p.media_type)}

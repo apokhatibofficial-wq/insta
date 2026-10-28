@@ -6,6 +6,7 @@ import { z } from "zod";
 import { logoutClient } from "@/server/auth/client";
 import { currentSessionHash, getClientContext } from "@/server/client/context";
 import { DbError } from "@/server/db";
+import { syncMedia, unsubscribeClient } from "@/server/instagram/connect";
 import { assertSameOrigin } from "@/server/http";
 
 export type Result<T = undefined> = { ok: true; data: T } | { ok: false; error: string; words?: string[] };
@@ -108,7 +109,16 @@ export async function endDeviceAction(sessionId: unknown) {
 
 export async function disconnectInstagramAction() {
   return run(async () => {
-    const { db } = await getClientContext();
+    const { clientId, db } = await getClientContext();
+    await unsubscribeClient(clientId);
     await db.service("client_ig_disconnect", { p_session_hash: await currentSessionHash() });
   }, ["/settings", "/dashboard"]);
+}
+
+export async function refreshPostsAction() {
+  return run(async () => {
+    const { clientId, me } = await getClientContext();
+    if (me.ig?.status !== "ok") return 0;
+    return syncMedia(clientId);
+  }, ["/posts", "/replies"]);
 }

@@ -2839,3 +2839,32 @@ textarea.input {
   font-size: 15px;
   color: var(--muted);
 }
+.callout-success {
+  background: color-mix(in srgb, var(--success) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  color: var(--success);
+}
+.post-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 11, 13, 0.85), rgba(10, 11, 13, 0.1) 60%);
+}
+.post-tile > :not(.post-thumb):not(.post-shade),
+.strip-tile > :not(.post-thumb):not(.post-shade),
+.picker-tile > :not(.post-thumb):not(.post-shade) {
+  position: relative;
+  z-index: 1;
+}
+.post-tile > .post-badge,
+.strip-tile > .post-badge,
+.picker-tile > .post-badge,
+.picker-tile > .picker-check {
+  position: absolute;
+}

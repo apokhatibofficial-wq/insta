@@ -5,6 +5,8 @@ export type Post = {
   posted_at: string | null;
   comments_count: number;
   replied: number;
+  image?: string | null;
+  permalink?: string | null;
 };
 
 const TONES = ["#2a2622", "#232733", "#2b2420", "#1f2a26", "#2a2226", "#20262b"];

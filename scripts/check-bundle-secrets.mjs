@@ -14,6 +14,7 @@ const SECRET_VARS = [
   "META_APP_SECRET",
   "META_WEBHOOK_VERIFY_TOKEN",
   "DATABASE_URL",
+  "CRON_SECRET",
 ];
 
 const envFileArg = process.argv.indexOf("--env-file");

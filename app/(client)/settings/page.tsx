@@ -3,7 +3,7 @@ import { ClientShell } from "@/components/client/ClientShell";
 import { formatDate } from "@/lib/dates";
 import { daysLabel } from "@/lib/labels";
 import { currentSessionHash, getClientContext } from "@/server/client/context";
-import { env } from "@/server/env";
+import { env, metaConfigured } from "@/server/env";
 import { DevicesSection, InstagramSection, type Device } from "./SettingsView";
 
 export const metadata: Metadata = { title: "الحساب — KHATIB" };
@@ -56,7 +56,7 @@ export default async function SettingsPage() {
 
       <section className="card" style={{ padding: 24, borderRadius: 20, gap: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>حساب إنستغرام</h2>
-        <InstagramSection status={me.ig?.status ?? "none"} username={me.ig?.username ?? null} />
+        <InstagramSection status={me.ig?.status ?? "none"} username={me.ig?.username ?? null} canConnect={metaConfigured() && (sub.state === "active" || sub.state === "paused")} />
         <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7, color: "var(--muted-2)" }}>
           نستخدم إذن Meta الرسمي فقط، ولا نعرف كلمة مرور إنستغرام. يمكنك أيضًا إلغاء الإذن من إعدادات إنستغرام نفسها.
         </p>
