@@ -2,7 +2,7 @@
 //
 // Needs (environment, never committed):
 //   SUPABASE_ACCESS_TOKEN   personal access token (supabase.com → Account → Access Tokens)
-//   SUPABASE_ORG_SLUG       organisation to create the project in (not secret)
+//   SUPABASE_ORG_SLUG       organisation to create the project in (optional with a single organisation)
 //   CLOUDFLARE_API_TOKEN    "Edit Cloudflare Workers" template (+ Account Analytics: Read)
 //   CLOUDFLARE_ACCOUNT_ID
 // In a Claude Code cloud environment the two tokens can instead be network
@@ -76,6 +76,20 @@ const mask = (v) => {
 // ---------------------------------------------------------------------------
 // 1. Supabase project
 // ---------------------------------------------------------------------------
+// The slug in SUPABASE_ORG_SLUG is easy to get wrong (it is not the display
+// name); fall back to the account's only organization when it doesn't match.
+async function orgSlug() {
+  const orgs = await sb("GET", "/organizations");
+  const wanted = envVar("SUPABASE_ORG_SLUG");
+  const match = orgs.find((o) => o.slug === wanted || o.id === wanted || o.name === wanted);
+  if (match) return match.slug ?? match.id;
+  if (orgs.length === 1) {
+    log(`using your only Supabase organization "${orgs[0].name}"`);
+    return orgs[0].slug ?? orgs[0].id;
+  }
+  throw new Error(`SUPABASE_ORG_SLUG does not match any of your organizations: ${orgs.map((o) => o.name).join(", ")}`);
+}
+
 async function ensureProject() {
   state.projectRef ??= envVar("SUPABASE_PROJECT_REF");
   state.projectRef ??= (await sb("GET", "/projects")).find((p) => p.name === PROJECT_NAME)?.id;
@@ -85,7 +99,7 @@ async function ensureProject() {
     log("creating Supabase project (free plan)…");
     const p = await sb("POST", "/projects", {
       name: PROJECT_NAME,
-      organization_slug: need("SUPABASE_ORG_SLUG"),
+      organization_slug: await orgSlug(),
       db_pass: state.dbPass,
       region_selection: { type: "specific", code: envVar("SUPABASE_REGION") ?? "eu-central-1" },
     });
