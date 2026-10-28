@@ -20,7 +20,8 @@
     "check:bundle-secrets": "node scripts/check-bundle-secrets.mjs",
     "cf:build": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build",
     "cf:preview": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "cf:deploy": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy:trial": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "5.3.0",
