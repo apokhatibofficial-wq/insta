@@ -5,6 +5,9 @@
 //   SUPABASE_ORG_SLUG       organisation to create the project in (not secret)
 //   CLOUDFLARE_API_TOKEN    "Edit Cloudflare Workers" template (+ Account Analytics: Read)
 //   CLOUDFLARE_ACCOUNT_ID
+// In a Claude Code cloud environment the two tokens can instead be network
+// secrets bound to api.supabase.com / api.cloudflare.com: the agent proxy then
+// sets the Authorization header and the variables may be left unset.
 // Optional: SUPABASE_PROJECT_REF (reuse an existing project), SUPABASE_REGION (default eu-central-1).
 //
 // Generated secrets and the project ref are kept in .deploy/state.json
@@ -30,6 +33,9 @@ const need = (k) => {
   return v;
 };
 const log = (...a) => console.log("•", ...a);
+// Placeholder for a token the agent proxy injects (it replaces the Authorization header).
+const PROXY_TOKEN = "injected-by-proxy";
+const token = (k) => process.env[k] || PROXY_TOKEN;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 mkdirSync(STATE_DIR, { recursive: true, mode: 0o700 });
@@ -39,7 +45,7 @@ const save = () => writeFileSync(STATE, JSON.stringify(state, null, 2), { mode: 
 async function sb(method, path, body) {
   const res = await fetch(`${API}${path}`, {
     method,
-    headers: { authorization: `Bearer ${need("SUPABASE_ACCESS_TOKEN")}`, "content-type": "application/json" },
+    headers: { authorization: `Bearer ${token("SUPABASE_ACCESS_TOKEN")}`, "content-type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const text = await res.text();
@@ -141,7 +147,7 @@ function wrangler(args, input) {
   return execFileSync("npx", ["wrangler", ...args], {
     cwd: ROOT,
     input,
-    env: { ...process.env, CLOUDFLARE_API_TOKEN: need("CLOUDFLARE_API_TOKEN"), CLOUDFLARE_ACCOUNT_ID: need("CLOUDFLARE_ACCOUNT_ID") },
+    env: { ...process.env, CLOUDFLARE_API_TOKEN: token("CLOUDFLARE_API_TOKEN"), CLOUDFLARE_ACCOUNT_ID: need("CLOUDFLARE_ACCOUNT_ID") },
     stdio: ["pipe", "pipe", "inherit"],
   }).toString();
 }
