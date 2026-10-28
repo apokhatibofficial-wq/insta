@@ -10,14 +10,18 @@
 // sets the Authorization header and the variables may be left unset.
 // Optional: SUPABASE_PROJECT_REF (reuse an existing project), SUPABASE_REGION (default eu-central-1).
 //
-// Generated secrets and the project ref are kept in .deploy/state.json
-// (gitignored, mode 600) so re-running never rotates the pepper or session
-// secret (which would invalidate every access code and session).
-// Nothing secret is printed. The one-time admin setup token is written to
-// .deploy/ADMIN_SETUP_TOKEN.txt for the owner to open.
+// Stable secrets (pepper, session secret, signing key, …) must never rotate,
+// or every access code and session is invalidated. Two ways to keep them:
+//   - DEPLOY_MASTER_KEY set (GitHub Actions): every secret is derived from it
+//     with HKDF, so runs on fresh machines produce the same values. The owner
+//     chooses ADMIN_SETUP_TOKEN themselves (also a secret) so it is never printed.
+//   - otherwise: generated randomly and kept in .deploy/state.json
+//     (gitignored, mode 600); the admin setup token is written to
+//     .deploy/ADMIN_SETUP_TOKEN.txt for the owner to open.
+// The Supabase project is found by name when no ref is known. Nothing secret is printed.
 
 import { execFileSync } from "node:child_process";
-import { randomBytes, randomUUID } from "node:crypto";
+import { createECDH, hkdfSync, randomBytes, randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { exportJWK, generateKeyPair } from "jose";
@@ -53,19 +57,31 @@ async function sb(method, path, body) {
   return text ? JSON.parse(text) : null;
 }
 
-const secret = (bytes = 32) => randomBytes(bytes).toString("base64url");
+const MASTER = process.env.DEPLOY_MASTER_KEY;
+if (MASTER !== undefined && MASTER.length < 32) throw new Error("DEPLOY_MASTER_KEY must be at least 32 characters");
+const derive = (label, bytes) => Buffer.from(hkdfSync("sha256", MASTER, "khatib-platform", label, bytes));
+const randomOrDerived = (label, bytes) => (MASTER ? derive(label, bytes) : randomBytes(bytes));
+const secret = (label, bytes = 32) => randomOrDerived(label, bytes).toString("base64url");
+const PROJECT_NAME = "khatib-platform";
+
+// In GitHub Actions, hide values fetched at runtime from the job log.
+const mask = (v) => {
+  if (process.env.GITHUB_ACTIONS === "true") console.log(`::add-mask::${v}`);
+  return v;
+};
 
 // ---------------------------------------------------------------------------
 // 1. Supabase project
 // ---------------------------------------------------------------------------
 async function ensureProject() {
   state.projectRef ??= process.env.SUPABASE_PROJECT_REF;
+  state.projectRef ??= (await sb("GET", "/projects")).find((p) => p.name === PROJECT_NAME)?.id;
   if (!state.projectRef) {
-    state.dbPass ??= secret(24);
+    state.dbPass ??= secret("db-pass", 24);
     save();
     log("creating Supabase project (free plan)…");
     const p = await sb("POST", "/projects", {
-      name: "khatib-platform",
+      name: PROJECT_NAME,
       organization_slug: need("SUPABASE_ORG_SLUG"),
       db_pass: state.dbPass,
       region_selection: { type: "specific", code: process.env.SUPABASE_REGION ?? "eu-central-1" },
@@ -106,7 +122,9 @@ async function migrate() {
 // 3. Our ES256 signing key (decision 1B) and API keys
 // ---------------------------------------------------------------------------
 async function ensureSigningKey() {
-  if (!state.signingJwk) {
+  if (MASTER) {
+    state.signingJwk = { ...derivedP256Jwk(), kid: uuidFrom(derive("signing-kid", 16)), alg: "ES256", use: "sig", key_ops: ["sign", "verify"], ext: true };
+  } else if (!state.signingJwk) {
     const { privateKey } = await generateKeyPair("ES256", { extractable: true });
     const jwk = await exportJWK(privateKey);
     state.signingJwk = { ...jwk, kid: randomUUID(), alg: "ES256", use: "sig", key_ops: ["sign", "verify"], ext: true };
@@ -130,6 +148,24 @@ async function ensureSigningKey() {
   }
 }
 
+// P-256 private key from the master key (a random 32-byte scalar is a valid key
+// with overwhelming probability; setPrivateKey throws otherwise).
+function derivedP256Jwk() {
+  const d = derive("signing-key", 32);
+  const ecdh = createECDH("prime256v1");
+  ecdh.setPrivateKey(d);
+  const pub = ecdh.getPublicKey(); // 0x04 || x || y
+  const b64 = (b) => b.toString("base64url");
+  return { kty: "EC", crv: "P-256", x: b64(pub.subarray(1, 33)), y: b64(pub.subarray(33, 65)), d: b64(d) };
+}
+
+function uuidFrom(b) {
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+  const h = b.toString("hex");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+}
+
 async function apiKeys() {
   const list = await sb("GET", `/projects/${state.projectRef}/api-keys?reveal=true`);
   const find = (t) => list.find((k) => k.type === t && k.api_key);
@@ -137,7 +173,7 @@ async function apiKeys() {
   let sec = find("secret");
   if (!pub) pub = await sb("POST", `/projects/${state.projectRef}/api-keys?reveal=true`, { type: "publishable", name: "khatib_web" });
   if (!sec) sec = await sb("POST", `/projects/${state.projectRef}/api-keys?reveal=true`, { type: "secret", name: "khatib_server" });
-  return { publishable: pub.api_key, secret: sec.api_key };
+  return { publishable: mask(pub.api_key), secret: mask(sec.api_key) };
 }
 
 // ---------------------------------------------------------------------------
@@ -161,15 +197,18 @@ async function deployWorker(keys) {
   if (!url) throw new Error("could not read the workers.dev URL from wrangler output");
   state.url = url;
 
-  state.secrets ??= {
-    ACCESS_CODE_PEPPER: secret(32),
-    SESSION_SECRET: secret(32),
-    ADMIN_SETUP_TOKEN: secret(24),
-    TOKEN_ENCRYPTION_KEY: randomBytes(32).toString("base64"),
-    CRON_SECRET: secret(32),
-    META_WEBHOOK_VERIFY_TOKEN: secret(24),
-  };
-  save();
+  if (MASTER || !state.secrets) {
+    state.secrets = {
+      ACCESS_CODE_PEPPER: secret("access-code-pepper"),
+      SESSION_SECRET: secret("session-secret"),
+      ADMIN_SETUP_TOKEN: MASTER ? need("ADMIN_SETUP_TOKEN") : secret("admin-setup-token", 24),
+      TOKEN_ENCRYPTION_KEY: randomOrDerived("token-encryption-key", 32).toString("base64"),
+      CRON_SECRET: secret("cron-secret"),
+      META_WEBHOOK_VERIFY_TOKEN: secret("meta-webhook-verify-token", 24),
+    };
+    if (state.secrets.ADMIN_SETUP_TOKEN.length < 24) throw new Error("ADMIN_SETUP_TOKEN must be at least 24 characters");
+  }
+  if (!MASTER) save();
   const all = {
     ...state.secrets,
     NEXT_PUBLIC_SUPABASE_URL: `https://${state.projectRef}.supabase.co`,
@@ -182,7 +221,7 @@ async function deployWorker(keys) {
   };
   log("setting Worker secrets…");
   wrangler(["secret", "bulk"], JSON.stringify(all));
-  writeFileSync(join(STATE_DIR, "ADMIN_SETUP_TOKEN.txt"), `${state.secrets.ADMIN_SETUP_TOKEN}\n`, { mode: 0o600 });
+  if (!MASTER) writeFileSync(join(STATE_DIR, "ADMIN_SETUP_TOKEN.txt"), `${state.secrets.ADMIN_SETUP_TOKEN}\n`, { mode: 0o600 });
 }
 
 // ---------------------------------------------------------------------------
@@ -217,4 +256,8 @@ const keys = await apiKeys();
 await deployWorker(keys);
 await smoke();
 log(`deployed: ${state.url}`);
-log("admin setup token: open .deploy/ADMIN_SETUP_TOKEN.txt (shown nowhere else)");
+if (MASTER) log(`admin setup: open ${state.url}/admin/setup and enter your ADMIN_SETUP_TOKEN secret`);
+else log("admin setup token: open .deploy/ADMIN_SETUP_TOKEN.txt (shown nowhere else)");
+if (process.env.GITHUB_STEP_SUMMARY) {
+  writeFileSync(process.env.GITHUB_STEP_SUMMARY, `### Deployed\n\n${state.url}\n\nAdmin setup: ${state.url}/admin/setup\n`, { flag: "a" });
+}

@@ -85,6 +85,23 @@ npm run build && npm run check:bundle-secrets -- --env-file .env.local
 
 ## النشر (يحتاج إعدادًا خارجيًا من المالك)
 
+### النشر التجريبي من GitHub Actions (الأسهل)
+
+أضف هذه الأسرار في المستودع ← Settings ← Secrets and variables ← Actions ← New repository secret:
+
+| الاسم | القيمة |
+|---|---|
+| `SUPABASE_ACCESS_TOKEN` | من supabase.com ← Account ← Access Tokens |
+| `SUPABASE_ORG_SLUG` | معرّف المنظمة في رابط لوحة Supabase |
+| `CLOUDFLARE_API_TOKEN` | من قالب "Edit Cloudflare Workers" |
+| `CLOUDFLARE_ACCOUNT_ID` | من صفحة Workers & Pages |
+| `DEPLOY_MASTER_KEY` | نص عشوائي ≥ 32 حرفًا (من مدير كلمات المرور). كل أسرار التطبيق تُشتق منه، **لا تغيّره أبدًا** |
+| `ADMIN_SETUP_TOKEN` | نص عشوائي ≥ 24 حرفًا، تُدخله مرة واحدة في `/admin/setup` |
+
+ثم: Actions ← **Deploy (trial)** ← Run workflow. الرابط يظهر في ملخص التشغيل. إعادة التشغيل آمنة ولا تغيّر الأسرار.
+
+### النشر اليدوي
+
 1. **Supabase**: إنشاء مشروع مجاني، ثم تطبيق `supabase/migrations/*` بالترتيب (عبر SQL Editor أو `npx supabase db push`). **لا تطبّق** `supabase/local/`.
 2. **مفتاح توقيع JWT (قرار 1B)**: ولّد مفتاح ES256:
    ```bash
