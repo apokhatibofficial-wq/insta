@@ -18,9 +18,9 @@
     "test:e2e": "playwright test",
     "db:local:reset": "node scripts/db-local-reset.mjs",
     "check:bundle-secrets": "node scripts/check-bundle-secrets.mjs",
-    "cf:build": "opennextjs-cloudflare build",
-    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "cf:build": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build",
+    "cf:preview": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "KTS_WORKER_BUILD=1 opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "5.3.0",
@@ -45,6 +45,7 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
     "pg": "8.23.1",
+    "sharp": "0.35.5",
     "typescript": "5.9.3",
     "vitest": "5.0.5",
     "wrangler": "4.154.0"

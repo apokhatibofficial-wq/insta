@@ -8,6 +8,7 @@ export function getDb(): Promise<Db> {
   db ??= (async () => {
     const e = env();
     if (e.DB_DRIVER === "pg") {
+      if (process.env.KTS_PG_DRIVER !== "enabled") throw new Error("DB_DRIVER=pg is not available in this build");
       const { createPgDb } = await import("./pg");
       return createPgDb(e.DATABASE_URL!);
     }
