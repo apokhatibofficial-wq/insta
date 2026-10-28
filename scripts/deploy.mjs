@@ -262,8 +262,9 @@ async function smoke() {
   };
   const results = [
     await check("/login", [200]),
-    await check("/admin/login", [307, 308]),
-    await check("/admin/setup", [200]),
+    // Before admin setup: login redirects to setup. After it: login renders, setup is gone.
+    await check("/admin/login", [200, 307, 308]),
+    await check("/admin/setup", [200, 404]),
     await check("/api/webhooks/meta?hub.mode=subscribe&hub.verify_token=wrong&hub.challenge=1", [403]),
     await check("/api/jobs/daily", [401], { method: "POST" }),
     await check("/robot/robot-wink.webp", [200]),
