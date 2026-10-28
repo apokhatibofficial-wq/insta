@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6f6f3;-webkit-font-smoothing:antialiased}
+a{color:#141518;text-decoration:underline;text-underline-offset:3px}a:hover{color:#000}
+button,input{font:inherit}
+input::placeholder{color:#9a9ca2}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; background:#f6f6f3; color:#141518; font-family:'IBM Plex Sans Arabic',sans-serif;">
+  <header style="position:sticky; top:0; z-index:10; background:rgba(246,246,243,.86); backdrop-filter:blur(12px); border-bottom:1px solid #e2e2dc;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; gap:24px;">
+      <div dir="ltr" style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#62666d;">TECHNICAL SOLUTIONS</span></div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:4px; overflow-x:auto; flex:1; min-width:0;">
+        <a href="Client Dashboard Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الرئيسية</a>
+        <a href="#" aria-current="page" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; background:#e9e9e4; color:#141518; text-decoration:none; font-size:15px; font-weight:600;">المنشورات</a>
+        <a href="Client Replies Light.dc.html?post=all" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الردود العامة</a>
+        <a href="#" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">السجل</a>
+        <a href="Client Settings Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الحساب</a>
+      </nav>
+      <button style="flex:none; height:38px; padding:0 14px; border-radius:10px; border:1px solid #d4d4cd; background:transparent; color:#46494f; font-size:14px; cursor:pointer;" style-hover="color:#000; border-color:#a9aba5;">خروج</button>
+    </div>
+  </header>
+
+  <main style="max-width:1240px; margin:0 auto; padding:28px 24px 64px; display:flex; flex-direction:column; gap:22px;">
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <h1 style="margin:0; font-size:28px; font-weight:700;">المنشورات</h1>
+      <p style="margin:0; font-size:15px; color:#5b5f66; text-wrap:pretty;">اختر منشورًا لتحدد الكلمات التي يرد عليها البوت في تعليقاته.</p>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div style="position:relative; flex:1; min-width:240px; max-width:380px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62666d" stroke-width="1.8" stroke-linecap="round" style="position:absolute; right:14px; top:13px;"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+        <input type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="ابحث في نص المنشور" aria-label="بحث في المنشورات" style="box-sizing:border-box; width:100%; height:44px; padding:0 42px 0 14px; border-radius:12px; background:#f1f1ed; border:1px solid #d4d4cd; color:#141518; font-size:15px; outline:none;" style-focus="border-color:#62666d;">
+      </div>
+      <div role="tablist" aria-label="تصفية" style="display:flex; gap:4px; padding:4px; border-radius:12px; background:#f1f1ed; border:1px solid #e2e2dc;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+          <button role="tab" aria-selected="{{ f.on }}" onClick="{{ f.pick }}" style="height:34px; padding:0 14px; border-radius:9px; border:none; background:{{ f.bg }}; color:{{ f.fg }}; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;">{{ f.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px;">
+      <a href="Client Replies Light.dc.html?post=all" style="display:flex; flex-direction:column; gap:12px; padding:0; border-radius:20px; background:#ffffff; border:1px solid #e2e2dc; color:#141518; text-decoration:none; overflow:hidden;" style-hover="border-color:#a9aba5;">
+        <span style="aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:#efefeb;">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3b3e44" stroke-width="1.5" stroke-linecap="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>
+          <span style="font-size:17px; font-weight:600;">القواعد العامة</span>
+          <span style="font-size:13px; color:#62666d; padding:0 20px; text-align:center; line-height:1.6;">تعمل على كل المنشورات، والجديدة أيضًا</span>
+        </span>
+        <span style="display:flex; justify-content:space-between; align-items:center; gap:8px; padding:0 16px 16px; font-size:13px;"><span style="color:#3b3e44;">قاعدتان</span><span style="color:#62666d;">فتح ←</span></span>
+      </a>
+      <sc-for list="{{ posts }}" as="p" hint-placeholder-count="8">
+        <a href="{{ p.href }}" aria-label="{{ p.aria }}" style="display:flex; flex-direction:column; gap:12px; border-radius:20px; background:#ffffff; border:1px solid #e2e2dc; color:#141518; text-decoration:none; overflow:hidden;" style-hover="border-color:#a9aba5;">
+          <span style="position:relative; aspect-ratio:1; background:{{ p.tone }}; display:flex; flex-direction:column; justify-content:flex-end; padding:14px;">
+            <span style="position:absolute; top:12px; left:12px; height:24px; padding:0 8px; border-radius:8px; background:rgba(0,0,0,.85); font-size:12px; display:flex; align-items:center;">{{ p.kind }}</span>
+            <sc-if value="{{ p.hasRules }}" hint-placeholder-val="{{ false }}">
+              <span style="position:absolute; top:12px; right:12px; height:24px; padding:0 9px; border-radius:8px; background:rgba(0,0,0,.85); color:#1b7f52; font-size:12px; display:flex; align-items:center; gap:6px;"><span style="width:6px; height:6px; border-radius:50%; background:#1b7f52;"></span>البوت يعمل هنا</span>
+            </sc-if>
+            <span style="font-size:15px; line-height:1.5; font-weight:500; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">{{ p.caption }}</span>
+          </span>
+          <span style="display:flex; flex-direction:column; gap:4px; padding:0 16px 16px;">
+            <span style="display:flex; justify-content:space-between; gap:8px; font-size:13px; white-space:nowrap;"><span style="color:{{ p.countFg }};">{{ p.count }}</span><span style="color:#62666d;">{{ p.date }}</span></span>
+            <span style="font-size:12px; color:#62666d;">{{ p.stats }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:40px; text-align:center;">
+        <img src="assets/robot-point.png" alt="" style="filter:drop-shadow(0 6px 16px rgba(0,0,0,.2)); width:110px;">
+        <span style="font-size:16px; font-weight:600;">لا توجد منشورات تطابق البحث</span>
+      </div>
+    </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  POSTS = [];
+  state = { query: '', filter: 'all' };
+  renderVals() {
+    const s = this.state, q = s.query.trim();
+    const plural = (n) => n === 0 ? 'بلا قواعد خاصة' : n === 1 ? 'قاعدة خاصة' : n === 2 ? 'قاعدتان خاصتان' : `${n} قواعد خاصة`;
+    const list = this.POSTS.filter(p => (s.filter === 'with' ? p.rules > 0 : s.filter === 'without' ? p.rules === 0 : true) && (!q || p.caption.includes(q)));
+    return {
+      query: s.query, onQuery: (e) => this.setState({ query: e.target.value }),
+      filters: [['all', 'الكل'], ['with', 'عليها قواعد'], ['without', 'بلا قواعد']].map(([k, label]) => ({ label, on: s.filter === k ? 'true' : 'false', pick: () => this.setState({ filter: k }), bg: s.filter === k ? '#ffffff' : 'transparent', fg: s.filter === k ? '#141518' : '#5b5f66' })),
+      posts: list.map(p => ({
+        caption: p.caption, kind: p.kind, date: p.date, tone: p.tone,
+        href: `Client Replies.dc.html?post=${p.id}`, aria: `إعداد ردود منشور: ${p.caption}`,
+        hasRules: p.rules > 0 && !p.paused,
+        count: p.paused ? 'قاعدة خاصة (معطّلة)' : plural(p.rules), countFg: p.rules && !p.paused ? '#1b7f52' : '#5b5f66',
+        stats: `${p.comments} تعليقًا · رد البوت على ${p.replied}`,
+      })),
+      empty: list.length === 0,
+    };
+  }
+}
+</script>
+</body>
+</html>

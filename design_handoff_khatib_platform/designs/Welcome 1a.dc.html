@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e7e7e3;-webkit-font-smoothing:antialiased}
+a{color:#111;text-decoration:underline}a:hover{color:#444}
+button{font:inherit}
+[data-theater]:fullscreen{display:flex;align-items:center;justify-content:center;background:#050506}
+</style>
+</helmet>
+<div dir="rtl" style="font-family:'IBM Plex Sans Arabic',sans-serif; color:#111; padding:64px; display:flex; flex-direction:column; gap:40px;">
+
+  <header style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; max-width:1700px;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:600; background:#111; color:#fff; padding:4px 10px; border-radius:8px;">1a</span>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:.14em; color:#55585e;">WELCOME · MOTION v5 · LIVING CHARACTER</span>
+      </div>
+      <h1 style="margin:0; font-size:40px; font-weight:700;">«الشاشة» — روبوت حيّ</h1>
+      <p style="margin:0; font-size:18px; color:#44474d; max-width:900px; text-wrap:pretty;">يقفز الروبوت إلى المشهد بحركة نابضة فيها انضغاط وارتداد، ثم تُضاء عيناه ويلوّح. يكتمل المشهد خلال 3 ثوانٍ تقريبًا، وبعدها يبقى حيًّا: يطفو ويتنفس ويرمش، وعيناه تتبعان المؤشر. إذا ابتعد المؤشر يتلفّت حوله، وإذا نقرت عليه يقفز.</p>
+    </div>
+    <div style="display:flex; gap:12px;">
+      <button onClick="{{ theater }}" style="height:48px; padding:0 22px; border-radius:14px; border:1px solid #111; background:#111; color:#fff; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap;" style-hover="background:#2a2b2e;" style-active="transform:scale(.98);">عرض بملء الشاشة</button>
+      <button onClick="{{ replay }}" style="height:48px; padding:0 22px; border-radius:14px; border:1px solid #c9c9c4; background:#fff; color:#111; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap;" style-hover="background:#f5f5f2;" style-active="transform:scale(.98);">إعادة التشغيل</button>
+    </div>
+  </header>
+
+  <div style="display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap;">
+
+    <div data-theater="" ref="{{ theaterRef }}">
+    <div data-stage="" data-screen-label="1a Desktop" style="position:relative; width:1280px; height:800px; overflow:hidden; border-radius:20px; background:#050506; color:#f2f2f0; box-shadow:0 30px 60px -30px rgba(0,0,0,.45); flex:none;">
+      <div data-a="reveal" style="position:absolute; inset:0; background:#0a0b0d;">
+        <div data-a="cam" style="position:absolute; inset:0;">
+          <div data-a="light" style="position:absolute; inset:-10%; background:radial-gradient(ellipse 40% 46% at 58% 48%, rgba(255,255,255,.085), rgba(255,255,255,0) 70%);"></div>
+          <div style="position:absolute; top:150px; right:170px; width:540px; aspect-ratio:700/430;">
+            <div data-par="" style="position:absolute; inset:0;">
+              <div data-a="shadowWrap" style="position:absolute; left:18%; right:18%; bottom:-6%; height:42px;">
+                <div data-a="shadow" style="position:absolute; inset:0; background:radial-gradient(closest-side, rgba(255,255,255,.13), rgba(255,255,255,0));"></div>
+              </div>
+              <div data-a="robot" data-hit="" style="position:absolute; inset:0; transform-origin:50% 92%; cursor:pointer;">
+                <div data-a="float" style="position:absolute; inset:0;">
+                  <div data-a="breathe" style="position:absolute; inset:0; transform-origin:50% 90%;">
+                    <div data-a="tilt" style="position:absolute; inset:0; transform-origin:50% 85%;">
+                      <div data-a="poseA" style="position:absolute; left:0.29%; top:5.58%; width:91.43%; aspect-ratio:640/392;">
+                        <img src="assets/robot-wave-base.png" alt="روبوت KHATIB يرحّب بك" style="position:absolute; inset:0; width:100%; height:100%;">
+                        <div data-a="led" style="position:absolute; inset:0;">
+                          <div data-look="" style="position:absolute; inset:0;">
+                            <img data-a="eye1" data-blink="" src="assets/robot-wave-eye1.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:43.8% 44%;">
+                            <img data-a="eye2" data-blink="" src="assets/robot-wave-eye2.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:63% 37.1%;">
+                            <img src="assets/robot-wave-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                          </div>
+                        </div>
+                      </div>
+                      <div data-a="poseB" style="position:absolute; left:11%; top:3.72%; width:77.71%; aspect-ratio:544/373; opacity:0;">
+                        <img src="assets/robot-wink-base.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                        <div data-a="ledGlow" style="position:absolute; inset:0;">
+                          <div data-look="" style="position:absolute; inset:0;">
+                            <img data-a="eyeopen" data-blink="" src="assets/robot-wink-eyeopen.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:38.7% 41.5%;">
+                            <img src="assets/robot-wink-eyeline.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                            <img src="assets/robot-wink-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-a="bubble" role="status" aria-label="أهلًا يا صديقي، أنا هنا لمساعدتك." style="position:absolute; top:220px; left:150px; width:400px; transform-origin:calc(100% + 20px) 61px;">
+            <div data-a="bfloat" style="position:relative;">
+              <div data-bpar="" style="position:relative;">
+                <div style="position:absolute; inset:0; border-radius:28px; overflow:hidden; background:#2a2c31;">
+                  <div data-a="ring" style="position:absolute; left:50%; top:50%; width:900px; height:900px; margin:-450px 0 0 -450px; background:conic-gradient(from 0deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 290deg, rgba(255,255,255,.8) 340deg, rgba(255,255,255,0) 360deg);"></div>
+                  <div style="position:absolute; inset:1px; border-radius:27px; background:#121316;"></div>
+                </div>
+                <svg width="22" height="34" viewBox="0 0 22 34" style="position:absolute; right:-20px; top:44px; overflow:visible;"><path d="M0 0 C7 7 13 13 21 17 C13 21 7 27 0 34 Z" fill="#121316" stroke="#2a2c31" stroke-width="1"></path><rect x="-2" y="0.6" width="4.6" height="32.8" fill="#121316"></rect></svg>
+                <div style="position:relative; padding:30px 34px;">
+                  <div data-a="dots" style="position:absolute; top:44px; right:34px; display:flex; gap:9px;">
+                    <span data-a="dot" data-i="0" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                    <span data-a="dot" data-i="1" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                    <span data-a="dot" data-i="2" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                  </div>
+                  <p aria-hidden="true" style="position:relative; margin:0; font-size:30px; line-height:1.55; font-weight:600; text-shadow:0 0 14px rgba(255,255,255,.28);"><sc-for list="{{ words }}" as="w" hint-placeholder-count="6"><span data-a="word" data-i="{{ $index }}" style="display:inline-block; margin-inline-end:.26em;">{{ w }}</span></sc-for></p>
+                </div>
+                <div style="position:absolute; inset:0; border-radius:28px; overflow:hidden; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.2) 2px 3px);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; top:0; left:0; right:0; padding:32px 48px; display:flex; align-items:center; justify-content:space-between;">
+          <div data-a="brand" dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.16em; display:flex; gap:10px;"><span style="font-weight:600; color:#f2f2f0;">KHATIB</span><span style="color:#9a9da4;">TECHNICAL SOLUTIONS</span></div>
+          <button data-a="skip" onClick="{{ skip }}" style="height:40px; padding:0 16px; border-radius:12px; border:1px solid #2a2c31; background:transparent; color:#b4b7bd; font-size:15px; cursor:pointer;" style-hover="color:#fff; border-color:#45484e;">تخطَّ</button>
+        </div>
+        <div style="position:absolute; bottom:72px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:14px;">
+          <button data-a="cta" style="height:56px; padding:0 36px; border-radius:16px; border:none; background:#f2f2f0; color:#0a0b0d; font-size:18px; font-weight:600; cursor:pointer;" style-hover="background:#fff;" style-active="transform:scale(.98);" style-focus="outline:2px solid #fff; outline-offset:3px;">الدخول إلى لوحتك</button>
+          <span data-a="cta2" style="font-size:15px; color:#8f939a;">ستحتاج رمز الدخول الذي استلمته منّا.</span>
+        </div>
+      </div>
+      <div data-a="line" style="position:absolute; left:0; right:0; top:50%; height:2px; margin-top:-1px; background:#f2f2f0; box-shadow:0 0 18px 2px rgba(255,255,255,.55); opacity:0;"></div>
+    </div>
+    </div>
+
+    <div data-stage="" data-screen-label="1a Mobile" style="position:relative; width:390px; height:844px; overflow:hidden; border-radius:36px; background:#050506; color:#f2f2f0; box-shadow:0 30px 60px -30px rgba(0,0,0,.45); flex:none;">
+      <div data-a="reveal" style="position:absolute; inset:0; background:#0a0b0d;">
+        <div data-a="cam" style="position:absolute; inset:0;">
+          <div data-a="light" style="position:absolute; inset:-10%; background:radial-gradient(ellipse 70% 34% at 50% 32%, rgba(255,255,255,.085), rgba(255,255,255,0) 70%);"></div>
+          <div style="position:absolute; top:150px; left:30px; width:330px; aspect-ratio:700/430;">
+            <div data-par="" style="position:absolute; inset:0;">
+              <div data-a="shadowWrap" style="position:absolute; left:18%; right:18%; bottom:-6%; height:26px;">
+                <div data-a="shadow" style="position:absolute; inset:0; background:radial-gradient(closest-side, rgba(255,255,255,.13), rgba(255,255,255,0));"></div>
+              </div>
+              <div data-a="robot" data-hit="" style="position:absolute; inset:0; transform-origin:50% 92%; cursor:pointer;">
+                <div data-a="float" style="position:absolute; inset:0;">
+                  <div data-a="breathe" style="position:absolute; inset:0; transform-origin:50% 90%;">
+                    <div data-a="tilt" style="position:absolute; inset:0; transform-origin:50% 85%;">
+                      <div data-a="poseA" style="position:absolute; left:0.29%; top:5.58%; width:91.43%; aspect-ratio:640/392;">
+                        <img src="assets/robot-wave-base.png" alt="روبوت KHATIB يرحّب بك" style="position:absolute; inset:0; width:100%; height:100%;">
+                        <div data-a="led" style="position:absolute; inset:0;">
+                          <div data-look="" style="position:absolute; inset:0;">
+                            <img data-a="eye1" data-blink="" src="assets/robot-wave-eye1.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:43.8% 44%;">
+                            <img data-a="eye2" data-blink="" src="assets/robot-wave-eye2.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:63% 37.1%;">
+                            <img src="assets/robot-wave-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                          </div>
+                        </div>
+                      </div>
+                      <div data-a="poseB" style="position:absolute; left:11%; top:3.72%; width:77.71%; aspect-ratio:544/373; opacity:0;">
+                        <img src="assets/robot-wink-base.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                        <div data-a="ledGlow" style="position:absolute; inset:0;">
+                          <div data-look="" style="position:absolute; inset:0;">
+                            <img data-a="eyeopen" data-blink="" src="assets/robot-wink-eyeopen.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:38.7% 41.5%;">
+                            <img src="assets/robot-wink-eyeline.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                            <img src="assets/robot-wink-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-a="bubble" role="status" aria-label="أهلًا يا صديقي، أنا هنا لمساعدتك." style="position:absolute; top:400px; left:24px; right:24px; transform-origin:50% -20px;">
+            <div data-a="bfloat" style="position:relative;">
+              <div data-bpar="" style="position:relative;">
+                <div style="position:absolute; inset:0; border-radius:24px; overflow:hidden; background:#2a2c31;">
+                  <div data-a="ring" style="position:absolute; left:50%; top:50%; width:800px; height:800px; margin:-400px 0 0 -400px; background:conic-gradient(from 0deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 290deg, rgba(255,255,255,.8) 340deg, rgba(255,255,255,0) 360deg);"></div>
+                  <div style="position:absolute; inset:1px; border-radius:23px; background:#121316;"></div>
+                </div>
+                <svg width="34" height="22" viewBox="0 0 34 22" style="position:absolute; top:-20px; left:50%; margin-left:-17px; overflow:visible;"><path d="M0 22 C7 15 13 9 17 1 C21 9 27 15 34 22 Z" fill="#121316" stroke="#2a2c31" stroke-width="1"></path><rect x="0.6" y="19.4" width="32.8" height="4.6" fill="#121316"></rect></svg>
+                <div style="position:relative; padding:22px 24px;">
+                  <div data-a="dots" style="position:absolute; top:36px; left:50%; margin-left:-22px; display:flex; gap:9px;">
+                    <span data-a="dot" data-i="0" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                    <span data-a="dot" data-i="1" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                    <span data-a="dot" data-i="2" style="width:9px; height:9px; border-radius:50%; background:#f2f2f0; box-shadow:0 0 10px rgba(255,255,255,.6);"></span>
+                  </div>
+                  <p aria-hidden="true" style="position:relative; margin:0; font-size:24px; line-height:1.55; font-weight:600; text-align:center; text-shadow:0 0 12px rgba(255,255,255,.28);"><sc-for list="{{ words }}" as="w" hint-placeholder-count="6"><span data-a="word" data-i="{{ $index }}" style="display:inline-block; margin-inline-end:.26em;">{{ w }}</span></sc-for></p>
+                </div>
+                <div style="position:absolute; inset:0; border-radius:24px; overflow:hidden; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.2) 2px 3px);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute; top:0; left:0; right:0; padding:56px 20px 0; display:flex; align-items:center; justify-content:space-between;">
+          <div data-a="brand" dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; display:flex; gap:6px;"><span style="font-weight:600;">KHATIB</span><span style="color:#9a9da4;">TECHNICAL SOLUTIONS</span></div>
+          <button data-a="skip" onClick="{{ skip }}" style="height:44px; padding:0 14px; border-radius:12px; border:1px solid #2a2c31; background:transparent; color:#b4b7bd; font-size:15px; cursor:pointer;">تخطَّ</button>
+        </div>
+        <div style="position:absolute; bottom:44px; left:20px; right:20px; display:flex; flex-direction:column; align-items:stretch; gap:14px; text-align:center;">
+          <button data-a="cta" style="height:56px; border-radius:16px; border:none; background:#f2f2f0; color:#0a0b0d; font-size:18px; font-weight:600; cursor:pointer;" style-active="transform:scale(.98);">الدخول إلى لوحتك</button>
+          <span data-a="cta2" style="font-size:14px; color:#8f939a;">ستحتاج رمز الدخول الذي استلمته منّا.</span>
+        </div>
+      </div>
+      <div data-a="line" style="position:absolute; left:0; right:0; top:50%; height:2px; margin-top:-1px; background:#f2f2f0; box-shadow:0 0 18px 2px rgba(255,255,255,.55); opacity:0;"></div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;pace&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.7,&quot;max&quot;:1.4,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;alive&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;simulateReducedMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  WORDS = ['أهلًا', 'يا', 'صديقي،', 'أنا', 'هنا', 'لمساعدتك.'];
+  anims = []; ts = [];
+  EXPO = 'cubic-bezier(.16,1,.3,1)';
+  SOFT = 'cubic-bezier(.65,0,.35,1)';
+  componentDidMount() {
+    this.onKey = (e) => { if (e.key === 'Escape' || e.key === 'Enter') this.finish(); };
+    window.addEventListener('keydown', this.onKey);
+    this.st = new Map();
+    const S = (el) => { if (!this.st.has(el)) this.st.set(el, { x: 0, y: 0, lx: 0, ly: 0, tx: 0, ty: 0, last: 0, wander: 0 }); return this.st.get(el); };
+    document.querySelectorAll('[data-stage]').forEach(S);
+    this.onMove = (e) => {
+      this.st.forEach((p, st) => {
+        const r = st.getBoundingClientRect();
+        if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+          const box = st.querySelector('[data-par]').getBoundingClientRect();
+          const cx = box.left + box.width * 0.5, cy = box.top + box.height * 0.45;
+          p.tx = Math.max(-1, Math.min(1, (e.clientX - cx) / (r.width * 0.45)));
+          p.ty = Math.max(-1, Math.min(1, (e.clientY - cy) / (r.height * 0.45)));
+          p.last = performance.now();
+        }
+      });
+    };
+    window.addEventListener('pointermove', this.onMove);
+    this.onHit = (e) => { const st = e.currentTarget.closest('[data-stage]'); this.hop(st); };
+    document.querySelectorAll('[data-hit]').forEach(el => el.addEventListener('click', this.onHit));
+    const loop = (now) => {
+      const live = this.props.alive !== false && !this.reduced();
+      this.st.forEach((p, st) => {
+        if (live && now - p.last > 1800 && now > p.wander) {
+          const r = Math.random();
+          p.tx = r < 0.3 ? 0 : (Math.random() * 1.4 - 0.7); p.ty = r < 0.3 ? 0 : (Math.random() * 0.9 - 0.45);
+          p.wander = now + 1600 + Math.random() * 2200;
+        }
+        const tx = live ? p.tx : 0, ty = live ? p.ty : 0;
+        p.x += (tx - p.x) * 0.045; p.y += (ty - p.y) * 0.045;
+        p.lx += (tx - p.lx) * 0.12; p.ly += (ty - p.ly) * 0.12;
+        const par = st.querySelector('[data-par]');
+        if (par) par.style.transform = `translate3d(${(p.x * 9).toFixed(2)}px, ${(p.y * 5).toFixed(2)}px, 0) rotate(${(p.x * 3).toFixed(2)}deg)`;
+        st.querySelectorAll('[data-look]').forEach(el => { el.style.transform = `translate3d(${(p.lx * 7).toFixed(2)}px, ${(p.ly * 5).toFixed(2)}px, 0)`; });
+        st.querySelectorAll('[data-bpar]').forEach(el => { el.style.transform = `translate3d(${(p.x * -4).toFixed(2)}px, ${(p.y * -3).toFixed(2)}px, 0)`; });
+      });
+      this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+    this.onFs = () => {
+      const w = this.theaterEl; if (!w) return;
+      const stage = w.querySelector('[data-stage]');
+      if (document.fullscreenElement === w) {
+        const s = Math.min(window.innerWidth / 1280, window.innerHeight / 800);
+        stage.style.transform = `scale(${s})`; stage.style.borderRadius = '0px'; stage.style.boxShadow = 'none';
+      } else { stage.style.transform = ''; stage.style.borderRadius = ''; stage.style.boxShadow = ''; }
+    };
+    this.onFsChange = () => { this.onFs(); if (document.fullscreenElement === this.theaterEl) this.run(); };
+    document.addEventListener('fullscreenchange', this.onFsChange);
+    window.addEventListener('resize', this.onFs);
+    setTimeout(() => this.run(), 80);
+  }
+  componentWillUnmount() {
+    this.stop(); cancelAnimationFrame(this.raf);
+    window.removeEventListener('keydown', this.onKey); window.removeEventListener('pointermove', this.onMove);
+    document.querySelectorAll('[data-hit]').forEach(el => el.removeEventListener('click', this.onHit));
+    document.removeEventListener('fullscreenchange', this.onFsChange); window.removeEventListener('resize', this.onFs);
+  }
+  componentDidUpdate(prev) {
+    if (prev.simulateReducedMotion !== this.props.simulateReducedMotion || prev.pace !== this.props.pace || prev.alive !== this.props.alive) this.run();
+  }
+  reduced() {
+    return !!this.props.simulateReducedMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  stop() { this.ts.forEach(clearTimeout); this.ts = []; this.anims.forEach(a => a.cancel()); this.anims = []; }
+  A(key, kf, dur, delay, opts = {}, root = document) {
+    const k = this.props.pace ?? 1;
+    root.querySelectorAll(`[data-a="${key}"]`).forEach(el => {
+      const d = typeof delay === 'function' ? delay(el) : delay;
+      const inst = opts.instant;
+      this.anims.push(el.animate(kf, {
+        duration: inst ? 0 : dur * (opts.noPace ? 1 : k), delay: inst ? 0 : d * (opts.noPace ? 1 : k),
+        easing: opts.easing || this.EXPO, fill: opts.fill || 'both',
+        iterations: inst ? 1 : (opts.iterations || 1), direction: opts.direction || 'normal'
+      }));
+    });
+  }
+  hop(st) {
+    if (!st || this.reduced()) return;
+    const k = 1;
+    st.querySelectorAll('[data-a="robot"]').forEach(el => el.animate([
+      { transform: 'translateY(0px) scale(1,1)' },
+      { transform: 'translateY(5px) scale(1.05,.94)', offset: 0.18 },
+      { transform: 'translateY(-26px) scale(.97,1.04)', offset: 0.48 },
+      { transform: 'translateY(3px) scale(1.04,.96)', offset: 0.78 },
+      { transform: 'translateY(0px) scale(1,1)' }
+    ], { duration: 720 * k, easing: 'cubic-bezier(.33,1,.68,1)', composite: 'replace' }));
+    this.blink(st);
+  }
+  blink(root = document) {
+    root.querySelectorAll('[data-blink]').forEach(el => el.animate(
+      [{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)', offset: 0.45 }, { transform: 'scaleY(1)' }],
+      { duration: 220, easing: 'cubic-bezier(.45,0,.55,1)' }));
+  }
+  scheduleBlinks() {
+    const next = () => {
+      this.ts.push(setTimeout(() => {
+        this.blink();
+        if (Math.random() < 0.25) this.ts.push(setTimeout(() => this.blink(), 300));
+        next();
+      }, 2400 + Math.random() * 3200));
+    };
+    next();
+  }
+  startIdle(delay) {
+    const o = { fill: 'none', iterations: Infinity, direction: 'alternate', easing: 'cubic-bezier(.45,0,.55,1)', noPace: true };
+    this.A('float', [{ transform: 'translateY(0px)' }, { transform: 'translateY(-9px)' }], 2100, delay, o);
+    this.A('shadow', [{ transform: 'scaleX(1)', opacity: 1 }, { transform: 'scaleX(.88)', opacity: .72 }], 2100, delay, o);
+    this.A('breathe', [{ transform: 'scale(1,1)' }, { transform: 'scale(1.008,1.014)' }], 1700, delay + 400, o);
+    this.A('bfloat', [{ transform: 'translateY(0px)' }, { transform: 'translateY(-5px)' }], 2100, delay + 350, o);
+    this.A('ledGlow', [{ filter: 'brightness(1)' }, { filter: 'brightness(1.18)' }], 1700, delay + 400, o);
+    this.A('ring', [{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], 9000, delay, { fill: 'none', iterations: Infinity, easing: 'linear', noPace: true });
+    this.ts.push(setTimeout(() => this.scheduleBlinks(), delay));
+  }
+  play(instant) {
+    this.stop();
+    const I = { instant };
+    const A = (key, kf, dur, delay, opts = {}) => this.A(key, kf, dur, delay, Object.assign({}, opts, I));
+    A('line', [{ opacity: 0, transform: 'scaleX(0)' }, { opacity: 1, transform: 'scaleX(1)', offset: 0.6 }, { opacity: 0, transform: 'scaleX(1) scaleY(14)' }], 420, 0, { easing: this.SOFT });
+    A('reveal', [{ clipPath: 'inset(50% 0% 50% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], 520, 260);
+    A('cam', [{ transform: 'scale(1.035)' }, { transform: 'scale(1)' }], 2200, 260, { easing: 'cubic-bezier(.22,1,.36,1)' });
+    A('light', [{ opacity: 0 }, { opacity: 1 }], 1200, 300, { easing: 'ease-out' });
+    A('brand', [{ opacity: 0, letterSpacing: '.42em' }, { opacity: 1 }], 1200, 350);
+    A('skip', [{ opacity: 0 }, { opacity: 1 }], 400, 350, { easing: 'ease-out' });
+    A('robot', [
+      { opacity: 0, transform: 'translateY(90px) rotate(-8deg) scale(.72,.72)', filter: 'blur(8px)', offset: 0 },
+      { opacity: 1, filter: 'blur(0px)', offset: 0.22 },
+      { transform: 'translateY(-18px) rotate(3deg) scale(.98,1.04)', offset: 0.42 },
+      { transform: 'translateY(5px) rotate(-1.5deg) scale(1.05,.94)', offset: 0.6 },
+      { transform: 'translateY(-4px) rotate(.6deg) scale(.99,1.01)', offset: 0.8 },
+      { opacity: 1, transform: 'translateY(0px) rotate(0deg) scale(1,1)', filter: 'blur(0px)', offset: 1 }
+    ], 1150, 300, { easing: 'linear' });
+    A('shadowWrap', [
+      { opacity: 0, transform: 'scaleX(.4)' }, { opacity: .6, transform: 'scaleX(.75)', offset: 0.42 },
+      { opacity: 1, transform: 'scaleX(1.08)', offset: 0.6 }, { opacity: 1, transform: 'scaleX(1)' }
+    ], 1150, 300, { easing: 'linear' });
+    A('led', [
+      { opacity: 0, clipPath: 'inset(0% 0% 100% 0%)', filter: 'brightness(2)' },
+      { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', offset: 0.45 },
+      { opacity: .4, offset: 0.58 },
+      { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', filter: 'brightness(1)' }
+    ], 420, 820, { easing: 'linear' });
+    const blinkKf = [{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)', offset: 0.45 }, { transform: 'scaleY(1)' }];
+    A('eye1', blinkKf, 220, 1300, { easing: this.SOFT, fill: 'none' });
+    A('eye2', blinkKf, 220, 1315, { easing: this.SOFT, fill: 'none' });
+    A('tilt', [
+      { transform: 'rotate(0deg)' }, { transform: 'rotate(-6deg)', offset: 0.2 }, { transform: 'rotate(4deg)', offset: 0.42 },
+      { transform: 'rotate(-3deg)', offset: 0.62 }, { transform: 'rotate(1.2deg)', offset: 0.82 }, { transform: 'rotate(0deg)' }
+    ], 950, 1150, { easing: 'cubic-bezier(.45,0,.55,1)' });
+    A('bubble', [
+      { opacity: 0, transform: 'scale(.3)', filter: 'blur(8px)' },
+      { opacity: 1, transform: 'scale(1.035)', filter: 'blur(0px)', offset: 0.55 },
+      { transform: 'scale(.992)', offset: 0.8 },
+      { opacity: 1, transform: 'scale(1)', filter: 'blur(0px)' }
+    ], 700, 1150, { easing: 'cubic-bezier(.2,.7,.3,1)' });
+    A('ring', [{ transform: 'rotate(-60deg)' }, { transform: 'rotate(300deg)' }], 1200, 1250, { easing: this.SOFT, fill: 'none' });
+    A('dots', [{ opacity: 0 }, { opacity: 1, offset: 0.12 }, { opacity: 1, offset: 0.85 }, { opacity: 0 }], 720, 1300, { easing: 'linear' });
+    A('dot', [{ opacity: .25, transform: 'translateY(0px)' }, { opacity: 1, transform: 'translateY(-4px)' }, { opacity: .25, transform: 'translateY(0px)' }], 360, el => 1360 + (+el.getAttribute('data-i')) * 110, { iterations: 2, fill: 'none', easing: 'ease-in-out' });
+    A('word', [
+      { opacity: 0, transform: 'translateY(.3em) scale(.96)', filter: 'blur(5px)', textShadow: '0 0 0px rgba(255,255,255,0)' },
+      { opacity: 1, textShadow: '0 0 22px rgba(255,255,255,.75)', offset: 0.4 },
+      { opacity: 1, transform: 'translateY(0em) scale(1)', filter: 'blur(0px)', textShadow: '0 0 14px rgba(255,255,255,.28)' }
+    ], 620, el => { const i = +el.getAttribute('data-i'); return 1960 + i * 85 + (i >= 3 ? 130 : 0); });
+    A('cta', [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'translateY(0px)' }], 700, 1550);
+    A('cta2', [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0px)' }], 700, 1650);
+    const T = 2500;
+    A('poseA', [{ opacity: 1 }, { opacity: 0 }], 140, T + 230, { easing: 'linear' });
+    A('poseB', [{ opacity: 0 }, { opacity: 1 }], 140, T + 230, { easing: 'linear' });
+    if (!instant) {
+      const k = this.props.pace ?? 1;
+      this.ts.push(setTimeout(() => document.querySelectorAll('[data-stage]').forEach(st => this.hop(st)), T * k));
+    }
+    const live = this.props.alive !== false && !this.reduced();
+    if (live) this.startIdle(instant ? 0 : 3200 * (this.props.pace ?? 1));
+  }
+  run = () => this.play(this.reduced());
+  finish = () => this.play(true);
+  renderVals() {
+    return {
+      replay: this.run,
+      skip: this.finish,
+      words: this.WORDS,
+      theaterRef: (el) => { this.theaterEl = el; },
+      theater: () => { const w = this.theaterEl; if (w && w.requestFullscreen) w.requestFullscreen().catch(() => this.run()); else this.run(); },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0b0d;-webkit-font-smoothing:antialiased}
+a{color:#f2f2f0;text-decoration:underline;text-underline-offset:3px}a:hover{color:#fff}
+button,input,textarea{font:inherit}
+input::placeholder,textarea::placeholder{color:#5f626a}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; background:#0a0b0d; color:#f2f2f0; font-family:'IBM Plex Sans Arabic',sans-serif;">
+  <header style="position:sticky; top:0; z-index:10; background:rgba(10,11,13,.86); backdrop-filter:blur(12px); border-bottom:1px solid #1d1f23;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; gap:24px;">
+      <div dir="ltr" style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#8f939a;">TECHNICAL SOLUTIONS</span></div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:4px; overflow-x:auto; flex:1; min-width:0;">
+        <a href="Client Dashboard.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">الرئيسية</a>
+        <a href="Client Posts.dc.html" aria-current="page" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; background:#17181c; color:#f2f2f0; text-decoration:none; font-size:15px; font-weight:600;">المنشورات</a>
+        <a href="Client Replies.dc.html?post=all" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">الردود العامة</a>
+        <a href="#" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">السجل</a>
+        <a href="Client Settings.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">الحساب</a>
+      </nav>
+      <button style="flex:none; height:38px; padding:0 14px; border-radius:10px; border:1px solid #2a2c31; background:transparent; color:#b4b7bd; font-size:14px; cursor:pointer;" style-hover="color:#fff; border-color:#45484e;">خروج</button>
+    </div>
+  </header>
+
+  <main style="max-width:1240px; margin:0 auto; padding:28px 24px 64px; display:flex; flex-direction:column; gap:22px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <a href="Client Posts.dc.html" style="display:inline-flex; align-items:center; gap:6px; font-size:14px; color:#9a9da4; text-decoration:none; align-self:flex-start;" style-hover="color:#f2f2f0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"></path></svg>كل المنشورات</a>
+        <h1 style="margin:0; font-size:28px; font-weight:700;">الردود والكلمات</h1>
+        <p style="margin:0; font-size:15px; color:#9a9da4; text-wrap:pretty;">اختر منشورًا، ثم حدّد الكلمات التي يرد عليها البوت فيه. القواعد العامة تعمل على كل المنشورات.</p>
+      </div>
+      <button onClick="{{ addRule }}" style="flex:none; white-space:nowrap; height:46px; padding:0 18px; border-radius:14px; border:none; background:#f2f2f0; color:#0a0b0d; font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer;" style-hover="background:#fff;" style-active="transform:scale(.98);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>{{ addLabel }}</button>
+    </div>
+
+    <section aria-labelledby="posts-h" style="display:flex; flex-direction:column; gap:12px;">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+        <h2 id="posts-h" style="margin:0; font-size:16px; font-weight:600;">المنشور</h2>
+        <span style="font-size:13px; color:#8f939a;">آخر منشوراتك من إنستغرام</span>
+      </div>
+      <div role="listbox" aria-label="اختيار المنشور" style="display:flex; gap:12px; overflow-x:auto; overflow-y:hidden; padding:4px 2px 10px;">
+        <button role="option" aria-selected="{{ allSelStr }}" onClick="{{ pickAll }}" style="flex:none; width:132px; display:flex; flex-direction:column; gap:8px; padding:0; border:none; background:transparent; color:#f2f2f0; cursor:pointer; text-align:right;">
+          <span style="width:132px; height:132px; box-sizing:border-box; border-radius:16px; background:#0f1012; border:{{ allBorder }}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; transition:border-color 180ms ease;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4c7cc" stroke-width="1.6" stroke-linecap="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect></svg>
+            <span style="font-size:14px; font-weight:600;">كل المنشورات</span>
+          </span>
+          <span style="font-size:12px; color:#8f939a;">{{ allCount }}</span>
+        </button>
+        <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+          <button role="option" aria-selected="{{ p.selStr }}" onClick="{{ p.pick }}" style="flex:none; width:132px; display:flex; flex-direction:column; gap:8px; padding:0; border:none; background:transparent; color:#f2f2f0; cursor:pointer; text-align:right;">
+            <span style="position:relative; width:132px; height:132px; box-sizing:border-box; border-radius:16px; background:{{ p.tone }}; border:{{ p.border }}; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:10px; transition:border-color 180ms ease;">
+              <span style="position:absolute; top:8px; left:8px; height:22px; padding:0 7px; border-radius:7px; background:rgba(10,11,13,.6); font-size:11px; display:flex; align-items:center;">{{ p.kind }}</span>
+              <span style="position:relative; font-size:13px; line-height:1.45; font-weight:500; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">{{ p.caption }}</span>
+            </span>
+            <span style="display:flex; flex-direction:column; gap:2px; font-size:12px; line-height:1.4; color:#8f939a; white-space:nowrap;"><span>{{ p.date }}</span><span style="color:{{ p.countFg }};">{{ p.count }}</span></span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+
+      <section aria-label="القواعد" style="flex:1 1 300px; min-width:0; display:flex; flex-direction:column; gap:8px;">
+        <span style="font-size:14px; color:#9a9da4;">{{ listTitle }}</span>
+        <sc-for list="{{ list }}" as="r" hint-placeholder-count="4">
+          <button onClick="{{ r.pick }}" aria-pressed="{{ r.selStr }}" style="text-align:right; display:flex; align-items:center; gap:14px; padding:16px 18px; border-radius:18px; background:{{ r.bg }}; border:1px solid {{ r.border }}; color:#f2f2f0; cursor:pointer; opacity:{{ r.op }};" style-hover="border-color:#45484e;">
+            <span style="flex:none; width:8px; height:8px; border-radius:50%; background:{{ r.dot }};"></span>
+            <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;">
+              <span style="display:flex; gap:6px; flex-wrap:wrap;"><sc-for list="{{ r.words }}" as="w" hint-placeholder-count="2"><span style="height:26px; padding:0 10px; border-radius:8px; background:#1d1f23; display:inline-flex; align-items:center; font-size:14px; font-weight:500;">{{ w }}</span></sc-for></span>
+              <span style="font-size:13px; color:#8f939a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.summary }}</span>
+            </span>
+            <span style="flex:none; height:24px; padding:0 9px; border-radius:8px; background:{{ r.scopeBg }}; color:{{ r.scopeFg }}; font-size:12px; display:flex; align-items:center;">{{ r.scope }}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{ listEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:28px 18px; border-radius:18px; border:1px dashed #2a2c31; text-align:center;">
+            <img src="assets/robot-point.png" alt="" style="width:96px;">
+            <span style="font-size:15px; font-weight:600;">لا توجد قواعد على هذا المنشور</span>
+            <span style="font-size:13px; color:#8f939a;">أضف قاعدة خاصة به من زر «قاعدة لهذا المنشور».</span>
+          </div>
+        </sc-if>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px; padding:18px; border-radius:18px; background:#0f1012; border:1px solid #1d1f23;">
+          <span style="font-size:15px; font-weight:600;">منع التكرار</span>
+          <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#c4c7cc; flex-wrap:wrap;">لا ترد على نفس الشخص أكثر من مرة كل
+            <select value="{{ cooldown }}" onChange="{{ onCooldown }}" style="height:36px; padding:0 10px; border-radius:10px; background:#121316; border:1px solid #2a2c31; color:#f2f2f0; font-size:14px;">
+              <option value="1">ساعة</option><option value="6">6 ساعات</option><option value="24">24 ساعة</option>
+            </select>
+          </label>
+          <span style="font-size:13px; line-height:1.6; color:#8f939a;">يحمي حسابك من أن يبدو كحساب مزعج، ويقلل خطر التقييد من Meta.</span>
+        </div>
+      </section>
+
+      <sc-if value="{{ hasRule }}" hint-placeholder-val="{{ true }}">
+      <section aria-label="تعديل القاعدة" style="flex:999 1 600px; min-width:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; align-items:start;">
+        <form onSubmit="{{ save }}" novalidate="" style="display:flex; flex-direction:column; gap:22px; padding:24px; border-radius:22px; background:#0f1012; border:1px solid #1d1f23;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+            <h2 style="margin:0; font-size:18px; font-weight:700;">{{ editTitle }}</h2>
+            <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#c4c7cc; cursor:pointer;">{{ enabledLabel }}
+              <button type="button" role="switch" aria-checked="{{ enStr }}" onClick="{{ toggleEnabled }}" style="position:relative; width:46px; height:26px; border-radius:999px; border:none; background:{{ swBg }}; cursor:pointer; transition:background 200ms ease;" style-focus="outline:2px solid #f2f2f0; outline-offset:3px;">
+                <span style="position:absolute; top:3px; right:3px; width:20px; height:20px; border-radius:50%; background:{{ knobBg }}; transform:{{ knobTf }}; transition:transform 260ms cubic-bezier(.16,1,.3,1);"></span>
+              </button>
+            </label>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <span style="font-size:14px; font-weight:500; color:#c4c7cc;">يعمل على</span>
+            <div role="radiogroup" aria-label="نطاق القاعدة" style="display:flex; gap:4px; padding:4px; border-radius:12px; background:#121316; border:1px solid #1d1f23; align-self:flex-start;">
+              <button type="button" role="radio" aria-checked="{{ scopeSpecStr }}" onClick="{{ setSpecific }}" style="height:36px; padding:0 14px; border-radius:9px; border:none; background:{{ specBg }}; color:{{ specFg }}; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;">منشورات محددة</button>
+              <button type="button" role="radio" aria-checked="{{ scopeAllStr }}" onClick="{{ setAll }}" style="height:36px; padding:0 14px; border-radius:9px; border:none; background:{{ allBg }}; color:{{ allFg }}; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;">كل المنشورات</button>
+            </div>
+            <sc-if value="{{ isSpecific }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                <sc-for list="{{ chosen }}" as="c" hint-placeholder-count="1">
+                  <span style="height:40px; padding:0 6px 0 6px; border-radius:11px; background:#1d1f23; display:inline-flex; align-items:center; gap:8px; font-size:14px; max-width:240px;">
+                    <span style="flex:none; width:28px; height:28px; border-radius:7px; background:{{ c.tone }};"></span>
+                    <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ c.caption }}</span>
+                    <button type="button" onClick="{{ c.remove }}" aria-label="{{ c.label }}" style="flex:none; width:24px; height:24px; border-radius:6px; border:none; background:transparent; color:#8f939a; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="background:#2a2c31; color:#fff;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+                  </span>
+                </sc-for>
+                <button type="button" onClick="{{ openPicker }}" style="height:40px; padding:0 14px; border-radius:11px; border:1px dashed #45484e; background:transparent; color:#f2f2f0; font-size:14px; cursor:pointer; white-space:nowrap;" style-hover="background:#121316;">{{ pickerLabel }}</button>
+              </div>
+              <sc-if value="{{ noPosts }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; color:#ff9592;">اختر منشورًا واحدًا على الأقل، أو اجعلها لكل المنشورات.</span></sc-if>
+            </sc-if>
+            <span style="font-size:13px; line-height:1.6; color:#8f939a;">{{ scopeHint }}</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <span style="font-size:14px; font-weight:500; color:#c4c7cc;">الكلمات المفتاحية</span>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; padding:10px; border-radius:14px; background:#121316; border:1px solid {{ kwBorder }};">
+              <sc-for list="{{ kws }}" as="k" hint-placeholder-count="2">
+                <span style="height:32px; padding:0 6px 0 12px; border-radius:9px; background:#1d1f23; display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:500;">{{ k.w }}<button type="button" onClick="{{ k.remove }}" aria-label="{{ k.label }}" style="width:22px; height:22px; border-radius:6px; border:none; background:transparent; color:#8f939a; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="background:#2a2c31; color:#fff;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></span>
+              </sc-for>
+              <input value="{{ kwInput }}" onChange="{{ onKwInput }}" onKeyDown="{{ onKwKey }}" placeholder="اكتب كلمة واضغط Enter" aria-label="إضافة كلمة مفتاحية" style="flex:1; min-width:160px; height:32px; border:none; background:transparent; color:#f2f2f0; font-size:15px; outline:none;">
+            </div>
+            <span style="font-size:13px; line-height:1.6; color:{{ kwHintFg }};">{{ kwHint }}</span>
+          </div>
+
+          <label style="display:flex; flex-direction:column; gap:8px;">
+            <span style="display:flex; justify-content:space-between; font-size:14px; font-weight:500; color:#c4c7cc;"><span>الرد العلني على التعليق <span style="color:#8f939a; font-weight:400;">(اختياري)</span></span><span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8f939a;">{{ replyCount }}</span></span>
+            <textarea rows="2" value="{{ reply }}" onChange="{{ onReply }}" placeholder="مثال: أرسلنا لك التفاصيل في الخاص 🤍" style="box-sizing:border-box; padding:12px 14px; border-radius:12px; background:#121316; border:1px solid #2a2c31; color:#f2f2f0; font-size:15px; line-height:1.6; resize:vertical; outline:none;" style-focus="border-color:#8f939a;"></textarea>
+          </label>
+
+          <label style="display:flex; flex-direction:column; gap:8px;">
+            <span style="display:flex; justify-content:space-between; font-size:14px; font-weight:500; color:#c4c7cc;"><span>الرسالة الخاصة</span><span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:{{ dmCountFg }};">{{ dmCount }}</span></span>
+            <textarea rows="4" value="{{ dm }}" onChange="{{ onDm }}" placeholder="مثال: أهلًا! هذه أسعار مجموعة العود…" style="box-sizing:border-box; padding:12px 14px; border-radius:12px; background:#121316; border:1px solid {{ dmBorder }}; color:#f2f2f0; font-size:15px; line-height:1.6; resize:vertical; outline:none;" style-focus="border-color:#8f939a;"></textarea>
+          </label>
+
+          <label style="display:flex; flex-direction:column; gap:8px;">
+            <span style="font-size:14px; font-weight:500; color:#c4c7cc;">رابط المنتج أو الشراء <span style="color:#8f939a; font-weight:400;">(اختياري)</span></span>
+            <input dir="ltr" value="{{ link }}" onChange="{{ onLink }}" placeholder="https://" inputmode="url" style="box-sizing:border-box; height:46px; padding:0 14px; border-radius:12px; background:#121316; border:1px solid {{ linkBorder }}; color:#f2f2f0; font-family:'IBM Plex Mono',monospace; font-size:14px; outline:none; text-align:left;" style-focus="border-color:#8f939a;">
+            <sc-if value="{{ linkBad }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px; color:#ff9592;">يجب أن يبدأ الرابط بـ https://</span></sc-if>
+          </label>
+
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button type="submit" disabled="{{ cantSave }}" style="white-space:nowrap; height:48px; padding:0 22px; border-radius:14px; border:none; background:{{ saveBg }}; color:{{ saveFg }}; font-size:16px; font-weight:600; cursor:{{ saveCursor }};" style-active="transform:scale(.985);">حفظ</button>
+            <button type="button" onClick="{{ remove }}" style="white-space:nowrap; height:48px; padding:0 16px; border-radius:14px; border:none; background:transparent; color:#ff9592; font-size:15px; cursor:pointer;" style-hover="background:rgba(229,72,77,.08);">حذف القاعدة</button>
+            <span style="font-size:13px; color:#8f939a;">{{ saveHint }}</span>
+          </div>
+        </form>
+
+        <aside aria-label="معاينة" style="position:sticky; top:92px; display:flex; flex-direction:column; gap:14px; padding:24px; border-radius:22px; background:#0d0e10; border:1px dashed #2a2c31;">
+          <span style="font-size:13px; letter-spacing:.04em; color:#8f939a;">معاينة · هكذا سيبدو الأمر</span>
+          <div style="display:flex; align-items:center; gap:10px; padding:10px; border-radius:14px; background:#121316;">
+            <span style="flex:none; width:40px; height:40px; border-radius:9px; background:{{ pvTone }};"></span>
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;"><span style="font-size:12px; color:#8f939a;">على منشور</span><span style="font-size:14px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ pvCaption }}</span></div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; gap:10px;">
+              <span style="flex:none; width:32px; height:32px; border-radius:50%; background:#2a2c31;"></span>
+              <div style="display:flex; flex-direction:column; gap:2px;"><span dir="ltr" style="font-size:13px; font-weight:600; text-align:right;">rana.k</span><span style="font-size:15px;">{{ sampleComment }}</span></div>
+            </div>
+            <sc-if value="{{ hasReply }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; gap:10px; margin-right:42px;">
+                <span style="flex:none; width:28px; height:28px; border-radius:50%; background:#f2f2f0;"></span>
+                <div style="display:flex; flex-direction:column; gap:2px;"><span dir="ltr" style="font-size:13px; font-weight:600; text-align:right;">sham.perfumes</span><span style="font-size:15px; color:#c4c7cc;">{{ reply }}</span></div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="height:1px; background:#1d1f23;"></div>
+          <span style="font-size:13px; color:#8f939a;">في الرسائل الخاصة</span>
+          <div style="align-self:flex-start; max-width:88%; display:flex; flex-direction:column; gap:8px; padding:14px 16px; border-radius:20px 20px 20px 6px; background:#1d1f23;">
+            <span style="font-size:15px; line-height:1.65; white-space:pre-wrap; text-wrap:pretty;">{{ dmPreview }}</span>
+            <sc-if value="{{ hasLink }}" hint-placeholder-val="{{ false }}">
+              <span dir="ltr" style="display:block; padding:10px 12px; border-radius:12px; background:#121316; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#c4c7cc; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ linkHost }}</span>
+            </sc-if>
+          </div>
+          <p style="margin:0; font-size:12px; line-height:1.7; color:#8f939a;">تُرسل الرسالة الخاصة مرة واحدة لكل تعليق، وفق قواعد Meta. إذا كانت الرسائل الخاصة مغلقة عند الشخص، يُكتفى بالرد العلني.</p>
+        </aside>
+      </section>
+      </sc-if>
+    </div>
+  </main>
+
+  <sc-if value="{{ pickerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:30; display:flex; align-items:center; justify-content:center; padding:24px;">
+      <div onClick="{{ closePicker }}" style="position:absolute; inset:0; background:rgba(5,5,6,.66);"></div>
+      <section role="dialog" aria-modal="true" aria-labelledby="pk-h" style="position:relative; width:min(640px, 100%); max-height:calc(100vh - 48px); display:flex; flex-direction:column; border-radius:24px; background:#0f1012; border:1px solid #2a2c31; box-shadow:0 40px 80px -30px rgba(0,0,0,.7);">
+        <header style="display:flex; align-items:center; justify-content:space-between; padding:22px 24px; border-bottom:1px solid #1d1f23;">
+          <div style="display:flex; flex-direction:column; gap:4px;"><h2 id="pk-h" style="margin:0; font-size:20px; font-weight:700;">اختر المنشورات</h2><span style="font-size:13px; color:#8f939a;">تعمل القاعدة على التعليقات في المنشورات المختارة فقط.</span></div>
+          <button onClick="{{ closePicker }}" aria-label="إغلاق" style="width:40px; height:40px; border-radius:12px; border:none; background:transparent; color:#9a9da4; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="background:#1d1f23; color:#fff;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        </header>
+        <div style="overflow:auto; padding:20px 24px; display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:12px;">
+          <sc-for list="{{ pickList }}" as="p" hint-placeholder-count="6">
+            <button role="checkbox" aria-checked="{{ p.onStr }}" onClick="{{ p.toggle }}" style="position:relative; aspect-ratio:1; box-sizing:border-box; border-radius:16px; background:{{ p.tone }}; border:{{ p.border }}; color:#f2f2f0; display:flex; flex-direction:column; justify-content:flex-end; padding:10px; text-align:right; cursor:pointer; overflow:hidden;">
+              <span style="position:absolute; top:8px; right:8px; width:24px; height:24px; border-radius:50%; background:{{ p.checkBg }}; border:1.5px solid {{ p.checkBorder }}; display:flex; align-items:center; justify-content:center; color:#0a0b0d;">
+                <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+              </span>
+              <span style="position:absolute; top:8px; left:8px; height:22px; padding:0 7px; border-radius:7px; background:rgba(10,11,13,.6); font-size:11px; display:flex; align-items:center;">{{ p.kind }}</span>
+              <span style="font-size:13px; line-height:1.45; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ p.caption }}</span>
+              <span style="font-size:11px; color:#b4b7bd;">{{ p.date }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <footer style="display:flex; align-items:center; gap:12px; padding:18px 24px; border-top:1px solid #1d1f23;">
+          <button onClick="{{ closePicker }}" style="height:48px; padding:0 24px; border-radius:14px; border:none; background:#f2f2f0; color:#0a0b0d; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap;" style-hover="background:#fff;">تم</button>
+          <span style="font-size:14px; color:#9a9da4;">{{ pickCount }}</span>
+        </footer>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:40; padding:12px 18px; border-radius:14px; background:#f2f2f0; color:#0a0b0d; font-size:15px; font-weight:500; box-shadow:0 20px 40px -16px rgba(0,0,0,.6);">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  DM_MAX = 1000;
+  POSTS = [
+    { id: 'p1', caption: 'عطر الياسمين الجديد ✨ متوفر الآن', kind: 'ريلز', date: '26 تشرين الأول', tone: '#2a2622' },
+    { id: 'p2', caption: 'عرض نهاية الأسبوع: خصم 20% على كل العطور', kind: 'صورة', date: '24 تشرين الأول', tone: '#232733' },
+    { id: 'p3', caption: 'مجموعة العود الفاخرة — 4 روائح جديدة', kind: 'متعدد', date: '20 تشرين الأول', tone: '#2b2420' },
+    { id: 'p4', caption: 'كيف تختار عطرك المناسب؟', kind: 'ريلز', date: '15 تشرين الأول', tone: '#1f2a26' },
+    { id: 'p5', caption: 'من خلف الكواليس في معملنا', kind: 'صورة', date: '10 تشرين الأول', tone: '#2a2226' },
+    { id: 'p6', caption: 'أفكار هدايا للمناسبات', kind: 'متعدد', date: '3 تشرين الأول', tone: '#20262b' },
+  ];
+  state = {
+    post: 'p1', sel: 'r5', kwInput: '', toast: '', cooldown: '24', picker: false,
+    rules: [
+      { id: 'r5', on: true, posts: ['p1'], words: ['ياسمين', 'سعر'], reply: 'عطر الياسمين بـ 45$ — أرسلنا لك التفاصيل 🤍', dm: 'أهلًا! عطر الياسمين الجديد متوفر بحجمين، هذا رابط الطلب:', link: 'https://sham-perfumes.com/jasmine' },
+      { id: 'r2', on: true, posts: ['p3'], words: ['عود', 'oud'], reply: '', dm: 'مجموعة العود الجديدة وصلت 🌿 تصفحها من الرابط:', link: 'https://sham-perfumes.com/oud' },
+      { id: 'r4', on: false, posts: ['p2'], words: ['خصم', 'عرض'], reply: 'العرض ساري حتى الأحد 🎁', dm: 'تفاصيل العرض والكود في هذا الرابط:', link: 'https://sham-perfumes.com/weekend' },
+      { id: 'r1', on: true, posts: [], words: ['سعر', 'بكم'], reply: 'أرسلنا لك الأسعار في الخاص 🤍', dm: 'أهلًا! هذه أسعار مجموعتنا الحالية، والتوصيل متاح لكل المحافظات.', link: 'https://sham-perfumes.com/prices' },
+      { id: 'r3', on: true, posts: [], words: ['توصيل'], reply: 'نوصل لكل المحافظات خلال 2–4 أيام.', dm: '', link: '' },
+    ],
+  };
+  norm(w) { return w.trim().toLowerCase().replace(/[\u064B-\u065F\u0670]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه'); }
+  postById(id) { return this.POSTS.find(p => p.id === id); }
+  applies(rule, postId) { return rule.posts.length === 0 || rule.posts.includes(postId); }
+  visible() { const s = this.state; return s.post === 'all' ? s.rules.filter(r => r.posts.length === 0) : s.rules.filter(r => this.applies(r, s.post)).sort((a, b) => (b.posts.length > 0) - (a.posts.length > 0)); }
+  cur() { const v = this.visible(); return v.find(r => r.id === this.state.sel) || v[0] || null; }
+  patch(p) { const r = this.cur(); if (!r) return; this.setState(s => ({ rules: s.rules.map(x => x.id === r.id ? Object.assign({}, x, p, { dirty: true }) : x) })); }
+  flash(m) { this.setState({ toast: m }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2200); }
+  componentDidMount() {
+    try { const q = new URLSearchParams(window.location.search).get('post'); if (q && (q === 'all' || this.postById(q))) { const nv = q === 'all' ? this.state.rules.filter(x => x.posts.length === 0) : this.state.rules.filter(x => this.applies(x, q)).sort((a, b) => (b.posts.length > 0) - (a.posts.length > 0)); this.setState({ post: q, sel: nv[0] ? nv[0].id : null }); } } catch (e) {}
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.picker) this.setState({ picker: false }); }; window.addEventListener('keydown', this.onKey); }
+  componentWillUnmount() { clearTimeout(this.tt); window.removeEventListener('keydown', this.onKey); }
+  overlap(a, b) { if (a.posts.length === 0 && b.posts.length === 0) return true; if (a.posts.length === 0 || b.posts.length === 0) return false; return a.posts.some(p => b.posts.includes(p)); }
+  renderVals() {
+    const s = this.state, G = '#4cc38a';
+    const vis = this.visible(), r = this.cur();
+    const pickPost = (id) => () => { const nv = id === 'all' ? s.rules.filter(x => x.posts.length === 0) : s.rules.filter(x => this.applies(x, id)).sort((a, b) => (b.posts.length > 0) - (a.posts.length > 0)); this.setState({ post: id, sel: nv[0] ? nv[0].id : null, kwInput: '' }); };
+    const countFor = (id) => s.rules.filter(x => x.posts.includes(id)).length;
+    const plural = (n) => n === 0 ? 'بلا قواعد خاصة' : n === 1 ? 'قاعدة واحدة' : n === 2 ? 'قاعدتان' : `${n} قواعد`;
+    const generalCount = s.rules.filter(x => x.posts.length === 0).length;
+    const curPost = s.post === 'all' ? null : this.postById(s.post);
+    const base = {
+      addLabel: curPost ? 'قاعدة لهذا المنشور' : 'قاعدة عامة',
+      allSelStr: s.post === 'all' ? 'true' : 'false', pickAll: pickPost('all'),
+      allBorder: s.post === 'all' ? '2px solid #f2f2f0' : '1px solid #2a2c31',
+      allCount: `${plural(generalCount).replace('بلا قواعد خاصة', 'بلا قواعد')} عامة`,
+      posts: this.POSTS.map(p => { const n = countFor(p.id); return { caption: p.caption, kind: p.kind, date: p.date, tone: p.tone, pick: pickPost(p.id), selStr: s.post === p.id ? 'true' : 'false', border: s.post === p.id ? '2px solid #f2f2f0' : '1px solid transparent', count: plural(n), countFg: n ? '#c4c7cc' : '#8f939a' }; }),
+      listTitle: curPost ? `القواعد على «${curPost.caption}»` : 'القواعد العامة — تعمل على كل المنشورات',
+      listEmpty: vis.length === 0,
+      cooldown: s.cooldown, onCooldown: (e) => { this.setState({ cooldown: e.target.value }); this.flash('حُفظ'); },
+      addRule: () => { const id = 'r' + Date.now(); this.setState(st => ({ rules: [{ id, on: true, posts: st.post === 'all' ? [] : [st.post], words: [], reply: '', dm: '', link: '', dirty: true, fresh: true }, ...st.rules], sel: id, kwInput: '' })); },
+      pickerOpen: s.picker, closePicker: () => this.setState({ picker: false }),
+      toast: s.toast, hasRule: !!r,
+    };
+    if (!r) return Object.assign(base, { list: [], pickList: [], pickCount: '' });
+    const specificWords = new Set(curPost ? s.rules.filter(x => x.posts.includes(curPost.id) && x.on).flatMap(x => x.words.map(w => this.norm(w))) : []);
+    const list = vis.map(x => {
+      const sel = x.id === r.id;
+      const parts = [x.reply.trim() ? 'رد علني' : null, x.dm.trim() ? 'رسالة خاصة' : null, x.link ? 'رابط' : null].filter(Boolean);
+      const general = x.posts.length === 0;
+      const shadowed = general && curPost && x.words.length > 0 && x.words.every(w => specificWords.has(this.norm(w)));
+      return {
+        words: x.words.length ? x.words : ['بلا كلمات'], pick: () => this.setState({ sel: x.id, kwInput: '' }), selStr: sel ? 'true' : 'false',
+        bg: sel ? '#17181c' : '#0f1012', border: sel ? '#45484e' : '#1d1f23', dot: x.on ? G : '#45484e', op: shadowed ? .55 : 1,
+        summary: (x.on ? '' : 'معطّلة · ') + (shadowed ? 'تحل محلها قاعدة هذا المنشور' : (parts.join(' + ') || 'لم تكتمل بعد')),
+        scope: general ? 'عامة' : x.posts.length === 1 ? 'منشور واحد' : `${x.posts.length} منشورات`,
+        scopeBg: general ? '#1d1f23' : 'rgba(76,195,138,.12)', scopeFg: general ? '#b4b7bd' : G,
+      };
+    });
+    const clash = r.words.filter(w => s.rules.some(x => x.id !== r.id && this.overlap(x, r) && x.words.some(v => this.norm(v) === this.norm(w))));
+    const overrides = r.posts.length > 0 ? r.words.filter(w => s.rules.some(x => x.posts.length === 0 && x.words.some(v => this.norm(v) === this.norm(w)))) : [];
+    const linkBad = !!r.link && !/^https:\/\/[^\s.]+\.[^\s]+$/.test(r.link);
+    const dmOver = r.dm.length > this.DM_MAX;
+    const isSpecific = r.posts.length > 0 || r.scopeSpecific;
+    const noPosts = isSpecific && r.posts.length === 0;
+    const empty = r.words.length === 0 || (!r.reply.trim() && !r.dm.trim());
+    const cantSave = empty || linkBad || dmOver || clash.length > 0 || noPosts || !r.dirty;
+    let host = '';
+    try { host = r.link && !linkBad ? new URL(r.link).host + new URL(r.link).pathname : ''; } catch (e) {}
+    const addKw = () => { const v = s.kwInput.trim(); if (!v) return; if (r.words.some(w => this.norm(w) === this.norm(v))) { this.setState({ kwInput: '' }); return; } this.patch({ words: [...r.words, v] }); this.setState({ kwInput: '' }); };
+    const pv = r.posts.length ? this.postById(r.posts[0]) : (curPost || null);
+    const togglePost = (id) => () => { const has = r.posts.includes(id); this.patch({ posts: has ? r.posts.filter(p => p !== id) : [...r.posts, id], scopeSpecific: true }); };
+    return Object.assign(base, {
+      list,
+      editTitle: r.fresh ? 'قاعدة جديدة' : 'تعديل القاعدة',
+      enStr: r.on ? 'true' : 'false', enabledLabel: r.on ? 'مفعّلة' : 'معطّلة',
+      swBg: r.on ? G : '#2a2c31', knobBg: r.on ? '#0a0b0d' : '#8f939a', knobTf: r.on ? 'translateX(-20px)' : 'translateX(0px)',
+      toggleEnabled: () => this.patch({ on: !r.on }),
+      isSpecific, noPosts,
+      scopeSpecStr: isSpecific ? 'true' : 'false', scopeAllStr: isSpecific ? 'false' : 'true',
+      specBg: isSpecific ? '#23252a' : 'transparent', specFg: isSpecific ? '#f2f2f0' : '#9a9da4',
+      allBg: isSpecific ? 'transparent' : '#23252a', allFg: isSpecific ? '#9a9da4' : '#f2f2f0',
+      setSpecific: () => this.patch({ scopeSpecific: true, posts: r.posts.length ? r.posts : (curPost ? [curPost.id] : []) }),
+      setAll: () => this.patch({ scopeSpecific: false, posts: [] }),
+      chosen: r.posts.map(id => { const p = this.postById(id); return { caption: p.caption, tone: p.tone, label: `إزالة ${p.caption}`, remove: togglePost(id) }; }),
+      openPicker: () => this.setState({ picker: true }),
+      pickerLabel: r.posts.length ? 'تعديل المنشورات' : '+ اختيار المنشورات',
+      scopeHint: isSpecific
+        ? (overrides.length ? `على هذه المنشورات، تتقدم هذه القاعدة على القاعدة العامة لكلمة «${overrides.join('»، «')}».` : 'لا يرد البوت بهذه القاعدة إلا على تعليقات المنشورات المختارة.')
+        : 'تعمل على كل منشوراتك، بما فيها المنشورات الجديدة. القواعد الخاصة بمنشور معيّن تتقدم عليها.',
+      pickList: this.POSTS.map(p => { const on = r.posts.includes(p.id); return { caption: p.caption, kind: p.kind, date: p.date, tone: p.tone, on, onStr: on ? 'true' : 'false', toggle: togglePost(p.id), border: on ? '2px solid #f2f2f0' : '1px solid #2a2c31', checkBg: on ? '#f2f2f0' : 'rgba(10,11,13,.5)', checkBorder: on ? '#f2f2f0' : '#8f939a' }; }),
+      pickCount: r.posts.length ? `${r.posts.length === 1 ? 'منشور واحد مختار' : r.posts.length === 2 ? 'منشوران مختاران' : r.posts.length + ' منشورات مختارة'}` : 'لم تختر أي منشور',
+      kws: r.words.map(w => ({ w, label: `حذف ${w}`, remove: () => this.patch({ words: r.words.filter(x => x !== w) }) })),
+      kwInput: s.kwInput, onKwInput: (e) => this.setState({ kwInput: e.target.value }),
+      onKwKey: (e) => { if (e.key === 'Enter' || e.key === ',' || e.key === '،') { e.preventDefault(); addKw(); } else if (e.key === 'Backspace' && !s.kwInput && r.words.length) this.patch({ words: r.words.slice(0, -1) }); },
+      kwBorder: clash.length ? '#e5484d' : '#2a2c31',
+      kwHint: clash.length ? `«${clash.join('»، «')}» مستخدمة في قاعدة أخرى على نفس المنشور. احذفها من إحداهما.` : 'نتجاهل التشكيل والهمزات وحالة الأحرف. مثلًا «سعر» تطابق «السعر؟» و«سعرها».',
+      kwHintFg: clash.length ? '#ff9592' : '#8f939a',
+      reply: r.reply, onReply: (e) => this.patch({ reply: e.target.value }), replyCount: `${r.reply.length}`,
+      dm: r.dm, onDm: (e) => this.patch({ dm: e.target.value }),
+      dmCount: `${r.dm.length}/${this.DM_MAX}`, dmCountFg: dmOver ? '#ff9592' : '#8f939a', dmBorder: dmOver ? '#e5484d' : '#2a2c31',
+      link: r.link, onLink: (e) => this.patch({ link: e.target.value.trim() }),
+      linkBad, linkBorder: linkBad ? '#e5484d' : '#2a2c31',
+      cantSave, saveBg: cantSave ? '#1d1f23' : '#f2f2f0', saveFg: cantSave ? '#6b6e75' : '#0a0b0d', saveCursor: cantSave ? 'not-allowed' : 'pointer',
+      saveHint: !r.dirty ? 'كل التغييرات محفوظة' : noPosts ? 'اختر منشورًا' : empty ? 'أضف كلمة واحدة على الأقل، وردًا علنيًا أو رسالة خاصة' : 'لديك تغييرات غير محفوظة',
+      save: (e) => { e.preventDefault(); if (cantSave) return; this.setState(st => ({ rules: st.rules.map(x => x.id === r.id ? Object.assign({}, x, { dirty: false, fresh: false }) : x) })); this.flash('حُفظت القاعدة'); },
+      remove: () => { const rest = s.rules.filter(x => x.id !== r.id); this.setState({ rules: rest, sel: null }); this.flash('حُذفت القاعدة'); },
+      pvTone: pv ? pv.tone : '#1d1f23', pvCaption: pv ? pv.caption : 'أي منشور من منشوراتك',
+      sampleComment: r.words.length ? `${r.words[0]} هذا؟` : 'اكتب كلمة لترى المعاينة',
+      hasReply: !!r.reply.trim(),
+      dmPreview: r.dm.trim() || (r.link ? '' : 'لا توجد رسالة خاصة لهذه القاعدة'),
+      hasLink: !!host, linkHost: host,
+    });
+  }
+}
+</script>
+</body>
+</html>

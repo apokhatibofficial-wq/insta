@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0b0d;-webkit-font-smoothing:antialiased}
+a{color:#f2f2f0;text-decoration:underline;text-underline-offset:3px}a:hover{color:#fff}
+button{font:inherit}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; background:#0a0b0d; color:#f2f2f0; font-family:'IBM Plex Sans Arabic',sans-serif;">
+  <header style="position:sticky; top:0; z-index:10; background:rgba(10,11,13,.86); backdrop-filter:blur(12px); border-bottom:1px solid #1d1f23;">
+    <div style="max-width:1120px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; gap:24px;">
+      <div dir="ltr" style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#8f939a;">TECHNICAL SOLUTIONS</span></div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:4px; overflow-x:auto; flex:1; min-width:0;">
+        <a href="Client Dashboard.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">الرئيسية</a>
+        <a href="Client Posts.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">المنشورات</a>
+        <a href="Client Replies.dc.html?post=all" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">الردود العامة</a>
+        <a href="Client Activity.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#9a9da4; text-decoration:none; font-size:15px;" style-hover="color:#f2f2f0; background:#121316;">السجل</a>
+        <a href="#" aria-current="page" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; background:#17181c; color:#f2f2f0; text-decoration:none; font-size:15px; font-weight:600;">الحساب</a>
+      </nav>
+      <button style="flex:none; height:38px; padding:0 14px; border-radius:10px; border:1px solid #2a2c31; background:transparent; color:#b4b7bd; font-size:14px; cursor:pointer;" style-hover="color:#fff; border-color:#45484e;">خروج</button>
+    </div>
+  </header>
+
+  <main style="max-width:760px; margin:0 auto; padding:28px 24px 64px; display:flex; flex-direction:column; gap:20px;">
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <h1 style="margin:0; font-size:28px; font-weight:700;">الحساب</h1>
+      <p style="margin:0; font-size:15px; color:#9a9da4;">اسم العميل · <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;">KTS-0142</span></p>
+    </div>
+
+    <section style="padding:24px; border-radius:20px; background:#0f1012; border:1px solid #1d1f23; display:flex; flex-direction:column; gap:16px;">
+      <h2 style="margin:0; font-size:18px; font-weight:600;">الاشتراك</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:16px;">
+        <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:13px; color:#8f939a;">الحالة</span><span style="font-size:15px; color:#4cc38a; font-weight:600;">نشط</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:13px; color:#8f939a;">ينتهي في</span><span style="font-size:15px;">21 تشرين الثاني 2026</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:13px; color:#8f939a;">المتبقي</span><span style="font-size:15px;">25 يومًا</span></div>
+      </div>
+      <p style="margin:0; font-size:14px; line-height:1.7; color:#9a9da4;">للتجديد تواصل مع فريق KHATIB. يُضاف التجديد بعد تاريخ الانتهاء، فلا تخسر أي يوم.</p>
+      <a href="https://wa.me/4368181700732" target="_blank" rel="noopener noreferrer" style="align-self:flex-start; height:44px; padding:0 18px; border-radius:12px; border:1px solid #2a2c31; color:#f2f2f0; text-decoration:none; font-size:15px; display:flex; align-items:center;" style-hover="border-color:#45484e; background:#121316;">تواصل عبر واتساب</a>
+    </section>
+
+    <section style="padding:24px; border-radius:20px; background:#0f1012; border:1px solid #1d1f23; display:flex; flex-direction:column; gap:16px;">
+      <h2 style="margin:0; font-size:18px; font-weight:600;">حساب إنستغرام</h2>
+      <sc-if value="{{ igOn }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px; display:flex; flex-direction:column; gap:4px;">
+            <span dir="ltr" style="font-size:16px; font-weight:600; text-align:right;">@username</span>
+            <span style="font-size:13px; color:#8f939a; display:flex; align-items:center; gap:6px;"><span style="width:7px; height:7px; border-radius:50%; background:#4cc38a;"></span>مربوط منذ 3 تشرين الأول 2026</span>
+          </div>
+          <button onClick="{{ askUnlink }}" style="height:44px; padding:0 18px; border-radius:12px; border:1px solid rgba(229,72,77,.4); background:transparent; color:#ff9592; font-size:15px; cursor:pointer; white-space:nowrap;" style-hover="border-color:#e5484d;">فصل الحساب</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ igOff }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+          <span style="flex:1; min-width:200px; font-size:15px; color:#9a9da4;">لا يوجد حساب مربوط. البوت متوقف.</span>
+          <button onClick="{{ relink }}" style="height:44px; padding:0 18px; border-radius:12px; border:none; background:#f2f2f0; color:#0a0b0d; font-size:15px; font-weight:600; cursor:pointer;">ربط حساب إنستغرام</button>
+        </div>
+      </sc-if>
+      <p style="margin:0; font-size:13px; line-height:1.7; color:#8f939a;">نستخدم إذن Meta الرسمي فقط، ولا نعرف كلمة مرور إنستغرام. يمكنك أيضًا إلغاء الإذن من إعدادات إنستغرام نفسها.</p>
+    </section>
+
+    <section style="padding:24px; border-radius:20px; background:#0f1012; border:1px solid #1d1f23; display:flex; flex-direction:column; gap:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+        <h2 style="margin:0; font-size:18px; font-weight:600;">الأجهزة المسجّل دخولها</h2>
+        <sc-if value="{{ hasOthers }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ endOthers }}" style="height:38px; padding:0 14px; border-radius:10px; border:1px solid #2a2c31; background:transparent; color:#f2f2f0; font-size:14px; cursor:pointer; white-space:nowrap;" style-hover="border-color:#45484e;">إنهاء الجلسات الأخرى</button>
+        </sc-if>
+      </div>
+      <div style="display:flex; flex-direction:column; border-radius:14px; border:1px solid #1d1f23; overflow:hidden;">
+        <sc-for list="{{ sessions }}" as="x" hint-placeholder-count="3">
+          <div style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-top:{{ x.border }};">
+            <span style="flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;">
+              <span style="font-size:15px;">{{ x.dev }}</span>
+              <span style="font-size:13px; color:#8f939a;">{{ x.when }}</span>
+            </span>
+            <sc-if value="{{ x.current }}" hint-placeholder-val="{{ false }}"><span style="height:24px; padding:0 8px; border-radius:8px; background:#4cc38a1f; color:#4cc38a; font-size:12px; font-weight:600; display:flex; align-items:center;">هذا الجهاز</span></sc-if>
+            <sc-if value="{{ x.other }}" hint-placeholder-val="{{ true }}"><button onClick="{{ x.end }}" style="height:36px; padding:0 12px; border-radius:10px; border:none; background:transparent; color:#9a9da4; font-size:14px; cursor:pointer;" style-hover="color:#ff9592;">إنهاء</button></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding:14px 16px; border-radius:14px; background:rgba(230,194,122,.08); border:1px solid rgba(230,194,122,.28); color:#ecd3a0; font-size:14px; line-height:1.7;">ترى جهازًا لا تعرفه؟ أنهِ جلسته، ثم تواصل معنا لتغيير رمز الدخول. لا يمكن تغيير الرمز من هنا حفاظًا على أمانك.</div>
+    </section>
+  </main>
+
+  <sc-if value="{{ dlg }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; background:rgba(5,5,6,.72); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50;">
+      <div role="dialog" aria-modal="true" aria-labelledby="uT" style="width:100%; max-width:440px; padding:28px; border-radius:22px; background:#0f1012; border:1px solid #2a2c31; box-shadow:0 40px 80px -30px rgba(0,0,0,.7); display:flex; flex-direction:column; gap:16px;">
+        <h2 id="uT" style="margin:0; font-size:21px; font-weight:700;">فصل حساب إنستغرام؟</h2>
+        <p style="margin:0; font-size:15px; line-height:1.75; color:#9a9da4;">يتوقف البوت فورًا ونحذف إذن الوصول. ردودك وكلماتك تبقى محفوظة، ويمكنك الربط من جديد متى شئت.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onClick="{{ unlink }}" style="height:46px; padding:0 20px; border-radius:12px; border:none; background:#e5484d; color:#fff; font-size:15px; font-weight:600; cursor:pointer;">فصل الحساب</button>
+          <button onClick="{{ cancel }}" style="height:46px; padding:0 18px; border-radius:12px; border:1px solid #2a2c31; background:transparent; color:#f2f2f0; font-size:15px; cursor:pointer;">إلغاء</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = { ig: true, dlg: false, s: [
+    { id: 1, dev: 'iPhone · Safari', when: 'نشط الآن', cur: true },
+    { id: 2, dev: 'Windows · Chrome', when: 'آخر نشاط قبل يومين', cur: false },
+    { id: 3, dev: 'Android · Chrome', when: 'آخر نشاط قبل 12 يومًا', cur: false },
+  ] };
+  componentDidMount() { this.k = (e) => { if (e.key === 'Escape') this.setState({ dlg: false }); }; window.addEventListener('keydown', this.k); }
+  componentWillUnmount() { window.removeEventListener('keydown', this.k); }
+  renderVals() {
+    const st = this.state;
+    return {
+      igOn: st.ig, igOff: !st.ig, dlg: st.dlg,
+      askUnlink: () => this.setState({ dlg: true }), cancel: () => this.setState({ dlg: false }),
+      unlink: () => this.setState({ ig: false, dlg: false }), relink: () => this.setState({ ig: true }),
+      hasOthers: st.s.some(x => !x.cur),
+      endOthers: () => this.setState(p => ({ s: p.s.filter(x => x.cur) })),
+      sessions: st.s.map((x, i) => ({ dev: x.dev, when: x.when, current: x.cur, other: !x.cur, border: i ? '1px solid #16171a' : 'none', end: () => this.setState(p => ({ s: p.s.filter(y => y.id !== x.id) })) })),
+    };
+  }
+}
+</script>
+</body>
+</html>

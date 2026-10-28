@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0b0d;-webkit-font-smoothing:antialiased}
+a{color:#f2f2f0;text-decoration:underline;text-underline-offset:3px}a:hover{color:#fff}
+button,input{font:inherit}
+input::placeholder{color:#5f626a}
+</style>
+</helmet>
+<div dir="rtl" style="position:relative; width:100%; height:100%; min-height:640px; background:#0a0b0d; color:#f2f2f0; font-family:'IBM Plex Sans Arabic',sans-serif; display:flex; flex-direction:column; overflow:hidden;">
+  <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 60% 45% at 50% 28%, rgba(255,255,255,.06), rgba(255,255,255,0) 70%);"></div>
+  <header style="position:relative; padding:28px 32px; display:flex; align-items:center; justify-content:space-between;">
+    <div dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#9a9da4;">TECHNICAL SOLUTIONS</span></div>
+  </header>
+  <main style="position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:8px 24px 40px;">
+    <form ref="{{ formRef }}" onSubmit="{{ submit }}" novalidate="" style="width:100%; max-width:440px; display:flex; flex-direction:column; gap:28px;">
+
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div style="position:relative; flex:none; width:150px; aspect-ratio:700/430;">
+          <div ref="{{ shadowRef }}" style="position:absolute; left:20%; right:20%; bottom:-6%; height:16px; background:radial-gradient(closest-side, rgba(255,255,255,.1), rgba(255,255,255,0));"></div>
+          <div ref="{{ floatRef }}" style="position:absolute; inset:0;">
+            <div style="position:absolute; left:11%; top:3.72%; width:77.71%; aspect-ratio:544/373; opacity:{{ winkOp }}; transition:opacity 300ms ease;">
+              <img src="assets/robot-wink-base.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+              <div ref="{{ lookRef }}" style="position:absolute; inset:0; transition:transform 600ms cubic-bezier(.16,1,.3,1);">
+                <img data-blink="" src="assets/robot-wink-eyeopen.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:38.7% 41.5%;">
+                <img src="assets/robot-wink-eyeline.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+                <img src="assets/robot-wink-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+              </div>
+            </div>
+            <img src="assets/robot-point.png" alt="" style="position:absolute; left:5.71%; top:10.23%; width:89.57%; opacity:{{ pointOp }}; transition:opacity 300ms ease;">
+          </div>
+        </div>
+        <div style="position:relative; flex:1; min-width:0; padding:14px 18px; border-radius:20px; background:#121316; border:1px solid #2a2c31;">
+          <div style="position:absolute; right:-9px; top:50%; margin-top:-8px; width:16px; height:16px; background:#121316; border-top:1px solid #2a2c31; border-right:1px solid #2a2c31; transform:rotate(45deg);"></div>
+          <p ref="{{ bubbleRef }}" aria-live="polite" style="position:relative; margin:0; font-size:17px; line-height:1.55; font-weight:600; text-shadow:0 0 12px rgba(255,255,255,.22); text-wrap:pretty;">{{ bubbleText }}</p>
+          <div style="position:absolute; inset:0; border-radius:20px; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.18) 2px 3px);"></div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <h1 style="margin:0; font-size:30px; line-height:1.3; font-weight:700;">الدخول إلى لوحتك</h1>
+        <p style="margin:0; font-size:16px; line-height:1.6; color:#9a9da4; text-wrap:pretty;">أدخل رمز الدخول الذي استلمته عند تفعيل اشتراكك.</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <label for="{{ inputId }}" style="font-size:15px; font-weight:500; color:#c4c7cc;">رمز الدخول</label>
+        <div style="position:relative;">
+          <input id="{{ inputId }}" type="{{ inputType }}" value="{{ value }}" onChange="{{ onChange }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" disabled="{{ locked }}" autocomplete="off" autocapitalize="off" spellcheck="false" dir="ltr" placeholder="••••••••••" aria-invalid="{{ ariaInvalid }}" aria-describedby="{{ msgId }}" style="box-sizing:border-box; width:100%; height:60px; padding:0 60px 0 20px; border-radius:16px; background:#121316; border:1px solid {{ inputBorder }}; color:#f2f2f0; font-family:'IBM Plex Mono',monospace; font-size:21px; letter-spacing:.12em; outline:none; opacity:{{ inputOp }}; transition:border-color 200ms ease, box-shadow 200ms ease;" style-focus="box-shadow:0 0 0 4px rgba(255,255,255,.08); border-color:#8f939a;">
+          <button type="button" onClick="{{ toggleShow }}" aria-label="{{ toggleLabel }}" disabled="{{ locked }}" style="position:absolute; right:8px; top:8px; width:44px; height:44px; border-radius:12px; border:none; background:transparent; color:#9a9da4; display:flex; align-items:center; justify-content:center; cursor:pointer;" style-hover="background:#1d1f23; color:#f2f2f0;" style-focus="outline:2px solid #8f939a; outline-offset:0;">
+            <sc-if value="{{ show }}" hint-placeholder-val="{{ false }}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"></path><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6 0 9.5 7 9.5 7a17 17 0 0 1-3.1 3.9M6.6 6.6C4 8.3 2.5 12 2.5 12s3.5 7 9.5 7c1.6 0 3-.4 4.3-1"></path><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path></svg>
+            </sc-if>
+            <sc-if value="{{ hidden }}" hint-placeholder-val="{{ true }}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </sc-if>
+          </button>
+        </div>
+        <div id="{{ msgId }}" style="min-height:24px; font-size:15px; line-height:1.6;">
+          <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+            <span style="display:flex; gap:8px; align-items:flex-start; color:#ff9592;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none; margin-top:3px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16.5v.01"></path></svg><span>{{ errorMsg }}</span></span>
+          </sc-if>
+          <sc-if value="{{ locked }}" hint-placeholder-val="{{ false }}">
+            <span style="display:flex; gap:8px; align-items:flex-start; color:#e6c27a;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none; margin-top:3px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>{{ lockMsg }}</span></span>
+          </sc-if>
+          <sc-if value="{{ isIdle }}" hint-placeholder-val="{{ true }}">
+            <span style="color:#8f939a;">الرمز حسّاس لحالة الأحرف. لا تشاركه مع أحد.</span>
+          </sc-if>
+        </div>
+      </div>
+
+      <button type="submit" disabled="{{ btnDisabled }}" aria-busy="{{ loading }}" style="height:56px; border-radius:16px; border:none; background:{{ btnBg }}; color:{{ btnColor }}; font-size:18px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:12px; cursor:{{ btnCursor }}; transition:background 200ms ease, color 200ms ease;" style-active="transform:scale(.985);" style-focus="outline:2px solid #f2f2f0; outline-offset:3px;">
+        <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+          <span ref="{{ spinRef }}" aria-hidden="true" style="width:18px; height:18px; border-radius:50%; border:2px solid rgba(10,11,13,.25); border-top-color:#0a0b0d; box-sizing:border-box;"></span>
+        </sc-if>
+        <span>{{ btnLabel }}</span>
+      </button>
+
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#8f939a; text-align:center; text-wrap:pretty;">لا تملك رمزًا؟ تواصل مع فريق KHATIB لتفعيل اشتراكك.</p>
+    </form>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;status&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;error&quot;,&quot;loading&quot;,&quot;locked&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;'idle'|'error'|'loading'|'locked'&quot;}}">
+class Component extends DCLogic {
+  MAX = 5;
+  LOCK_SECS = 900;
+  constructor(props) {
+    super(props);
+    const s = (props && props.status) || 'idle';
+    this.state = {
+      value: s === 'idle' ? '' : 'K7Q2M9XP4T',
+      show: false,
+      status: s,
+      attempts: s === 'error' ? 3 : s === 'locked' ? 5 : 0,
+      lockLeft: s === 'locked' ? 872 : 0,
+    };
+    this.uid = 'c' + Math.random().toString(36).slice(2, 8);
+  }
+  reduced() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  componentDidMount() {
+    this.tick = setInterval(() => {
+      if (this.state.status !== 'locked') return;
+      const n = this.state.lockLeft - 1;
+      if (n <= 0) this.setState({ status: 'idle', lockLeft: 0, attempts: 0, value: '' });
+      else this.setState({ lockLeft: n });
+    }, 1000);
+    if (this.form && !this.reduced()) {
+      Array.from(this.form.children).forEach((el, i) => el.animate(
+        [{ opacity: 0, transform: 'translateY(14px)', filter: 'blur(4px)' }, { opacity: 1, transform: 'translateY(0px)', filter: 'blur(0px)' }],
+        { duration: 900, delay: 120 + i * 80, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both' }));
+    }
+  }
+  startLife() {
+    if (this.reduced() || this.lifeOn) return;
+    this.lifeOn = true;
+    const o = { duration: 2100, iterations: Infinity, direction: 'alternate', easing: 'cubic-bezier(.45,0,.55,1)' };
+    if (this.floatEl) this.floatEl.animate([{ transform: 'translateY(0px)' }, { transform: 'translateY(-5px)' }], o);
+    if (this.shadowEl) this.shadowEl.animate([{ transform: 'scaleX(1)', opacity: 1 }, { transform: 'scaleX(.86)', opacity: .7 }], o);
+    const blink = () => {
+      this.blinkT = setTimeout(() => {
+        const root = this.floatEl; if (!root) return;
+        root.querySelectorAll('[data-blink]').forEach(el => el.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)', offset: .45 }, { transform: 'scaleY(1)' }], { duration: 220, easing: 'cubic-bezier(.45,0,.55,1)' }));
+        blink();
+      }, 2600 + Math.random() * 3000);
+    };
+    blink();
+  }
+  look(x, y) { if (this.lookEl) this.lookEl.style.transform = `translate(${x}px, ${y}px)`; }
+  onFocus = () => this.look(-4, 4);
+  onBlur = () => this.look(0, 0);
+  componentWillUnmount() { clearInterval(this.tick); clearTimeout(this.to); clearTimeout(this.blinkT); }
+  componentDidUpdate() {
+    const changed = this._lastStatus !== undefined && this._lastStatus !== this.state.status;
+    this._lastStatus = this.state.status;
+    if (changed && this.bubble && !this.reduced()) {
+      this.bubble.animate([{ opacity: 0, filter: 'blur(5px)' }, { opacity: 1, filter: 'blur(0px)' }], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
+    }
+  }
+  submit = (e) => {
+    e.preventDefault();
+    const { value, status } = this.state;
+    if (!value.trim() || status === 'loading' || status === 'locked') return;
+    this.setState({ status: 'loading' });
+    this.to = setTimeout(() => {
+      const attempts = this.state.attempts + 1;
+      if (attempts >= this.MAX) this.setState({ attempts, status: 'locked', lockLeft: this.LOCK_SECS });
+      else this.setState({ attempts, status: 'error' });
+    }, 1100);
+  };
+  onChange = (e) => {
+    const v = e.target.value.replace(/\s+/g, '');
+    this.setState(s => ({ value: v, status: s.status === 'error' ? 'idle' : s.status }));
+  };
+  toggleShow = () => this.setState(s => ({ show: !s.show }));
+  mmss(t) { const m = Math.floor(t / 60), s = t % 60; return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`; }
+  renderVals() {
+    const { value, show, status, attempts, lockLeft } = this.state;
+    const loading = status === 'loading', locked = status === 'locked', isError = status === 'error';
+    const left = this.MAX - attempts;
+    const remain = attempts >= 3 && isError ? (left === 2 ? ' تبقّت محاولتان.' : left === 1 ? ' تبقّت محاولة واحدة.' : '') : '';
+    const bubble = {
+      idle: 'أدخل رمزك، وسأفتح لك لوحتك.',
+      loading: 'لحظة، أتحقّق من الرمز…',
+      error: 'لم ينجح الأمر هذه المرة. لنجرّب مرة أخرى.',
+      locked: 'لنأخذ استراحة قصيرة، ثم نحاول مجددًا.',
+    }[status];
+    const disabled = !value.trim() || loading || locked;
+    return {
+      formRef: (el) => { this.form = el; },
+      floatRef: (el) => { this.floatEl = el; if (el) this.startLife(); },
+      shadowRef: (el) => { this.shadowEl = el; },
+      lookRef: (el) => { this.lookEl = el; },
+      onFocus: this.onFocus, onBlur: this.onBlur,
+      bubbleRef: (el) => { this.bubble = el; },
+      spinRef: (el) => { if (el && !el._spin) el._spin = el.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 800, iterations: Infinity }); },
+      submit: this.submit, onChange: this.onChange, toggleShow: this.toggleShow,
+      inputId: this.uid + '-code', msgId: this.uid + '-msg',
+      value, show, hidden: !show,
+      inputType: show ? 'text' : 'password',
+      toggleLabel: show ? 'إخفاء الرمز' : 'إظهار الرمز',
+      bubbleText: bubble,
+      winkOp: isError || locked ? 0 : 1,
+      pointOp: isError || locked ? 1 : 0,
+      inputBorder: isError ? '#e5484d' : '#2a2c31',
+      inputOp: locked ? 0.5 : 1,
+      ariaInvalid: isError ? 'true' : 'false',
+      isError, locked, loading, isIdle: !isError && !locked,
+      errorMsg: 'تعذّر الدخول. تحقّق من الرمز وحاول مرة أخرى.' + remain,
+      lockMsg: `محاولات كثيرة متتالية. يمكنك المحاولة بعد ${this.mmss(lockLeft)}.`,
+      btnLabel: loading ? 'جارٍ التحقق…' : locked ? `متاح بعد ${this.mmss(lockLeft)}` : 'دخول',
+      btnDisabled: disabled,
+      btnBg: loading ? '#d6d6d3' : disabled ? '#1d1f23' : '#f2f2f0',
+      btnColor: loading ? '#0a0b0d' : disabled ? '#6b6e75' : '#0a0b0d',
+      btnCursor: disabled ? 'not-allowed' : 'pointer',
+    };
+  }
+}
+</script>
+</body>
+</html>

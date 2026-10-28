@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0b0d;-webkit-font-smoothing:antialiased}
+a{color:#f2f2f0;text-decoration:underline;text-underline-offset:3px}a:hover{color:#fff}
+button,input{font:inherit}
+input::placeholder{color:#5f626a}
+@keyframes kts-spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; box-sizing:border-box; background:#0a0b0d; color:#f2f2f0; font-family:'IBM Plex Sans Arabic',sans-serif; display:flex; flex-direction:column;">
+  <header style="padding:28px 32px; display:flex; justify-content:space-between; align-items:center; gap:16px;">
+    <div dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#8f939a;">TECHNICAL SOLUTIONS</span></div>
+    <span style="height:26px; padding:0 10px; border-radius:8px; background:#1d1f23; color:#b4b7bd; font-size:13px; display:flex; align-items:center;">لوحة الإدارة</span>
+  </header>
+
+  <main style="flex:1; display:flex; align-items:center; justify-content:center; padding:24px 20px 64px;">
+    <div style="width:100%; max-width:420px; display:flex; flex-direction:column; gap:28px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center;">
+        <div style="width:72px; height:72px; border-radius:22px; background:#121316; border:1px solid #2a2c31; display:flex; align-items:center; justify-content:center;">
+          <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4cc38a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+          </sc-if>
+          <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f2f2f0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M3 19.5c0-3.3 2.7-5.5 6-5.5 1.3 0 2.5.3 3.4.9"></path><circle cx="17.5" cy="13.5" r="2.5"></circle><path d="M17.5 16v4.5M17.5 18.5h1.8"></path></svg>
+          </sc-if>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h1 style="margin:0; font-size:28px; font-weight:700;">{{ title }}</h1>
+          <p style="margin:0; font-size:15px; line-height:1.7; color:#9a9da4; text-wrap:pretty;">{{ sub }}</p>
+        </div>
+      </div>
+
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="padding:14px 16px; border-radius:14px; background:rgba(229,72,77,.08); border:1px solid rgba(229,72,77,.32); color:#ff9592; font-size:14px; line-height:1.7;">لم يكتمل التحقق. ربما أُلغيت النافذة أو انتهت مهلتها، أو أن المفتاح غير مسجّل لهذه اللوحة.</div>
+      </sc-if>
+
+      <sc-if value="{{ showPasskey }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <button onClick="{{ signIn }}" disabled="{{ busy }}" style="height:56px; border-radius:16px; border:none; background:{{ btnBg }}; color:{{ btnFg }}; font-size:17px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;" style-hover="background:#fff;" style-focus="outline:2px solid #f2f2f0; outline-offset:3px;">
+            <sc-if value="{{ busy }}" hint-placeholder-val="{{ false }}"><span style="width:18px; height:18px; border-radius:50%; border:2px solid #45484e; border-top-color:#f2f2f0; animation:kts-spin .8s linear infinite;"></span></sc-if>
+            {{ btnLabel }}
+          </button>
+          <button onClick="{{ toRecovery }}" style="height:44px; border-radius:12px; border:none; background:transparent; color:#9a9da4; font-size:14px; cursor:pointer;" style-hover="color:#f2f2f0;">فقدت جهازي؟ استخدم رمز استرداد</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showRecovery }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <label for="rc" style="font-size:15px; font-weight:600;">رمز الاسترداد</label>
+          <input id="rc" dir="ltr" value="{{ code }}" onChange="{{ onCode }}" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX" style="box-sizing:border-box; height:56px; padding:0 16px; border-radius:12px; background:#121316; border:1px solid #2a2c31; color:#f2f2f0; font-family:'IBM Plex Mono',monospace; font-size:19px; letter-spacing:.12em; text-align:center; outline:none;" style-focus="border-color:#8f939a; box-shadow:0 0 0 4px rgba(255,255,255,.06);">
+          <span style="font-size:13px; color:#8f939a; line-height:1.6;">كل رمز يعمل مرة واحدة. بعد الدخول سجّل Passkey جديدًا فورًا.</span>
+          <button onClick="{{ useCode }}" disabled="{{ codeOff }}" style="height:56px; border-radius:16px; border:none; background:{{ codeBg }}; color:{{ codeFg }}; font-size:17px; font-weight:600; cursor:pointer;">دخول برمز الاسترداد</button>
+          <button onClick="{{ toPasskey }}" style="height:44px; border-radius:12px; border:none; background:transparent; color:#9a9da4; font-size:14px; cursor:pointer;" style-hover="color:#f2f2f0;">العودة إلى Passkey</button>
+        </div>
+      </sc-if>
+
+      <div style="display:flex; gap:10px; align-items:flex-start; padding-top:20px; border-top:1px solid #1d1f23; font-size:13px; line-height:1.7; color:#8f939a;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8f939a" stroke-width="1.8" stroke-linecap="round" style="flex:none; margin-top:3px;"><rect x="5" y="10.5" width="14" height="9.5" rx="2"></rect><path d="M8 10.5V8a4 4 0 018 0v2.5"></path></svg>
+        <span>هذه الصفحة للمدير فقط. رموز دخول العملاء لا تعمل هنا، وكل محاولة دخول تُسجَّل.</span>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;forceState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;busy&quot;,&quot;error&quot;,&quot;done&quot;,&quot;recovery&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { mode: 'passkey', phase: 'idle', code: '' };
+  componentDidMount() { const f = this.props.forceState; if (f && f !== 'idle') this.apply(f); }
+  componentDidUpdate(p) { if (p.forceState !== this.props.forceState) this.apply(this.props.forceState || 'idle'); }
+  apply(f) { this.setState(f === 'recovery' ? { mode: 'recovery', phase: 'idle' } : { mode: 'passkey', phase: f }); }
+  renderVals() {
+    const s = this.state, busy = s.phase === 'busy', done = s.phase === 'done';
+    const norm = s.code.replace(/[^A-Za-z0-9]/g, '');
+    const codeOk = norm.length === 12;
+    const titles = { idle: 'دخول المدير', busy: 'بانتظار جهازك…', error: 'دخول المدير', done: 'تم التحقق' };
+    const subs = {
+      idle: 'استخدم Passkey المسجّل على جهازك: بصمة الإصبع أو الوجه أو قفل الشاشة.',
+      busy: 'أكمل التحقق في النافذة التي فتحها المتصفح.',
+      error: 'يمكنك المحاولة مرة أخرى.',
+      done: 'جارٍ فتح لوحة الإدارة…',
+    };
+    return {
+      title: s.mode === 'recovery' ? 'الدخول برمز استرداد' : titles[s.phase],
+      sub: s.mode === 'recovery' ? 'اكتب أحد رموز الاسترداد التي حفظتها عند إعداد الحساب.' : subs[s.phase],
+      isDone: done, notDone: !done, isError: s.phase === 'error',
+      showPasskey: s.mode === 'passkey' && !done, showRecovery: s.mode === 'recovery',
+      busy, btnLabel: busy ? 'جارٍ التحقق…' : 'الدخول بـ Passkey',
+      btnBg: busy ? '#1d1f23' : '#f2f2f0', btnFg: busy ? '#9a9da4' : '#0a0b0d',
+      signIn: () => { this.setState({ phase: 'busy' }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ phase: Math.random() < 0.3 ? 'error' : 'done' }), 1600); },
+      toRecovery: () => this.setState({ mode: 'recovery', phase: 'idle' }),
+      toPasskey: () => this.setState({ mode: 'passkey', phase: 'idle' }),
+      code: s.code, onCode: (e) => this.setState({ code: e.target.value.toUpperCase() }),
+      codeOff: !codeOk, codeBg: codeOk ? '#f2f2f0' : '#1d1f23', codeFg: codeOk ? '#0a0b0d' : '#6b6e75',
+      useCode: () => this.setState({ mode: 'passkey', phase: 'done' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

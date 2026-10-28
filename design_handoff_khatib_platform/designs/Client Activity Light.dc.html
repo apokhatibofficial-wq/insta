@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6f6f3;-webkit-font-smoothing:antialiased}
+a{color:#141518;text-decoration:underline;text-underline-offset:3px}a:hover{color:#000}
+button,input{font:inherit}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; background:#f6f6f3; color:#141518; font-family:'IBM Plex Sans Arabic',sans-serif;">
+  <header style="position:sticky; top:0; z-index:10; background:rgba(246,246,243,.86); backdrop-filter:blur(12px); border-bottom:1px solid #e2e2dc;">
+    <div style="max-width:1120px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; gap:24px;">
+      <div dir="ltr" style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#62666d;">TECHNICAL SOLUTIONS</span></div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:4px; overflow-x:auto; flex:1; min-width:0;">
+        <a href="Client Dashboard Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الرئيسية</a>
+        <a href="Client Posts Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">المنشورات</a>
+        <a href="Client Replies Light.dc.html?post=all" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الردود العامة</a>
+        <a href="#" aria-current="page" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; background:#e9e9e4; color:#141518; text-decoration:none; font-size:15px; font-weight:600;">السجل</a>
+        <a href="Client Settings Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الحساب</a>
+      </nav>
+      <button style="flex:none; height:38px; padding:0 14px; border-radius:10px; border:1px solid #d4d4cd; background:transparent; color:#46494f; font-size:14px; cursor:pointer;" style-hover="color:#000; border-color:#a9aba5;">خروج</button>
+    </div>
+  </header>
+
+  <main style="max-width:1120px; margin:0 auto; padding:28px 24px 64px; display:flex; flex-direction:column; gap:22px;">
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <h1 style="margin:0; font-size:28px; font-weight:700;">السجل</h1>
+      <p style="margin:0; font-size:15px; color:#5b5f66; text-wrap:pretty;">كل ما فعله البوت على حسابك، وما لم يستطع فعله ولماذا. الأوقات بتوقيت دمشق.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+        <div style="padding:18px 20px; border-radius:18px; background:#ffffff; border:1px solid #e2e2dc; display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:14px; color:#5b5f66;">{{ s.label }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:500; color:{{ s.fg }};">{{ s.value }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:space-between;">
+      <div role="tablist" aria-label="نوع الحدث" style="display:flex; gap:4px; padding:4px; border-radius:12px; background:#f1f1ed; border:1px solid #e2e2dc; overflow-x:auto; max-width:100%;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <button role="tab" aria-selected="{{ f.on }}" onClick="{{ f.pick }}" style="flex:none; height:34px; padding:0 14px; border-radius:9px; border:none; background:{{ f.bg }}; color:{{ f.fg }}; font-size:14px; font-weight:500; cursor:pointer; white-space:nowrap;">{{ f.label }}</button>
+        </sc-for>
+      </div>
+      <div role="tablist" aria-label="المدة" style="display:flex; gap:4px; padding:4px; border-radius:12px; background:#f1f1ed; border:1px solid #e2e2dc;">
+        <sc-for list="{{ ranges }}" as="r" hint-placeholder-count="3">
+          <button role="tab" aria-selected="{{ r.on }}" onClick="{{ r.pick }}" style="height:34px; padding:0 14px; border-radius:9px; border:none; background:{{ r.bg }}; color:{{ r.fg }}; font-size:14px; cursor:pointer; white-space:nowrap;">{{ r.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+        <section style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="margin:0; font-size:14px; font-weight:600; color:#5b5f66;">{{ g.day }}</h2>
+          <div style="border-radius:18px; background:#ffffff; border:1px solid #e2e2dc; overflow:hidden;">
+            <sc-for list="{{ g.items }}" as="e" hint-placeholder-count="3">
+              <div style="display:flex; gap:14px; align-items:flex-start; padding:16px 20px; border-top:{{ e.border }};">
+                <span style="flex:none; width:34px; height:34px; border-radius:10px; background:{{ e.tint }}; color:{{ e.fg }}; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700;">{{ e.icon }}</span>
+                <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:4px;">
+                  <span style="font-size:15px; line-height:1.6; text-wrap:pretty;">{{ e.text }}</span>
+                  <span style="font-size:13px; color:#62666d; line-height:1.6;">{{ e.meta }}</span>
+                  <sc-if value="{{ e.hasFix }}" hint-placeholder-val="{{ false }}">
+                    <span style="margin-top:4px; padding:10px 12px; border-radius:12px; background:rgba(148,101,15,.07); border:1px solid rgba(148,101,15,.3); color:#7a540d; font-size:13px; line-height:1.7;">{{ e.fix }}</span>
+                  </sc-if>
+                </div>
+                <span style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#62666d;">{{ e.time }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:48px 20px; text-align:center;">
+        <img src="assets/robot-wink.png" alt="" style="filter:drop-shadow(0 6px 16px rgba(0,0,0,.2)); width:120px;">
+        <span style="font-size:17px; font-weight:600;">لا أحداث في هذه الفترة</span>
+        <span style="font-size:14px; color:#5b5f66;">سيظهر هنا كل رد يرسله البوت.</span>
+      </div>
+    </sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  EV = [];
+  KIND = {
+    reply: { icon: '↩', fg: '#1b7f52', label: 'ردود' },
+    skip: { icon: '–', fg: '#5b5f66', label: 'ردود' },
+    fail: { icon: '!', fg: '#94650f', label: 'تحتاج انتباهك' },
+    set: { icon: '✎', fg: '#3b3e44', label: 'تغييرات' },
+    sys: { icon: '•', fg: '#3b3e44', label: 'تغييرات' },
+  };
+  DAYS = ['اليوم · 28 تشرين الأول', 'أمس · 27 تشرين الأول', '26 تشرين الأول', '25 تشرين الأول'];
+  state = { f: 'all', r: 7 };
+  renderVals() {
+    const s = this.state;
+    const match = (e) => e.d < s.r && (s.f === 'all' || (s.f === 'reply' && (e.k === 'reply' || e.k === 'skip')) || (s.f === 'fail' && e.k === 'fail') || (s.f === 'set' && (e.k === 'set' || e.k === 'sys')));
+    const list = this.EV.filter(match);
+    const groups = [];
+    list.forEach(e => {
+      let g = groups.find(x => x.d === e.d); if (!g) { g = { d: e.d, day: this.DAYS[e.d], items: [] }; groups.push(g); }
+      const K = this.KIND[e.k];
+      g.items.push({ text: e.text, meta: e.meta, time: e.t, icon: K.icon, fg: K.fg, tint: K.fg + '1f', hasFix: !!e.fix, fix: e.fix || '', border: g.items.length ? '1px solid #ececE8' : 'none' });
+    });
+    const inR = this.EV.filter(e => e.d < s.r);
+    const tab = (cur, k, label, set) => ({ label, on: cur === k ? 'true' : 'false', pick: set, bg: cur === k ? '#ffffff' : 'transparent', fg: cur === k ? '#141518' : '#5b5f66' });
+    return {
+      stats: [
+        { label: 'ردود أرسلها البوت', value: String(inR.filter(e => e.k === 'reply').length), fg: '#141518' },
+        { label: 'تعليقات تجاهلها لمنع التكرار', value: String(inR.filter(e => e.k === 'skip').length), fg: '#141518' },
+        { label: 'تحتاج انتباهك', value: String(inR.filter(e => e.k === 'fail').length), fg: '#94650f' },
+      ],
+      filters: [['all', 'الكل'], ['reply', 'الردود'], ['fail', 'تحتاج انتباهك'], ['set', 'التغييرات']].map(([k, l]) => tab(s.f, k, l, () => this.setState({ f: k }))),
+      ranges: [[1, 'اليوم'], [7, '7 أيام'], [30, '30 يومًا']].map(([k, l]) => tab(s.r, k, l, () => this.setState({ r: k }))),
+      groups, empty: list.length === 0,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6f6f3;-webkit-font-smoothing:antialiased}
+a{color:#141518;text-decoration:underline;text-underline-offset:3px}a:hover{color:#000}
+button,input,textarea{font:inherit}
+textarea::placeholder{color:#9a9ca2}
+</style>
+</helmet>
+<div dir="rtl" style="position:relative; min-height:100vh; background:#f6f6f3; color:#141518; font-family:'IBM Plex Sans Arabic',sans-serif; display:flex;">
+
+  <aside style="flex:none; width:248px; border-left:1px solid #e2e2dc; display:flex; flex-direction:column; padding:24px 16px; gap:28px; position:sticky; top:0; height:100vh; box-sizing:border-box;">
+    <div style="display:flex; align-items:center; gap:10px; padding:0 8px;">
+      <div style="position:relative; width:44px; height:30px; flex:none;"><img src="assets/robot-wink.png" alt="" style="filter:drop-shadow(0 6px 16px rgba(0,0,0,.2)); position:absolute; inset:0; width:100%; height:100%; object-fit:contain;"></div>
+      <div dir="ltr" style="display:flex; flex-direction:column; font-family:'IBM Plex Mono',monospace; letter-spacing:.14em; line-height:1.3;"><span style="font-size:12px; font-weight:600;">KHATIB</span><span style="font-size:9px; color:#62666d;">ADMIN</span></div>
+    </div>
+    <nav style="display:flex; flex-direction:column; gap:2px;">
+      <a href="Admin Clients Light.dc.html" style="display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:12px; background:#e9e9e4; color:#141518; text-decoration:none; font-size:15px; font-weight:600;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5"></path><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.8c1.6.8 2.6 2.6 3 5.2"></path></svg>العملاء</a>
+      <a href="Admin Subscriptions Light.dc.html" style="display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:12px; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="background:#f1f1ed; color:#141518;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>الاشتراكات</a>
+      <a href="Admin Bots Light.dc.html" style="display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:12px; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="background:#f1f1ed; color:#141518;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="4" y="7" width="16" height="12" rx="4"></rect><path d="M12 7V4M9 12.5v1M15 12.5v1"></path></svg>البوتات</a>
+      <a href="Admin Audit Log Light.dc.html" style="display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:12px; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="background:#f1f1ed; color:#141518;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 4h14v16H5z"></path><path d="M9 9h6M9 13h6M9 17h3"></path></svg>سجل العمليات</a>
+    </nav>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:10px; padding:14px; border-radius:16px; background:#f1f1ed; border:1px solid #e2e2dc;">
+      <div style="width:34px; height:34px; border-radius:10px; background:#e2e2dc; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:14px;">خ</div>
+      <div style="display:flex; flex-direction:column;"><span style="font-size:14px; font-weight:600;">المدير</span><span style="font-size:12px; color:#62666d;">دخول بـ Passkey</span></div>
+    </div>
+  </aside>
+
+  <main style="flex:1; min-width:0; padding:28px 40px 56px; display:flex; flex-direction:column; gap:24px;">
+    <nav aria-label="مسار التنقل" style="display:flex; align-items:center; gap:8px; font-size:14px; color:#62666d;">
+      <a href="Admin Clients Light.dc.html" style="color:#5b5f66; text-decoration:none;" style-hover="color:#141518;">العملاء</a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.5 6l-6 6 6 6"></path></svg>
+      <span style="color:#141518;">اسم العميل</span>
+    </nav>
+
+    <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+          <h1 style="margin:0; font-size:30px; font-weight:700;">اسم العميل</h1>
+          <span style="display:inline-flex; align-items:center; gap:7px; height:28px; padding:0 12px; border-radius:999px; background:{{ subBg }}; color:{{ subFg }}; font-size:13px; font-weight:500;"><span style="width:6px; height:6px; border-radius:50%; background:{{ subFg }};"></span>{{ subLabel }}</span>
+          <sc-if value="{{ accountOff }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; height:28px; padding:0 12px; border-radius:999px; background:#8f939a1f; color:#46494f; font-size:13px; font-weight:500;">الحساب معطّل</span></sc-if>
+        </div>
+        <div style="display:flex; gap:18px; flex-wrap:wrap; font-size:14px; color:#62666d;">
+          <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;">KTS-0133</span>
+          <span>عميل منذ 1 آب 2026</span>
+          <span dir="ltr">@username</span>
+        </div>
+      </div>
+      <button onClick="{{ toggleAccount }}" style="white-space:nowrap; flex:none; height:44px; padding:0 18px; border-radius:12px; border:1px solid {{ accBtnBorder }}; background:transparent; color:{{ accBtnFg }}; font-size:15px; font-weight:500; cursor:pointer;" style-hover="background:#f1f1ed;">{{ accBtnLabel }}</button>
+    </header>
+
+    <sc-if value="{{ showIgAlert }}" hint-placeholder-val="{{ true }}">
+      <div role="alert" style="display:flex; gap:14px; align-items:flex-start; padding:18px 20px; border-radius:18px; background:rgba(229,72,77,.08); border:1px solid rgba(229,72,77,.32);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c0302f" stroke-width="1.8" stroke-linecap="round" style="flex:none; margin-top:2px;"><path d="M9.5 14.5l5-5M8 11l-2 2a3.5 3.5 0 0 0 5 5l2-2M16 13l2-2a3.5 3.5 0 0 0-5-5l-2 2"></path></svg>
+        <div style="display:flex; flex-direction:column; gap:4px; flex:1;">
+          <span style="font-size:16px; font-weight:600; color:#9f2a28;">البوت متوقف: انتهت صلاحية ربط إنستغرام</span>
+          <span style="font-size:14px; line-height:1.7; color:#9b3b38;">لم تعد Meta تقبل تفويض هذا الحساب منذ 27 تشرين الأول، 14:20. يحتاج العميل إلى إعادة الربط من لوحته، ولا يمكن إصلاح ذلك من هنا. أُرسل إليه تنبيه داخل لوحته.</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:16px; align-items:start;">
+
+      <section aria-labelledby="sub-h" style="display:flex; flex-direction:column; gap:20px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <h2 id="sub-h" style="margin:0; font-size:18px; font-weight:700;">الاشتراك</h2>
+          <span style="font-size:13px; color:#62666d;">30 يومًا · بتوقيت دمشق</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px;">
+            <span style="font-size:15px; color:#46494f;">{{ periodLabel }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:500;">{{ daysLeftLabel }}</span>
+          </div>
+          <div role="progressbar" aria-valuemin="0" aria-valuemax="{{ totalDays }}" aria-valuenow="{{ leftDays }}" aria-label="الأيام المتبقية من الاشتراك" style="height:8px; border-radius:999px; background:#e2e2dc; overflow:hidden;">
+            <div style="height:100%; width:{{ usedPct }}; border-radius:999px; background:{{ subFg }}; transition:width 600ms cubic-bezier(.16,1,.3,1);"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; color:#62666d;"><span>{{ startLabel }}</span><span>{{ endLabel }}</span></div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onClick="{{ openRenew }}" style="white-space:nowrap; flex:none; height:46px; padding:0 18px; border-radius:12px; border:none; background:#141518; color:#f6f6f3; font-size:15px; font-weight:600; cursor:pointer;" style-hover="background:#000;" style-active="transform:scale(.98);">تجديد 30 يومًا</button>
+          <button onClick="{{ togglePause }}" style="white-space:nowrap; flex:none; height:46px; padding:0 16px; border-radius:12px; border:1px solid #d4d4cd; background:transparent; color:#141518; font-size:15px; cursor:pointer;" style-hover="border-color:#a9aba5;">{{ pauseLabel }}</button>
+          <button onClick="{{ openEnd }}" style="white-space:nowrap; flex:none; height:46px; padding:0 16px; border-radius:12px; border:1px solid transparent; background:transparent; color:#c0302f; font-size:15px; cursor:pointer;" style-hover="background:rgba(229,72,77,.08);">إنهاء الاشتراك</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="code-h" style="display:flex; flex-direction:column; gap:18px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <h2 id="code-h" style="margin:0; font-size:18px; font-weight:700;">رمز الدخول والجلسات</h2>
+          <span style="display:inline-flex; align-items:center; gap:7px; font-size:13px; color:{{ codeFg }};"><span style="width:6px; height:6px; border-radius:50%; background:{{ codeFg }};"></span>{{ codeStatus }}</span>
+        </div>
+        <dl style="margin:0; display:grid; grid-template-columns:auto 1fr; gap:10px 20px; font-size:14px;">
+          <dt style="color:#62666d;">الرمز</dt><dd dir="ltr" style="margin:0; font-family:'IBM Plex Mono',monospace; text-align:right; color:#46494f;">{{ codeMask }}</dd>
+          <dt style="color:#62666d;">أُنشئ</dt><dd style="margin:0;">{{ codeCreated }}</dd>
+          <dt style="color:#62666d;">آخر دخول</dt><dd style="margin:0;">{{ lastLogin }}</dd>
+          <dt style="color:#62666d;">جلسات نشطة</dt><dd style="margin:0;">{{ sessionsLabel }}</dd>
+        </dl>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onClick="{{ openRegen }}" style="white-space:nowrap; flex:none; height:44px; padding:0 16px; border-radius:12px; border:1px solid #d4d4cd; background:transparent; color:#141518; font-size:15px; cursor:pointer;" style-hover="border-color:#a9aba5;">توليد رمز جديد</button>
+          <button onClick="{{ endSessions }}" disabled="{{ noSessions }}" style="white-space:nowrap; flex:none; height:44px; padding:0 16px; border-radius:12px; border:1px solid #d4d4cd; background:transparent; color:{{ sessBtnFg }}; font-size:15px; cursor:{{ sessCursor }};" style-hover="border-color:#a9aba5;">إنهاء كل الجلسات</button>
+          <button onClick="{{ revokeCode }}" disabled="{{ codeRevoked }}" style="white-space:nowrap; flex:none; height:44px; padding:0 16px; border-radius:12px; border:1px solid transparent; background:transparent; color:{{ revokeFg }}; font-size:15px; cursor:{{ revokeCursor }};" style-hover="background:rgba(229,72,77,.08);">إبطال الرمز</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="bot-h" style="display:flex; flex-direction:column; gap:18px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <h2 id="bot-h" style="margin:0; font-size:18px; font-weight:700;">الأتمتة</h2>
+            <span style="font-size:14px; color:{{ botFg }};">{{ botLabel }}</span>
+          </div>
+          <button role="switch" aria-checked="{{ allowStr }}" aria-label="السماح بالأتمتة لهذا العميل" onClick="{{ toggleAllow }}" style="flex:none; position:relative; width:52px; height:30px; border-radius:999px; border:none; background:{{ swBg }}; cursor:pointer; transition:background 200ms ease;" style-focus="outline:2px solid #141518; outline-offset:3px;">
+            <span style="position:absolute; top:3px; right:3px; width:24px; height:24px; border-radius:50%; background:{{ knobBg }}; transform:{{ knobTf }}; transition:transform 260ms cubic-bezier(.16,1,.3,1), background 200ms ease;"></span>
+          </button>
+        </div>
+        <p style="margin:0; font-size:13px; line-height:1.7; color:#62666d;">إيقاف إداري فوري يتجاوز إعدادات العميل. حتى لو كان المفتاح مفعّلًا، يرفض الخادم تشغيل الأتمتة إذا انتهى الاشتراك أو كان الحساب معطّلًا.</p>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+          <sc-for list="{{ checks }}" as="c" hint-placeholder-count="4">
+            <li style="display:flex; align-items:center; gap:10px; font-size:14px;">
+              <span style="flex:none; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:{{ c.bg }}; color:{{ c.fg }};">
+                <sc-if value="{{ c.ok }}" hint-placeholder-val="{{ true }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+                <sc-if value="{{ c.bad }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"></path></svg></sc-if>
+              </span>
+              <span style="color:{{ c.text }};">{{ c.label }}</span>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+
+      <section aria-labelledby="log-h" style="display:flex; flex-direction:column; gap:16px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <div style="display:flex; align-items:center; justify-content:space-between;">
+          <h2 id="log-h" style="margin:0; font-size:18px; font-weight:700;">سجل التغييرات</h2>
+          <span style="font-size:13px; color:#62666d;">لا يمكن تعديله أو حذفه</span>
+        </div>
+        <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column;">
+          <sc-for list="{{ log }}" as="e" hint-placeholder-count="5">
+            <li style="display:grid; grid-template-columns:14px 1fr; gap:14px; padding-bottom:16px;">
+              <span style="position:relative; display:flex; justify-content:center;"><span style="margin-top:7px; width:8px; height:8px; border-radius:50%; background:{{ e.dot }};"></span></span>
+              <div style="display:flex; flex-direction:column; gap:3px;">
+                <span style="font-size:14px; font-weight:500;">{{ e.text }}</span>
+                <span style="font-size:12px; color:#62666d;">{{ e.meta }}</span>
+              </div>
+            </li>
+          </sc-for>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:30; display:flex; align-items:center; justify-content:center; padding:24px;">
+      <div onClick="{{ closeModal }}" style="position:absolute; inset:0; background:rgba(20,21,24,.34);"></div>
+      <section ref="{{ modalRef }}" role="dialog" aria-modal="true" aria-labelledby="m-title" style="position:relative; width:min(460px, 100%); display:flex; flex-direction:column; gap:20px; padding:28px; border-radius:24px; background:#ffffff; border:1px solid #d4d4cd; box-shadow:0 40px 80px -30px rgba(0,0,0,.18);">
+        <h2 id="m-title" style="margin:0; font-size:21px; font-weight:700;">{{ mTitle }}</h2>
+
+        <sc-if value="{{ mRenew }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; padding:16px; border-radius:16px; background:#f1f1ed; border:1px solid #e2e2dc;">
+              <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:12px; color:#62666d;">الانتهاء الحالي</span><span style="font-size:15px;">{{ endLabel }}</span></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#62666d" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"></path></svg>
+              <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:12px; color:#62666d;">الانتهاء الجديد</span><span style="font-size:15px; font-weight:600; color:#1b7f52;">{{ renewEndLabel }}</span></div>
+            </div>
+            <p style="margin:0; font-size:13px; line-height:1.7; color:#62666d;">{{ renewRule }}</p>
+            <label style="display:flex; flex-direction:column; gap:8px;">
+              <span style="font-size:14px; color:#3b3e44;">ملاحظة الدفع <span style="color:#62666d;">(اختياري)</span></span>
+              <textarea rows="2" value="{{ note }}" onChange="{{ onNote }}" placeholder="مثال: دُفع نقدًا — تشرين الثاني" style="box-sizing:border-box; padding:12px 14px; border-radius:12px; background:#f1f1ed; border:1px solid #d4d4cd; color:#141518; font-size:15px; resize:vertical; outline:none;" style-focus="border-color:#62666d;"></textarea>
+            </label>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ mEnd }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0; font-size:15px; line-height:1.8; color:#3b3e44;">تتوقف الأتمتة فورًا، ويرى العميل صفحة «انتهى الاشتراك» عند دخوله. لن تُحذف بياناته، ويمكنك تجديد الاشتراك لاحقًا.</p>
+        </sc-if>
+
+        <sc-if value="{{ mRegenAsk }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0; font-size:15px; line-height:1.8; color:#3b3e44;">سيتوقف الرمز الحالي فورًا، وتُنهى كل الجلسات المفتوحة. ستحتاج إلى إرسال الرمز الجديد للعميل.</p>
+        </sc-if>
+
+        <sc-if value="{{ mRegenShow }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:28px; font-weight:500; letter-spacing:.08em; text-align:center; padding:18px 0; border-radius:16px; background:#f1f1ed; border:1px solid #d4d4cd; text-shadow:none;">{{ newCode }}</div>
+            <span style="font-size:13px; line-height:1.7; color:#7a540d;">يظهر هذه المرة فقط. انسخه الآن وأرسله عبر قناة خاصة.</span>
+          </div>
+        </sc-if>
+
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{ mPrimary }}" style="flex:1; height:48px; border-radius:14px; border:none; background:{{ mPrimaryBg }}; color:{{ mPrimaryFg }}; font-size:16px; font-weight:600; cursor:pointer;" style-active="transform:scale(.985);">{{ mPrimaryLabel }}</button>
+          <sc-if value="{{ mHasCancel }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ closeModal }}" style="height:48px; padding:0 18px; border-radius:14px; border:1px solid #d4d4cd; background:transparent; color:#141518; font-size:16px; cursor:pointer;" style-hover="border-color:#a9aba5;">إلغاء</button>
+          </sc-if>
+        </div>
+      </section>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" ref="{{ toastRef }}" style="position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:40; display:flex; align-items:center; gap:10px; padding:12px 18px; border-radius:14px; background:#141518; color:#f6f6f3; font-size:15px; font-weight:500; box-shadow:0 20px 40px -16px rgba(0,0,0,.16);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  TODAY = '2026-10-28';
+  C = { green: '#1b7f52', amber: '#94650f', red: '#c0302f', gray: '#62666d' };
+  state = {
+    start: '2026-10-02', end: '2026-10-31', sub: 'active', account: true, allow: true, igOk: false,
+    code: 'active', codeCreated: '2026-08-01', sessions: 2, lastLogin: 'اليوم، 09:12',
+    modal: null, note: '', newCode: '', toast: '',
+    log: [
+      { text: 'تعطّل ربط إنستغرام: رفضت Meta التفويض', meta: 'النظام · 27 تشرين الأول، 14:20', dot: '#c0302f' },
+      { text: 'جُدّد الاشتراك 30 يومًا · «دُفع نقدًا»', meta: 'المدير · 2 تشرين الأول، 11:05', dot: '#1b7f52' },
+      { text: 'جُدّد الاشتراك 30 يومًا', meta: 'المدير · 2 أيلول، 10:40', dot: '#1b7f52' },
+      { text: 'رُبط حساب ‎@username‎', meta: 'العميل · 2 آب، 18:22', dot: '#62666d' },
+      { text: 'أُنشئ الحساب وولّد رمز الدخول', meta: 'المدير · 1 آب، 16:03', dot: '#62666d' },
+    ],
+  };
+  fmt(iso) { try { return new Intl.DateTimeFormat('ar-SY-u-nu-latn', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T00:00:00Z')); } catch (e) { return iso; } }
+  days(a, b) { return Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000); }
+  add(iso, n) { return new Date(Date.parse(iso + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10); }
+  now() { return 'المدير · الآن'; }
+  push(text, dot) { this.setState(s => ({ log: [{ text, meta: this.now(), dot }, ...s.log] })); }
+  flash(msg) { this.setState({ toast: msg }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  genCode() { const al = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'; const a = new Uint32Array(12); crypto.getRandomValues(a); return Array.from(a, v => al[v % al.length]).join(''); }
+  reduced() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  pop(el, kf) { if (el && el !== this['_' + kf] && !this.reduced()) { this['_' + kf] = el; el.animate(kf === 'm' ? [{ opacity: 0, transform: 'translateY(12px) scale(.98)' }, { opacity: 1, transform: 'none' }] : [{ opacity: 0, transform: 'translate(-50%, 12px)' }, { opacity: 1, transform: 'translate(-50%, 0)' }], { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' }); } }
+  componentDidMount() { this.onKey = (e) => { if (e.key === 'Escape' && this.state.modal) this.setState({ modal: null }); }; window.addEventListener('keydown', this.onKey); }
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); clearTimeout(this.tt); }
+  bucket() {
+    const s = this.state;
+    if (s.sub === 'paused') return 'paused';
+    if (s.sub === 'ended' || this.days(this.TODAY, s.end) < 0) return 'expired';
+    return this.days(this.TODAY, s.end) <= 7 ? 'soon' : 'active';
+  }
+  renderVals() {
+    const s = this.state, C = this.C, b = this.bucket();
+    const left = Math.max(0, this.days(this.TODAY, s.end) + 1);
+    const total = Math.max(1, this.days(this.TODAY < s.start ? this.TODAY : s.start, s.end) + 1);
+    const used = Math.min(total, Math.max(0, total - left));
+    const sub = { active: ['نشط', C.green], soon: [left === 1 ? 'ينتهي اليوم' : `ينتهي خلال ${left} أيام`, C.amber], expired: ['منتهٍ', C.red], paused: ['موقوف إداريًا', C.gray] }[b];
+    const renewFrom = b === 'expired' ? this.TODAY : this.add(s.end, 1);
+    const renewEnd = this.add(renewFrom, 29);
+    const subOk = b === 'active' || b === 'soon';
+    const running = s.allow && s.account && subOk && s.igOk;
+    const reason = !s.account ? 'متوقف: الحساب معطّل' : !subOk ? (b === 'paused' ? 'متوقف: إيقاف إداري للاشتراك' : 'متوقف: الاشتراك منتهٍ') : !s.allow ? 'متوقف: أوقفتَه إداريًا' : !s.igOk ? 'متوقف: خلل في ربط إنستغرام' : 'يعمل';
+    const ck = (ok, label) => ({ ok, bad: !ok, label, bg: ok ? C.green + '24' : C.red + '24', fg: ok ? C.green : C.red, text: ok ? '#3b3e44' : '#9f2a28' });
+    const m = s.modal;
+    const titles = { renew: 'تجديد الاشتراك', end: 'إنهاء الاشتراك الآن؟', regenAsk: 'توليد رمز دخول جديد؟', regenShow: 'الرمز الجديد' };
+    const mPrimary = {
+      renew: () => { const note = s.note.trim(); this.setState({ start: b === 'expired' ? this.TODAY : s.start, end: renewEnd, sub: 'active', modal: null, note: '' }); this.push(`جُدّد الاشتراك 30 يومًا${note ? ` · «${note}»` : ''}`, C.green); this.flash(`جُدّد حتى ${this.fmt(renewEnd)}`); },
+      end: () => { this.setState({ sub: 'ended', end: this.add(this.TODAY, -1), modal: null }); this.push('أُنهي الاشتراك وتوقفت الأتمتة', C.red); this.flash('أُنهي الاشتراك'); },
+      regenAsk: () => { this.setState({ modal: 'regenShow', newCode: this.genCode(), code: 'active', codeCreated: this.TODAY, sessions: 0, lastLogin: 'لم يدخل بعد' }); this.push('وُلّد رمز جديد وأُبطل القديم وأُنهيت الجلسات', C.amber); },
+      regenShow: () => { try { navigator.clipboard.writeText(s.newCode); } catch (e) {} this.setState({ modal: null, newCode: '' }); this.flash('نُسخ الرمز'); },
+    }[m];
+    return {
+      subLabel: sub[0], subFg: sub[1], subBg: sub[1] + '1f',
+      accountOff: !s.account,
+      accBtnLabel: s.account ? 'تعطيل الحساب' : 'إعادة تفعيل الحساب',
+      accBtnFg: s.account ? '#c0302f' : '#141518', accBtnBorder: s.account ? 'rgba(229,72,77,.35)' : '#d4d4cd',
+      toggleAccount: () => { const on = !s.account; this.setState({ account: on, sessions: on ? s.sessions : 0 }); this.push(on ? 'أُعيد تفعيل الحساب' : 'عُطّل الحساب وأُنهيت الجلسات', on ? C.green : C.red); this.flash(on ? 'فُعّل الحساب' : 'عُطّل الحساب'); },
+      showIgAlert: !s.igOk,
+      periodLabel: b === 'expired' ? 'انتهى الاشتراك' : b === 'paused' ? 'الاشتراك موقوف' : 'الأيام المتبقية',
+      daysLeftLabel: b === 'expired' ? '0' : `${Math.min(left, total)}/${total}`,
+      usedDays: used, leftDays: Math.min(left, total), totalDays: total, usedPct: `${Math.round((b === 'expired' ? 0 : Math.min(1, left / total)) * 100)}%`,
+      startLabel: this.fmt(s.start), endLabel: this.fmt(s.end), renewEndLabel: this.fmt(renewEnd),
+      renewRule: b === 'expired' ? 'الاشتراك منتهٍ، لذا تبدأ المدة الجديدة من اليوم.' : 'الاشتراك ما زال فعّالًا، لذا تُضاف المدة بعد تاريخ الانتهاء الحالي دون خسارة أي يوم.',
+      openRenew: () => this.setState({ modal: 'renew' }),
+      openEnd: () => this.setState({ modal: 'end' }),
+      pauseLabel: s.sub === 'paused' ? 'استئناف الاشتراك' : 'إيقاف مؤقت',
+      togglePause: () => { const p = s.sub !== 'paused'; this.setState({ sub: p ? 'paused' : 'active' }); this.push(p ? 'أُوقف الاشتراك مؤقتًا' : 'استُؤنف الاشتراك', p ? C.gray : C.green); this.flash(p ? 'أُوقف الاشتراك' : 'استُؤنف الاشتراك'); },
+      codeStatus: s.code === 'active' ? 'فعّال' : 'مُبطَل', codeFg: s.code === 'active' ? C.green : C.red,
+      codeMask: s.code === 'active' ? '•••• •••• ••••' : '—',
+      codeCreated: this.fmt(s.codeCreated), lastLogin: s.lastLogin,
+      sessionsLabel: s.sessions === 0 ? 'لا توجد' : s.sessions === 1 ? 'جلسة واحدة' : s.sessions === 2 ? 'جلستان' : `${s.sessions} جلسات`,
+      noSessions: s.sessions === 0, sessBtnFg: s.sessions === 0 ? '#9a9ca2' : '#141518', sessCursor: s.sessions === 0 ? 'not-allowed' : 'pointer',
+      endSessions: () => { if (!s.sessions) return; this.setState({ sessions: 0 }); this.push('أُنهيت كل جلسات العميل', C.amber); this.flash('أُنهيت الجلسات'); },
+      codeRevoked: s.code !== 'active', revokeFg: s.code !== 'active' ? '#9a9ca2' : '#c0302f', revokeCursor: s.code !== 'active' ? 'not-allowed' : 'pointer',
+      revokeCode: () => { if (s.code !== 'active') return; this.setState({ code: 'revoked', sessions: 0 }); this.push('أُبطل رمز الدخول', C.red); this.flash('أُبطل الرمز'); },
+      openRegen: () => this.setState({ modal: 'regenAsk' }),
+      allowStr: s.allow ? 'true' : 'false',
+      swBg: s.allow ? '#1b7f52' : '#d4d4cd', knobBg: s.allow ? '#f6f6f3' : '#62666d', knobTf: s.allow ? 'translateX(-22px)' : 'translateX(0px)',
+      toggleAllow: () => { const a = !s.allow; this.setState({ allow: a }); this.push(a ? 'سُمح بالأتمتة' : 'أُوقفت الأتمتة إداريًا', a ? C.green : C.red); },
+      botLabel: reason, botFg: running ? C.green : C.red,
+      checks: [ck(s.account, 'الحساب مفعّل'), ck(subOk, 'الاشتراك فعّال'), ck(s.allow, 'مسموح من الأدمن'), ck(s.igOk, 'ربط إنستغرام صالح')],
+      log: s.log,
+      modalOpen: !!m, modalRef: (el) => this.pop(el, 'm'), closeModal: () => this.setState({ modal: null, newCode: '' }),
+      mTitle: titles[m] || '', mRenew: m === 'renew', mEnd: m === 'end', mRegenAsk: m === 'regenAsk', mRegenShow: m === 'regenShow',
+      mHasCancel: m !== 'regenShow',
+      mPrimary,
+      mPrimaryLabel: { renew: 'تأكيد التجديد', end: 'إنهاء الاشتراك', regenAsk: 'توليد وإبطال القديم', regenShow: 'نسخ الرمز وإغلاق' }[m] || '',
+      mPrimaryBg: m === 'end' ? '#e5484d' : '#141518', mPrimaryFg: m === 'end' ? '#000' : '#f6f6f3',
+      newCode: s.newCode ? s.newCode.match(/.{1,4}/g).join(' ') : '',
+      note: s.note, onNote: (e) => this.setState({ note: e.target.value }),
+      toast: s.toast, toastRef: (el) => this.pop(el, 't'),
+    };
+  }
+}
+</script>
+</body>
+</html>

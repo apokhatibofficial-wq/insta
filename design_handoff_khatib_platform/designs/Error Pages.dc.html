@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0a0b0d;-webkit-font-smoothing:antialiased}
+a{color:#f2f2f0;text-decoration:underline;text-underline-offset:3px}a:hover{color:#fff}
+button{font:inherit}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; box-sizing:border-box; background:#0a0b0d; color:#f2f2f0; font-family:'IBM Plex Sans Arabic',sans-serif; display:flex; flex-direction:column;">
+  <header style="padding:28px 32px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+    <div dir="ltr" style="font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#8f939a;">TECHNICAL SOLUTIONS</span></div>
+    <div role="tablist" aria-label="معاينة الحالة" style="display:flex; gap:4px; padding:4px; border-radius:12px; background:#121316; border:1px solid #1d1f23;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <button role="tab" aria-selected="{{ t.on }}" onClick="{{ t.pick }}" style="height:32px; padding:0 12px; border-radius:9px; border:none; background:{{ t.bg }}; color:{{ t.fg }}; font-family:'IBM Plex Mono',monospace; font-size:13px; cursor:pointer;">{{ t.label }}</button>
+      </sc-for>
+    </div>
+  </header>
+  <main style="flex:1; display:flex; align-items:center; justify-content:center; padding:24px 20px 72px;">
+    <div style="width:100%; max-width:520px; display:flex; flex-direction:column; align-items:center; gap:24px; text-align:center;">
+      <img src="{{ img }}" alt="" style="width:200px; max-width:60%;">
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.16em; color:#8f939a;">{{ code }}</span>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <h1 style="margin:0; font-size:30px; font-weight:700; text-wrap:balance;">{{ title }}</h1>
+        <p style="margin:0; font-size:16px; line-height:1.75; color:#9a9da4; text-wrap:pretty;">{{ body }}</p>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+        <a href="{{ primaryHref }}" target="{{ target }}" rel="noopener noreferrer" style="height:52px; padding:0 28px; border-radius:14px; background:#f2f2f0; color:#0a0b0d; font-size:16px; font-weight:600; text-decoration:none; display:flex; align-items:center;" style-hover="background:#fff;">{{ primary }}</a>
+        <sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ reload }}" style="height:52px; padding:0 24px; border-radius:14px; border:1px solid #2a2c31; background:transparent; color:#f2f2f0; font-size:16px; cursor:pointer;" style-hover="border-color:#45484e;">{{ secondary }}</button>
+        </sc-if>
+      </div>
+      <sc-if value="{{ hasRef }}" hint-placeholder-val="{{ false }}">
+        <span style="font-size:13px; color:#8f939a;">رقم المرجع للدعم: <span dir="ltr" style="font-family:'IBM Plex Mono',monospace; color:#c4c7cc;">ERR-7F3A-2C91</span></span>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:800},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;404&quot;,&quot;500&quot;,&quot;session&quot;,&quot;disabled&quot;,&quot;maint&quot;],&quot;default&quot;:&quot;404&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  V = {
+    '404': { img: 'assets/robot-point.png', code: '404', title: 'هذه الصفحة غير موجودة', body: 'ربما تغيّر الرابط أو كُتب بشكل خاطئ. لوحتك وبياناتك بخير.', primary: 'العودة إلى لوحتك', href: 'Client Dashboard.dc.html' },
+    '500': { img: 'assets/robot-point.png', code: '500', title: 'حدث خطأ من جهتنا', body: 'لم يكتمل طلبك، ولم يتغيّر أي شيء في إعداداتك. جرّب مرة أخرى بعد قليل.', primary: 'العودة إلى لوحتك', href: 'Client Dashboard.dc.html', secondary: 'إعادة المحاولة', ref: true },
+    'session': { img: 'assets/robot-wink.png', code: 'SESSION', title: 'انتهت جلستك', body: 'سجّلنا خروجك للحماية. ادخل مرة أخرى برمز الدخول نفسه.', primary: 'الدخول من جديد', href: 'LoginScreen.dc.html' },
+    'disabled': { img: 'assets/robot-point.png', code: 'ACCOUNT', title: 'حسابك موقوف حاليًا', body: 'أوقف فريق KHATIB هذا الحساب، والبوت متوقف معه. بياناتك محفوظة. تواصل معنا لمعرفة السبب وإعادة التفعيل.', primary: 'تواصل عبر واتساب', href: 'https://wa.me/4368181700732' },
+    'maint': { img: 'assets/robot-wink.png', code: 'MAINTENANCE', title: 'نجري صيانة قصيرة', body: 'ستعود اللوحة خلال دقائق. البوت يستمر بالرد على التعليقات أثناء الصيانة.', primary: 'تحديث الصفحة', href: '#', secondary: null },
+  };
+  state = { v: '404' };
+  componentDidMount() { if (this.props.variant) this.setState({ v: this.props.variant }); }
+  componentDidUpdate(p) { if (p.variant !== this.props.variant && this.props.variant) this.setState({ v: this.props.variant }); }
+  renderVals() {
+    const x = this.V[this.state.v] || this.V['404'];
+    return {
+      tabs: [['404', '404'], ['500', '500'], ['session', 'جلسة'], ['disabled', 'موقوف'], ['maint', 'صيانة']].map(([k, l]) => ({ label: l, on: this.state.v === k ? 'true' : 'false', pick: () => this.setState({ v: k }), bg: this.state.v === k ? '#23252a' : 'transparent', fg: this.state.v === k ? '#f2f2f0' : '#9a9da4' })),
+      img: x.img, code: x.code, title: x.title, body: x.body, primary: x.primary, primaryHref: x.href, target: x.href.startsWith('http') ? '_blank' : '_self',
+      hasSecondary: !!x.secondary, secondary: x.secondary || '', reload: () => {}, hasRef: !!x.ref,
+    };
+  }
+}
+</script>
+</body>
+</html>

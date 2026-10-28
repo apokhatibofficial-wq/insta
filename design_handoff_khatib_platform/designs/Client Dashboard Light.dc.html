@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f6f6f3;-webkit-font-smoothing:antialiased}
+a{color:#141518;text-decoration:underline;text-underline-offset:3px}a:hover{color:#000}
+button{font:inherit}
+</style>
+</helmet>
+<div dir="rtl" style="min-height:100vh; background:#f6f6f3; color:#141518; font-family:'IBM Plex Sans Arabic',sans-serif;">
+  <header style="position:sticky; top:0; z-index:10; background:rgba(246,246,243,.86); backdrop-filter:blur(12px); border-bottom:1px solid #e2e2dc;">
+    <div style="max-width:1120px; margin:0 auto; padding:0 24px; height:68px; display:flex; align-items:center; gap:24px;">
+      <div dir="ltr" style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; display:flex; gap:8px;"><span style="font-weight:600;">KHATIB</span><span style="color:#62666d;">TECHNICAL SOLUTIONS</span></div>
+      <nav aria-label="القائمة الرئيسية" style="display:flex; gap:4px; overflow-x:auto; flex:1; min-width:0;">
+        <a href="#" aria-current="page" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; background:#e9e9e4; color:#141518; text-decoration:none; font-size:15px; font-weight:600;">الرئيسية</a>
+        <a href="Client Posts Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">المنشورات</a>
+        <a href="#" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">السجل</a>
+        <a href="Client Settings Light.dc.html" style="flex:none; height:38px; padding:0 14px; border-radius:10px; display:flex; align-items:center; color:#5b5f66; text-decoration:none; font-size:15px;" style-hover="color:#141518; background:#f1f1ed;">الحساب</a>
+      </nav>
+      <button style="flex:none; height:38px; padding:0 14px; border-radius:10px; border:1px solid #d4d4cd; background:transparent; color:#46494f; font-size:14px; cursor:pointer;" style-hover="color:#000; border-color:#a9aba5;">خروج</button>
+    </div>
+  </header>
+
+  <main style="max-width:1120px; margin:0 auto; padding:32px 24px 64px; display:flex; flex-direction:column; gap:20px;">
+
+    <section style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+      <div style="position:relative; flex:none; width:190px; aspect-ratio:700/430;">
+        <div ref="{{ shadowRef }}" style="position:absolute; left:20%; right:20%; bottom:-5%; height:18px; background:radial-gradient(closest-side, rgba(0,0,0,.12), rgba(255,255,255,0));"></div>
+        <div ref="{{ floatRef }}" style="position:absolute; inset:0;">
+          <div style="position:absolute; left:11%; top:3.72%; width:77.71%; aspect-ratio:544/373; opacity:{{ okOp }}; transition:opacity 300ms ease;">
+            <img src="assets/robot-wink-base.png" alt="" style="filter:drop-shadow(0 6px 16px rgba(0,0,0,.2)); position:absolute; inset:0; width:100%; height:100%;">
+            <div style="position:absolute; inset:0;">
+              <img data-blink="" src="assets/robot-wink-eyeopen.png" alt="" style="position:absolute; inset:0; width:100%; height:100%; transform-origin:38.7% 41.5%;">
+              <img src="assets/robot-wink-eyeline.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+              <img src="assets/robot-wink-mouth.png" alt="" style="position:absolute; inset:0; width:100%; height:100%;">
+            </div>
+          </div>
+          <img src="assets/robot-point.png" alt="" style="filter:drop-shadow(0 6px 16px rgba(0,0,0,.2)); position:absolute; left:5.71%; top:10.23%; width:89.57%; opacity:{{ warnOp }}; transition:opacity 300ms ease;">
+        </div>
+      </div>
+      <div style="position:relative; flex:1; min-width:260px; padding:20px 24px; border-radius:24px; background:#f1f1ed; border:1px solid #d4d4cd;">
+        <svg width="20" height="30" viewBox="0 0 20 30" style="position:absolute; right:-18px; top:50%; margin-top:-15px; overflow:visible;"><path d="M0 0 C6 6 12 11 19 15 C12 19 6 24 0 30 Z" fill="#f1f1ed" stroke="#d4d4cd" stroke-width="1"></path><rect x="-2" y="0.6" width="4.6" height="28.8" fill="#f1f1ed"></rect></svg>
+        <p style="position:relative; margin:0; font-size:15px; color:#5b5f66;">أهلًا، اسم العميل</p>
+        <p style="position:relative; margin:4px 0 0; font-size:22px; line-height:1.5; font-weight:600; text-shadow:none; text-wrap:pretty;">{{ headline }}</p>
+        <div style="position:absolute; inset:0; border-radius:24px; pointer-events:none; background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.03) 2px 3px);"></div>
+      </div>
+    </section>
+
+    <sc-if value="{{ needsConnect }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="connect-h" style="display:flex; flex-direction:column; gap:22px; padding:28px; border-radius:24px; background:#ffffff; border:1px solid #d4d4cd;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <h2 id="connect-h" style="margin:0; font-size:22px; font-weight:700;">{{ connectTitle }}</h2>
+          <p style="margin:0; font-size:15px; line-height:1.7; color:#5b5f66; text-wrap:pretty;">{{ connectBody }}</p>
+        </div>
+        <ol style="margin:0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+          <li style="display:flex; gap:12px; padding:16px; border-radius:16px; background:#f1f1ed;"><span style="flex:none; width:28px; height:28px; border-radius:50%; background:#e2e2dc; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:13px;">1</span><span style="font-size:14px; line-height:1.7; color:#3b3e44;">تأكد أن حسابك على إنستغرام احترافي (أعمال أو صانع محتوى).</span></li>
+          <li style="display:flex; gap:12px; padding:16px; border-radius:16px; background:#f1f1ed;"><span style="flex:none; width:28px; height:28px; border-radius:50%; background:#e2e2dc; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:13px;">2</span><span style="font-size:14px; line-height:1.7; color:#3b3e44;">اضغط «ربط»، وستنتقل إلى صفحة Meta الرسمية لتسجيل الدخول.</span></li>
+          <li style="display:flex; gap:12px; padding:16px; border-radius:16px; background:#f1f1ed;"><span style="flex:none; width:28px; height:28px; border-radius:50%; background:#e2e2dc; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:13px;">3</span><span style="font-size:14px; line-height:1.7; color:#3b3e44;">وافق على صلاحيات التعليقات والرسائل، ثم تعود إلى هنا تلقائيًا.</span></li>
+        </ol>
+        <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+          <button style="height:52px; padding:0 24px; border-radius:14px; border:none; background:#141518; color:#f6f6f3; font-size:16px; font-weight:600; cursor:pointer; white-space:nowrap;" style-hover="background:#000;" style-active="transform:scale(.98);" style-focus="outline:2px solid #141518; outline-offset:3px;">{{ connectCta }}</button>
+          <span style="display:flex; align-items:center; gap:8px; font-size:14px; color:#62666d;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"></rect><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"></path></svg>لن نطلب منك كلمة مرور إنستغرام أبدًا.</span>
+        </div>
+      </section>
+    </sc-if>
+
+    <section aria-label="الحالة" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px;">
+      <div style="display:flex; flex-direction:column; gap:12px; padding:22px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <span style="font-size:14px; color:#5b5f66;">الاشتراك</span>
+        <span style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'IBM Plex Mono',monospace; font-size:34px; font-weight:500; line-height:1;">24</span><span style="font-size:16px; color:#3b3e44;">يومًا متبقيًا</span></span>
+        <span style="font-size:13px; color:#62666d;">ينتهي في 21 تشرين الثاني 2026. للتجديد تواصل معنا.</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; padding:22px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <span style="font-size:14px; color:#5b5f66;">إنستغرام</span>
+        <span style="display:flex; align-items:center; gap:10px; font-size:18px; font-weight:600;"><span style="width:9px; height:9px; border-radius:50%; background:{{ igDot }};"></span><span dir="{{ igDir }}">{{ igLabel }}</span></span>
+        <span style="font-size:13px; color:#62666d;">{{ igMeta }}</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; padding:22px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <span style="font-size:14px; color:#5b5f66;">البوت</span>
+          <button role="switch" aria-checked="{{ onStr }}" aria-label="تشغيل البوت" onClick="{{ toggleBot }}" disabled="{{ cantRun }}" style="flex:none; position:relative; width:52px; height:30px; border-radius:999px; border:none; background:{{ swBg }}; cursor:{{ swCursor }}; opacity:{{ swOp }}; transition:background 200ms ease;" style-focus="outline:2px solid #141518; outline-offset:3px;">
+            <span style="position:absolute; top:3px; right:3px; width:24px; height:24px; border-radius:50%; background:{{ knobBg }}; transform:{{ knobTf }}; transition:transform 260ms cubic-bezier(.16,1,.3,1), background 200ms ease;"></span>
+          </button>
+        </div>
+        <span style="font-size:18px; font-weight:600; color:{{ botFg }};">{{ botLabel }}</span>
+        <span style="font-size:13px; color:#62666d;">{{ botMeta }}</span>
+      </div>
+    </section>
+
+    <sc-if value="{{ connected }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:12px; align-items:start;">
+        <section aria-labelledby="today-h" style="display:flex; flex-direction:column; gap:18px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <h2 id="today-h" style="margin:0; font-size:18px; font-weight:700;">الكلمات المفعّلة</h2>
+            <a href="Client Replies Light.dc.html" style="font-size:14px; color:#3b3e44;">إدارة الردود</a>
+          </div>
+          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;">
+            <sc-for list="{{ rules }}" as="r" hint-placeholder-count="3">
+              <li style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:14px; background:#f1f1ed;">
+                <div style="display:flex; flex-direction:column; gap:4px; min-width:0;">
+                  <span style="display:flex; gap:6px; flex-wrap:wrap;"><sc-for list="{{ r.words }}" as="w" hint-placeholder-count="2"><span style="height:26px; padding:0 10px; border-radius:8px; background:#e2e2dc; display:inline-flex; align-items:center; font-size:14px; font-weight:500;">{{ w }}</span></sc-for></span>
+                  <span style="font-size:13px; color:#62666d;">{{ r.does }}</span>
+                </div>
+                <span style="flex:none; font-family:'IBM Plex Mono',monospace; font-size:15px; color:#3b3e44;">{{ r.count }}</span>
+              </li>
+            </sc-for>
+          </ul>
+          <span style="font-size:13px; color:#62666d;">الرقم = عدد المرات التي استُخدمت فيها الكلمة اليوم.</span>
+        </section>
+
+        <section aria-labelledby="ev-h" style="display:flex; flex-direction:column; gap:14px; padding:24px; border-radius:22px; background:#ffffff; border:1px solid #e2e2dc;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <h2 id="ev-h" style="margin:0; font-size:18px; font-weight:700;">آخر الأحداث</h2>
+            <a href="#" style="font-size:14px; color:#3b3e44;">السجل الكامل</a>
+          </div>
+          <ol style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column;">
+            <sc-for list="{{ events }}" as="e" hint-placeholder-count="5">
+              <li style="display:flex; gap:12px; padding:12px 0; border-bottom:1px solid #ececE8;">
+                <span style="flex:none; margin-top:7px; width:8px; height:8px; border-radius:50%; background:{{ e.dot }};"></span>
+                <div style="display:flex; flex-direction:column; gap:3px; min-width:0; flex:1;">
+                  <span style="font-size:14px; line-height:1.6;">{{ e.text }}</span>
+                  <span style="font-size:12px; color:#62666d;">{{ e.meta }}</span>
+                </div>
+              </li>
+            </sc-for>
+          </ol>
+        </section>
+      </div>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div role="status" style="position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:40; padding:12px 18px; border-radius:14px; background:#141518; color:#f6f6f3; font-size:15px; font-weight:500; box-shadow:0 20px 40px -16px rgba(0,0,0,.16);">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;scenario&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ok&quot;,&quot;notConnected&quot;,&quot;reconnect&quot;],&quot;default&quot;:&quot;ok&quot;,&quot;tsType&quot;:&quot;'ok'|'notConnected'|'reconnect'&quot;}}">
+class Component extends DCLogic {
+  state = { on: true, toast: '' };
+  reduced() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  startLife() {
+    if (this.reduced() || this.life || !this.floatEl) return;
+    this.life = true;
+    const o = { duration: 2100, iterations: Infinity, direction: 'alternate', easing: 'cubic-bezier(.45,0,.55,1)' };
+    this.floatEl.animate([{ transform: 'translateY(0px)' }, { transform: 'translateY(-6px)' }], o);
+    if (this.shadowEl) this.shadowEl.animate([{ transform: 'scaleX(1)', opacity: 1 }, { transform: 'scaleX(.86)', opacity: .7 }], o);
+    const blink = () => { this.bt = setTimeout(() => { this.floatEl && this.floatEl.querySelectorAll('[data-blink]').forEach(el => el.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)', offset: .45 }, { transform: 'scaleY(1)' }], { duration: 220 })); blink(); }, 2600 + Math.random() * 3000); };
+    blink();
+  }
+  componentWillUnmount() { clearTimeout(this.bt); clearTimeout(this.tt); }
+  flash(m) { this.setState({ toast: m }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2400); }
+  renderVals() {
+    const sc = this.props.scenario ?? 'ok';
+    const connected = sc === 'ok';
+    const on = this.state.on && connected;
+    const G = '#1b7f52', R = '#c0302f', Y = '#62666d';
+    const headline = sc === 'notConnected' ? 'خطوة واحدة باقية: اربط حساب إنستغرام لأبدأ العمل.'
+      : sc === 'reconnect' ? 'توقفتُ مؤقتًا لأن ربط إنستغرام انتهت صلاحيته. أعد الربط وسأكمل فورًا.'
+      : on ? 'كل شيء يعمل. رددتُ اليوم على 38 تعليقًا وأرسلت 17 رابط شراء.'
+      : 'أنا متوقف الآن بطلبك. شغّلني متى شئت.';
+    return {
+      floatRef: (el) => { this.floatEl = el; if (el) this.startLife(); },
+      shadowRef: (el) => { this.shadowEl = el; },
+      okOp: connected ? 1 : 0, warnOp: connected ? 0 : 1,
+      headline,
+      needsConnect: !connected,
+      connectTitle: sc === 'reconnect' ? 'أعد ربط حساب إنستغرام' : 'اربط حساب إنستغرام',
+      connectBody: sc === 'reconnect' ? 'Meta تطلب تجديد الموافقة من وقت لآخر، أو بعد تغيير كلمة المرور. ردودك وإعداداتك محفوظة كما هي.' : 'البوت يحتاج إذنك ليقرأ التعليقات والرسائل ويرد عليها نيابة عنك. يتم الربط عبر Meta مباشرة.',
+      connectCta: sc === 'reconnect' ? 'إعادة الربط' : 'ربط حساب إنستغرام',
+      connected,
+      igDot: connected ? G : sc === 'reconnect' ? R : '#a9aba5',
+      igLabel: connected || sc === 'reconnect' ? '@username' : 'غير مربوط',
+      igDir: connected || sc === 'reconnect' ? 'ltr' : 'rtl',
+      igMeta: connected ? 'مربوط منذ 3 أيلول' : sc === 'reconnect' ? 'انتهت صلاحية الربط' : 'لم يُربط بعد',
+      onStr: on ? 'true' : 'false', cantRun: !connected,
+      swBg: on ? G : '#d4d4cd', knobBg: on ? '#f6f6f3' : '#62666d', knobTf: on ? 'translateX(-22px)' : 'translateX(0px)',
+      swCursor: connected ? 'pointer' : 'not-allowed', swOp: connected ? 1 : .5,
+      botLabel: on ? 'يعمل' : connected ? 'متوقف' : 'بانتظار الربط',
+      botFg: on ? G : connected ? '#3b3e44' : Y,
+      botMeta: on ? 'المفتاح يوقفه فورًا' : connected ? 'لن يرد على أي تعليق أو رسالة' : 'يعمل تلقائيًا بعد الربط',
+      toggleBot: () => { if (!connected) return; const n = !this.state.on; this.setState({ on: n }); this.flash(n ? 'عاد البوت للعمل' : 'أُوقف البوت فورًا'); },
+      rules: [
+        { words: ['سعر', 'بكم'], does: 'رد على التعليق + رسالة خاصة بالأسعار', count: '21' },
+        { words: ['عود', 'oud'], does: 'رسالة خاصة برابط مجموعة العود', count: '11' },
+        { words: ['توصيل'], does: 'رد على التعليق بمعلومات التوصيل', count: '6' },
+      ],
+      events: [
+        { text: 'أُرسل رابط مجموعة العود إلى ‎@username‎', meta: 'قبل 4 دقائق', dot: G },
+        { text: 'ردّ على تعليق «بكم هذا؟» في منشور «عطر الياسمين»', meta: 'قبل 9 دقائق', dot: G },
+        { text: 'تجاهل تعليقًا مكررًا من نفس الشخص خلال ساعة', meta: 'قبل 22 دقيقة', dot: Y },
+        { text: 'تعذّر إرسال رسالة خاصة: مرّ أكثر من 24 ساعة على تفاعل الشخص', meta: 'قبل ساعة', dot: '#94650f' },
+        { text: 'ردّ على 12 تعليقًا في منشور «عرض نهاية الأسبوع»', meta: 'قبل ساعتين', dot: G },
+      ],
+      toast: this.state.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>
