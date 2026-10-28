@@ -167,8 +167,6 @@ export function Welcome() {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    // Shown once per browser session; later visits go straight to login.
-    document.cookie = "kts_welcomed=1; Path=/; SameSite=Lax; Secure";
 
     let anims: Animation[] = [];
     let timers: ReturnType<typeof setTimeout>[] = [];
