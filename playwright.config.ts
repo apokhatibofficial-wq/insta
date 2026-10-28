@@ -18,10 +18,11 @@ export default defineConfig({
   use: { baseURL: `http://localhost:${PORT}`, locale: "ar", timezoneId: "Asia/Damascus", colorScheme: "dark" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 800 } } }],
   webServer: {
-    command: `npx next start -p ${PORT}`,
+    // Always a fresh Node build: a Cloudflare build (KTS_WORKER_BUILD=1) has the local DB driver compiled out.
+    command: `npx next build && npx next start -p ${PORT}`,
     url: `http://localhost:${PORT}/login`,
     reuseExistingServer: false,
-    timeout: 60_000,
+    timeout: 300_000,
     env: {
       DB_DRIVER: "pg",
       DATABASE_URL: "postgres://postgres:postgres@localhost:5432/khatib_e2e",

@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Unit + integration (migrations, RLS, auth, subscriptions)
+        run: npm test
+      - name: Build (Node)
+        run: npm run build
+      - name: No secrets in client bundles
+        run: npm run check:bundle-secrets
+      - name: Robot assets unchanged (WebP == PNG)
+        run: node scripts/verify-robot-assets.mjs
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: End-to-end
+        # Visual baselines are recorded locally; font rasterisation differs per OS.
+        run: npx playwright test --ignore-snapshots
+      - name: Cloudflare Worker build
+        run: npm run cf:build
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
