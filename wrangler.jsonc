@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "khatib-platform",
-  "main": ".open-next/worker.js",
+  "main": "cloudflare/worker.ts",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
@@ -9,6 +9,9 @@
     "binding": "ASSETS"
   },
   "observability": { "enabled": true },
+  // Daily maintenance at 00:17 Damascus (21:17 UTC): subscription expiry,
+  // 7-day retention warning, 180-day data deletion, housekeeping.
+  "triggers": { "crons": ["17 21 * * *"] },
   // Non-secret configuration. Secrets are set with `wrangler secret put <NAME>`
   // (see .env.example for the list) — never committed.
   "vars": {

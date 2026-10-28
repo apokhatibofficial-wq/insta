@@ -17,6 +17,7 @@ const config = [
       ".wrangler/**",
       "design_handoff_khatib_platform/**",
       "next-env.d.ts",
+      "cloudflare/**",
     ],
   },
 ];

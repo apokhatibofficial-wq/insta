@@ -92,6 +92,8 @@ export function botReason(b: BotState): string {
       return "متوقف: بانتظار ربط إنستغرام";
     case "paused":
       return "متوقف: أوقفه العميل";
+    case "global":
+      return "متوقف: إيقاف شامل لكل البوتات";
   }
 }
 
@@ -126,10 +128,43 @@ export function auditText(e: AuditEntry): { text: string; tone: Tone } {
       return { text: "سُمح بالأتمتة", tone: "green" };
     case "automation.blocked":
       return { text: "أُوقفت الأتمتة إداريًا", tone: "red" };
+    case "automation.global_stop":
+      return { text: "أُوقفت كل البوتات (إيقاف شامل)", tone: "red" };
+    case "automation.global_resume":
+      return { text: "استُؤنفت كل البوتات", tone: "green" };
+    case "automation.ig_disconnected":
+      return { text: "فصل العميل حساب إنستغرام", tone: "gray" };
+    case "subscription.expired":
+      return { text: "انتهى الاشتراك وحُذف إذن إنستغرام", tone: "red" };
+    case "account.archived":
+      return { text: "حُذفت بيانات العميل بعد 180 يومًا من الانتهاء", tone: "gray" };
+    case "security.admin_login":
+      return { text: e.details?.method === "recovery_code" ? "دخول المدير برمز استرداد" : "دخول المدير بـ Passkey", tone: "gray" };
+    case "security.admin_login_failed":
+      return { text: e.details?.locked ? "محاولات دخول فاشلة للمدير — قُفل الدخول مؤقتًا" : "محاولة دخول فاشلة إلى لوحة الإدارة", tone: "red" };
+    case "security.client_login_locked":
+      return { text: "قُفل دخول العملاء من جهاز بعد 5 محاولات فاشلة", tone: "amber" };
+    case "security.passkey_added":
+      return { text: "سُجّل مفتاح Passkey جديد", tone: "amber" };
+    case "security.admin_setup_completed":
+      return { text: "اكتمل إعداد دخول المدير", tone: "gray" };
     default:
       return { text: e.action, tone: "gray" };
   }
 }
+
+export type AuditTag = "sub" | "code" | "acct" | "bot" | "sec";
+
+export function auditTag(action: string): { key: AuditTag; label: string; tone: Tone | "soft" } {
+  const p = action.split(".")[0];
+  if (p === "subscription") return { key: "sub", label: "اشتراك", tone: "green" };
+  if (p === "code") return { key: "code", label: "رمز دخول", tone: "amber" };
+  if (p === "account") return { key: "acct", label: "حساب", tone: "soft" };
+  if (p === "automation") return { key: "bot", label: "أتمتة", tone: "soft" };
+  return { key: "sec", label: "أمان", tone: "red" };
+}
+
+export const actorLabel = (a: AuditEntry["actor_type"]) => ACTOR[a];
 
 export const auditMeta = (e: AuditEntry) => `${ACTOR[e.actor_type]} · ${formatDateTime(e.created_at)}`;
 

@@ -9,7 +9,7 @@ export type SubSummary = {
   today: string;
 };
 
-export type BotState = "disabled" | "sub_paused" | "sub_expired" | "admin" | "wait" | "err" | "paused" | "run";
+export type BotState = "disabled" | "sub_paused" | "sub_expired" | "admin" | "wait" | "err" | "paused" | "global" | "run";
 
 export type ClientRow = {
   id: string;

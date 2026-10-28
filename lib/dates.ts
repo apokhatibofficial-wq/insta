@@ -42,3 +42,15 @@ export function formatDateTime(ts: string | Date, now = new Date()): string {
   if (day.slice(0, 4) !== today.slice(0, 4)) return `${formatDate(day)}، ${time}`;
   return `${dayMonthFmt.format(d)}، ${time}`;
 }
+
+const dayMonthDateFmt = new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "long", timeZone: APP_TIMEZONE });
+
+/** A timestamp → «26 تشرين الأول» (Damascus). */
+export function formatDayMonth(ts: string | Date): string {
+  return dayMonthDateFmt.format(typeof ts === "string" ? new Date(ts) : ts);
+}
+
+/** A timestamp → «14:20» (Damascus). */
+export function formatTime(ts: string | Date): string {
+  return timeFmt.format(typeof ts === "string" ? new Date(ts) : ts);
+}

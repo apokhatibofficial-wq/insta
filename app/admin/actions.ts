@@ -137,3 +137,11 @@ export async function accountActiveAction(id: unknown, active: unknown) {
 export async function botAllowedAction(id: unknown, allowed: unknown) {
   return forClient(id, (cid) => clients.setBotAllowed(cid, z.boolean().parse(allowed)));
 }
+
+export async function globalStopAction(stop: unknown) {
+  return run(async () => {
+    const r = await clients.setGlobalStop(z.boolean().parse(stop));
+    revalidatePath("/admin/bots");
+    return r;
+  });
+}

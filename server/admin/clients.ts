@@ -122,3 +122,32 @@ export async function setBotAllowed(clientId: string, allowed: boolean) {
     p_allowed: z.boolean().parse(allowed),
   });
 }
+
+export async function setGlobalStop(stop: boolean) {
+  const { db, p_session_hash } = await ctx();
+  return db.service<{ global_stop: boolean }>("admin_global_stop_set", { p_session_hash, p_stop: z.boolean().parse(stop) });
+}
+
+export type BotRow = {
+  id: string;
+  public_id: string;
+  name: string;
+  username: string | null;
+  bot_state: import("./types").BotState | "global";
+  admin_allowed: boolean;
+  subscription: SubSummary;
+  load_24h: number;
+  last_reply: string | null;
+};
+
+export async function listBots() {
+  const { db, p_session_hash } = await ctx();
+  return db.service<{ global_stop: boolean; bots: BotRow[] }>("admin_bots_list", { p_session_hash });
+}
+
+export type AuditRow = import("./types").AuditEntry & { id: number; client_name: string | null; client_public_id: string | null };
+
+export async function listAudit() {
+  const { db, p_session_hash } = await ctx();
+  return db.service<AuditRow[]>("admin_audit_list", { p_session_hash });
+}

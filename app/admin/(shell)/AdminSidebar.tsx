@@ -7,12 +7,11 @@ import { RobotImg } from "@/components/robot/RobotImg";
 import { IconBot, IconCalendar, IconCheck, IconLog, IconUsers } from "@/components/ui/icons";
 import { adminLogoutAction } from "../actions";
 
-// Subscriptions / Bots / Audit log screens arrive in later phases.
 const NAV = [
   { href: "/admin/clients", label: "العملاء", icon: IconUsers, ready: true },
-  { href: "/admin/subscriptions", label: "الاشتراكات", icon: IconCalendar, ready: false },
-  { href: "/admin/bots", label: "البوتات", icon: IconBot, ready: false },
-  { href: "/admin/audit", label: "سجل العمليات", icon: IconLog, ready: false },
+  { href: "/admin/subscriptions", label: "الاشتراكات", icon: IconCalendar, ready: true },
+  { href: "/admin/bots", label: "البوتات", icon: IconBot, ready: true },
+  { href: "/admin/audit", label: "سجل العمليات", icon: IconLog, ready: true },
 ];
 
 export function AdminSidebar({ name }: { name: string }) {

@@ -4,6 +4,9 @@ import { defineConfig, devices } from "@playwright/test";
 // Postgres database (DB_DRIVER=pg). Secrets here are test-only values.
 const PORT = 3100;
 export const E2E_SETUP_TOKEN = "e2e-setup-token-0123456789abcdef";
+export const E2E_DATABASE_URL = "postgres://postgres:postgres@localhost:5432/khatib_e2e";
+export const E2E_PEPPER = "e2e-pepper-e2e-pepper-e2e-pepper-0001";
+export const E2E_SESSION_SECRET = "e2e-session-e2e-session-e2e-session-01";
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -25,9 +28,9 @@ export default defineConfig({
     timeout: 300_000,
     env: {
       DB_DRIVER: "pg",
-      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/khatib_e2e",
-      ACCESS_CODE_PEPPER: "e2e-pepper-e2e-pepper-e2e-pepper-0001",
-      SESSION_SECRET: "e2e-session-e2e-session-e2e-session-01",
+      DATABASE_URL: E2E_DATABASE_URL,
+      ACCESS_CODE_PEPPER: E2E_PEPPER,
+      SESSION_SECRET: E2E_SESSION_SECRET,
       ADMIN_SETUP_TOKEN: E2E_SETUP_TOKEN,
       WEBAUTHN_RP_ID: "localhost",
       WEBAUTHN_ORIGIN: `http://localhost:${PORT}`,
