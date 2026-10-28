@@ -30,6 +30,8 @@ const KNOWN = new Set([
   "two_passkeys_required",
   "no_current_subscription",
   "renewal_too_far",
+  "read_only",
+  "keyword_clash",
 ]);
 
 export function toDbError(message: string | undefined): DbError {

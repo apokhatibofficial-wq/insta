@@ -46,7 +46,7 @@ beforeAll(async () => {
     r.rows[0].id,
     B.id,
   ]);
-  await raw.query("insert into events (client_id, kind, summary) values ($1, 'test', 'b event')", [B.id]);
+  await raw.query("insert into events (client_id, kind, summary) values ($1, 'sys', 'b event')", [B.id]);
   await raw.query("update ig_connections set token_ciphertext = '\\x01', username = 'b_user' where client_id = $1", [B.id]);
 });
 
