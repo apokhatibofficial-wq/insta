@@ -26,11 +26,12 @@ test("reduced motion: welcome renders its final state immediately, no loops", as
   await ctx.close();
 });
 
-test("welcome plays once per session, then goes straight to login", async ({ page }) => {
+test("welcome plays on every visit", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".welcome")).toBeVisible();
   await page.goto("/");
-  await expect(page).toHaveURL(/\/login$/);
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator(".welcome")).toBeVisible();
 });
 
 test("Esc skips the welcome animation; CTA leads to login", async ({ page }) => {
