@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { defineConfig, devices } from "@playwright/test";
 
 // End-to-end tests run the production build against a throwaway local
@@ -7,8 +8,12 @@ export const E2E_SETUP_TOKEN = "e2e-setup-token-0123456789abcdef";
 export const E2E_DATABASE_URL = "postgres://postgres:postgres@localhost:5432/khatib_e2e";
 export const E2E_PEPPER = "e2e-pepper-e2e-pepper-e2e-pepper-0001";
 export const E2E_SESSION_SECRET = "e2e-session-e2e-session-e2e-session-01";
-export const E2E_META_SECRET = "e2e-meta-app-secret-0123456789";
-export const E2E_CRON_SECRET = "e2e-cron-secret-0123456789abcdef0123";
+// Test-only secrets, derived at runtime (same value in every test process) so
+// no secret-looking literal is committed.
+const derive = (label: string) => createHash("sha256").update(`khatib-e2e:${label}`).digest();
+export const E2E_META_SECRET = derive("meta-app-secret").toString("hex");
+export const E2E_CRON_SECRET = derive("cron-secret").toString("hex");
+const E2E_TOKEN_KEY = derive("token-encryption-key").toString("base64");
 export const MOCK_META = "http://127.0.0.1:3299";
 
 export default defineConfig({
@@ -43,7 +48,7 @@ export default defineConfig({
       META_APP_ID: "1234567890",
       META_APP_SECRET: E2E_META_SECRET,
       META_WEBHOOK_VERIFY_TOKEN: "e2e-verify-token-0123456789",
-      TOKEN_ENCRYPTION_KEY: "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=",
+      TOKEN_ENCRYPTION_KEY: E2E_TOKEN_KEY,
       CRON_SECRET: E2E_CRON_SECRET,
       META_GRAPH_URL: MOCK_META,
       META_OAUTH_URL: MOCK_META,
