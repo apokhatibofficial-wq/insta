@@ -31,15 +31,17 @@ const STATE_DIR = join(ROOT, ".deploy");
 const STATE = join(STATE_DIR, "state.json");
 const API = "https://api.supabase.com/v1";
 
+// Secrets pasted into a UI often carry a trailing newline.
+const envVar = (k) => process.env[k]?.trim() || undefined;
 const need = (k) => {
-  const v = process.env[k];
+  const v = envVar(k);
   if (!v) throw new Error(`Missing environment variable ${k}`);
   return v;
 };
 const log = (...a) => console.log("•", ...a);
 // Placeholder for a token the agent proxy injects (it replaces the Authorization header).
 const PROXY_TOKEN = "injected-by-proxy";
-const token = (k) => process.env[k] || PROXY_TOKEN;
+const token = (k) => envVar(k) || PROXY_TOKEN;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 mkdirSync(STATE_DIR, { recursive: true, mode: 0o700 });
@@ -57,8 +59,9 @@ async function sb(method, path, body) {
   return text ? JSON.parse(text) : null;
 }
 
-const MASTER = process.env.DEPLOY_MASTER_KEY;
-if (MASTER !== undefined && MASTER.length < 32) throw new Error("DEPLOY_MASTER_KEY must be at least 32 characters");
+const MASTER = envVar("DEPLOY_MASTER_KEY");
+if (process.env.GITHUB_ACTIONS === "true" && !MASTER) throw new Error("DEPLOY_MASTER_KEY is missing: add it as a repository secret");
+if (MASTER && MASTER.length < 32) throw new Error(`DEPLOY_MASTER_KEY must be at least 32 characters (got ${MASTER.length})`);
 const derive = (label, bytes) => Buffer.from(hkdfSync("sha256", MASTER, "khatib-platform", label, bytes));
 const randomOrDerived = (label, bytes) => (MASTER ? derive(label, bytes) : randomBytes(bytes));
 const secret = (label, bytes = 32) => randomOrDerived(label, bytes).toString("base64url");
@@ -74,7 +77,7 @@ const mask = (v) => {
 // 1. Supabase project
 // ---------------------------------------------------------------------------
 async function ensureProject() {
-  state.projectRef ??= process.env.SUPABASE_PROJECT_REF;
+  state.projectRef ??= envVar("SUPABASE_PROJECT_REF");
   state.projectRef ??= (await sb("GET", "/projects")).find((p) => p.name === PROJECT_NAME)?.id;
   if (!state.projectRef) {
     state.dbPass ??= secret("db-pass", 24);
@@ -84,7 +87,7 @@ async function ensureProject() {
       name: PROJECT_NAME,
       organization_slug: need("SUPABASE_ORG_SLUG"),
       db_pass: state.dbPass,
-      region_selection: { type: "specific", code: process.env.SUPABASE_REGION ?? "eu-central-1" },
+      region_selection: { type: "specific", code: envVar("SUPABASE_REGION") ?? "eu-central-1" },
     });
     state.projectRef = p.ref ?? p.id;
     save();
