@@ -9,6 +9,8 @@
 // secrets bound to api.supabase.com / api.cloudflare.com: the agent proxy then
 // sets the Authorization header and the variables may be left unset.
 // Optional: SUPABASE_PROJECT_REF (reuse an existing project), SUPABASE_REGION (default eu-central-1).
+// Optional (Instagram): META_APP_ID, META_APP_SECRET, and META_WEBHOOK_VERIFY_TOKEN
+// (the owner types the same value into the Meta dashboard; derived when unset).
 //
 // Stable secrets (pepper, session secret, signing key, …) must never rotate,
 // or every access code and session is invalidated. Two ways to keep them:
@@ -221,7 +223,7 @@ async function deployWorker(keys) {
       ADMIN_SETUP_TOKEN: MASTER ? need("ADMIN_SETUP_TOKEN") : secret("admin-setup-token", 24),
       TOKEN_ENCRYPTION_KEY: randomOrDerived("token-encryption-key", 32).toString("base64"),
       CRON_SECRET: secret("cron-secret"),
-      META_WEBHOOK_VERIFY_TOKEN: secret("meta-webhook-verify-token", 24),
+      META_WEBHOOK_VERIFY_TOKEN: envVar("META_WEBHOOK_VERIFY_TOKEN") ?? secret("meta-webhook-verify-token", 24),
     };
     if (state.secrets.ADMIN_SETUP_TOKEN.length < 24) throw new Error("ADMIN_SETUP_TOKEN must be at least 24 characters");
   }
@@ -236,6 +238,12 @@ async function deployWorker(keys) {
     WEBAUTHN_ORIGIN: url,
     SUPPORT_WHATSAPP_URL: "https://wa.me/4368181700732",
   };
+  // Instagram stays switched off until both are provided.
+  for (const k of ["META_APP_ID", "META_APP_SECRET"]) if (envVar(k)) all[k] = envVar(k);
+  // Same rules as server/env.ts: a bad value there would take the whole app down.
+  if (all.META_APP_ID && !/^[0-9]{5,30}$/.test(all.META_APP_ID)) throw new Error("META_APP_ID must be the numeric Instagram app ID");
+  if (all.META_APP_SECRET && all.META_APP_SECRET.length < 16) throw new Error("META_APP_SECRET looks too short");
+  if (all.META_WEBHOOK_VERIFY_TOKEN.length < 16) throw new Error("META_WEBHOOK_VERIFY_TOKEN must be at least 16 characters");
   log("setting Worker secrets…");
   wrangler(["secret", "bulk"], JSON.stringify(all));
   if (!MASTER) writeFileSync(join(STATE_DIR, "ADMIN_SETUP_TOKEN.txt"), `${state.secrets.ADMIN_SETUP_TOKEN}\n`, { mode: 0o600 });
@@ -276,5 +284,8 @@ log(`deployed: ${state.url}`);
 if (MASTER) log(`admin setup: open ${state.url}/admin/setup and enter your ADMIN_SETUP_TOKEN secret`);
 else log("admin setup token: open .deploy/ADMIN_SETUP_TOKEN.txt (shown nowhere else)");
 if (process.env.GITHUB_STEP_SUMMARY) {
-  writeFileSync(process.env.GITHUB_STEP_SUMMARY, `### Deployed\n\n${state.url}\n\nAdmin setup: ${state.url}/admin/setup\n`, { flag: "a" });
+  const meta = envVar("META_APP_ID") && envVar("META_APP_SECRET")
+    ? `Instagram: on. Redirect URI ${state.url}/connect/instagram/callback, webhook ${state.url}/api/webhooks/meta`
+    : "Instagram: off (META_APP_ID / META_APP_SECRET not set)";
+  writeFileSync(process.env.GITHUB_STEP_SUMMARY, `### Deployed\n\n${state.url}\n\nAdmin setup: ${state.url}/admin/setup\n\n${meta}\n`, { flag: "a" });
 }

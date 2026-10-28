@@ -154,6 +154,7 @@ npm run build && npm run check:bundle-secrets -- --env-file .env.local
 4. الصلاحيات: `instagram_business_basic`، `instagram_business_manage_comments`، `instagram_business_manage_messages`.
 5. لخدمة حسابات عملاء لا تملكها: **Advanced Access** + **Business Verification** + **App Review**، ونقل التطبيق إلى وضع **Live**. قبل ذلك يعمل الربط فقط مع الحسابات المضافة كمختبِرين في التطبيق.
 6. الأسرار في Cloudflare: `META_APP_ID`، `META_APP_SECRET`، `META_WEBHOOK_VERIFY_TOKEN`، `TOKEN_ENCRYPTION_KEY` (32 بايت عشوائية base64: `openssl rand -base64 32`)، `CRON_SECRET` (32+ حرفًا).
+   مع النشر من GitHub Actions: أضف `META_APP_ID` و`META_APP_SECRET` و`META_WEBHOOK_VERIFY_TOKEN` (16+ حرفًا، القيمة نفسها التي تكتبها في Meta) كأسرار في المستودع ثم أعد تشغيل **Deploy (trial)**؛ الباقي يُولَّد تلقائيًا.
 
 شروط من Meta تظهر للعميل: الحساب احترافي (أعمال أو صانع محتوى) وعام. الرسالة الخاصة رد واحد لكل تعليق خلال 7 أيام منه، وحدها مع الرابط 1000 بايت.
 
